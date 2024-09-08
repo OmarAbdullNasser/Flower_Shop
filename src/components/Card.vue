@@ -1,23 +1,36 @@
 <template>
   <div class="card mb-3">
-    <img src="../assets/flower-img.jpg" class="card-img-top" alt="..." />
+    <img :src="imgSrc" class="card-img-top" alt="..." />
     <div class="card-body text-center p-0">
       <h5 class="card-title m-3">
-        <a href="">Hi Lilies</a>
+        <a href="">{{ props.flower.name }}</a>
       </h5>
       <p class="card-text">
-        EGP 1801
-        <small>
-          <span>3298</span>
-        </small>
+        <span class="mx-1" v-if="props.flower.price_after_sale">
+          EGP {{ props.flower.price_after_sale }}
+          <small>
+            <span> {{ props.flower.price }}</span>
+          </small>
+        </span>
+
+        <span class="mx-1" v-else>
+          EGP {{ props.flower.price }}
+          
+        </span>
+
       </p>
       <a href="#" class="btn w-100">Add To cart </a>
     </div>
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { defineProps, computed } from "vue";
+const props = defineProps({
+  flower: Object,
+  require: true,
+});
+const imgSrc = computed(() => require(`@/assets/flowers/${props.flower.img}`));
 </script>
 
 <style lang="scss" scoped>

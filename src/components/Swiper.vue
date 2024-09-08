@@ -1,5 +1,5 @@
 <template>
-  <div class="slider my-0 my-lg-5">
+  <div class="slider my-0">
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-12">

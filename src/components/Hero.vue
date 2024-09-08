@@ -1,7 +1,11 @@
 <template>
   <div
     class="section Hero"
-    :style="{ ...backgroundImgStyle, '--custom-height': height }"
+    :style="{
+      ...backgroundImgStyle,
+      '--custom-height': height,
+      '--normal-height': N_height,
+    }"
   >
     <div
       class="overlay"
@@ -51,6 +55,11 @@ const props = defineProps({
     required: true,
     default: "auto",
   },
+  N_height: {
+    type: String,
+    required: true,
+    default:"auto"
+  },
 });
 
 const imgSrc = computed(() => require(`@/assets/${props.imageUrl}`));
@@ -61,12 +70,12 @@ const backgroundImgStyle = computed(() => ({
 }));
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 html {
   scroll-behavior: smooth;
 }
 .Hero {
-  height: auto;
+  height: var(--normal-height);
   z-index: 0;
   position: relative;
   .title-wrapper {
@@ -75,7 +84,7 @@ html {
 }
 @media screen and (max-width: 991px) {
   .Hero {
-    height: var(--custom-height);
+    max-height: var(--custom-height);
   }
 }
 </style>

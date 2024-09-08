@@ -18,12 +18,17 @@
           <label for="products-sort">
             <span>Sort by:</span>
           </label>
-          <select name="sortby" id="products-sort">
+          <select
+            name="sortby"
+            v-model="selectedOption"
+            id="sortBy"
+            @change="updateSort"
+          >
             <option value="1">Recommended</option>
-            <option value="2" class="">Name (A - Z)</option>
-            <option value="3">Name (Z - A)</option>
-            <option value="4">Price (Low to High)</option>
-            <option value="5">Price (High to Low)</option>
+            <option value="name-asc" class="">Name (A - Z)</option>
+            <option value="name-desc">Name (Z - A)</option>
+            <option value="price-asc">Price (Low to High)</option>
+            <option value="price-desc">Price (High to Low)</option>
             <option value="6">Latest Arrival</option>
           </select>
         </div>
@@ -32,8 +37,26 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+// Props for initial sort option
+import { ref} from "vue";
+const props = defineProps({
+  initialSort: {
+    type: String,
+    required: true,
+  },
+});
+
+// Emit event for sorting
+const emit = defineEmits(["sortChanged"]);
+
+// Local state for the selected option
+const selectedOption = ref(props.initialSort);
+
+// Emit the selected sort option to the parent component
+const updateSort = () => {
+  emit("sortChanged", selectedOption.value);
+};
 </script>
 
 <style lang="scss" scoped>

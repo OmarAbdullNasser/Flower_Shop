@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "totalItems": 100,
+    "itemsPerPage": 9,
+    "currentPage": 1,
+    "totalPages": 10
+  },
+  "items": [
+    {
+      "name": "Red Rose Bouquet",
+      "img": "1.png",
+      "price": 50,
+      "price_after_sale": 45,
+      "slug": "red-rose-bouquet"
+    },
+    {
+      "name": "White Lily Bouquet",
+      "img": "2.png",
+      "price": 60,
+      "price_after_sale": 55,
+      "slug": "white-lily-bouquet"
+    },
+    {
+      "name": "Sunflower Bunch",
+      "img": "3.png",
+      "price": 40,
+      "price_after_sale": null,
+      "slug": "sunflower-bunch"
+    },
+    {
+      "name": "Orchid Arrangement",
+      "img": "4.png",
+      "price": 75,
+      "price_after_sale": 70,
+      "slug": "orchid-arrangement"
+    },
+    {
+      "name": "Tulip Mix Bouquet",
+      "img": "5.png",
+      "price": 55,
+      "price_after_sale": 50,
+      "slug": "tulip-mix-bouquet"
+    },
+    {
+      "name": "Daisy Delight",
+      "img": "6.png",
+      "price": 30,
+      "price_after_sale": null,
+      "slug": "daisy-delight"
+    },
+    {
+      "name": "Peony Bunch",
+      "img": "7.png",
+      "price": 80,
+      "price_after_sale": 75,
+      "slug": "peony-bunch"
+    },
+    {
+      "name": "Lavender Stems",
+      "img": "8.png",
+      "price": 35,
+      "price_after_sale": null,
+      "slug": "lavender-stems"
+    }
+  ]
+}

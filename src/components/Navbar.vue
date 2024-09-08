@@ -1,79 +1,88 @@
 <template>
-  <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
-    <div class="container d-flex flex-lg-column">
-      <div class="social-block d-none d-lg-flex justify-content-between">
-        <div class="social ms-4">
-          <a href="#">
-            <font-awesome-icon icon="fa-solid fa-cart-plus" />
-          </a>
+  <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg mb-3">
+    <div class="container">
+      <div class="paret mx-auto d-flex">
+        <div class="navbar-brand text-center">
+          <span class="navbar-logo">
+            <a href="#">
+              <img
+                src="../assets/logo_brand.png"
+                alt="Mobirise"
+                style="height: 5rem"
+              />
+            </a>
+          </span>
         </div>
 
-        <div class="social-2 me-4">
-          <a href="#">
-            <font-awesome-icon icon="fa-brands fa-instagram" />
-          </a>
-
-          <a href="#" class="mx-3">
-            <font-awesome-icon icon="fa-brands fa-tiktok" />
-          </a>
-
-          <a href="#">
-            <font-awesome-icon icon="fa-brands fa-facebook" />
-          </a>
-        </div>
-      </div>
-
-      <div class="navbar-brand mx-lg-auto mb-lg-4 text-center">
-        <span class="navbar-logo">
-          <a href="#">
-            <img
-              src="../assets/Flower-Logo.png"
-              alt="Mobirise"
-              style="height: 2.5rem"
-            />
-          </a>
-        </span>
-        <span class="navbar-caption-wrap"
-          ><a class="text-info" href="#">Flower me</a></span
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
-      </div>
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarTogglerDemo02"
-        aria-controls="navbarTogglerDemo02"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <div
+          class="collapse navbar-collapse text-center"
+          id="navbarTogglerDemo02"
+        >
+          <div class="centerNavbar">
+            <ul class="navbar-nav mx-auto text-center align-items-center">
+              <li class="nav-item mx-3">
+                <router-link :to="{ name: 'home' }" class="nav-link"
+                  >Home</router-link
+                >
+              </li>
+              <li class="nav-item mx-3">
+                <router-link :to="{ name: 'Products' }" class="nav-link"
+                  >Shop</router-link
+                >
+              </li>
+              <li class="nav-item mx-3">
+                <a class="nav-link" href="">Product</a>
+              </li>
+              <li class="nav-item mx-3">
+                <a class="nav-link" href="">Landscape</a>
+              </li>
+              <li class="nav-item mx-3">
+                <a class="nav-link" href="">Repair</a>
+              </li>
+              <li class="nav-item mx-3">
+                <a class="nav-link" href="">Blog</a>
+              </li>
+            </ul>
+          </div>
 
-      <div
-        class="collapse navbar-collapse text-center"
-        id="navbarTogglerDemo02"
-      >
-        <ul class="navbar-nav ms-auto text-center">
-          <li class="nav-item mx-3">
-            <a class="nav-link" href="">Homepage</a>
-          </li>
-          <li class="nav-item mx-3">
-            <a class="nav-link" href="">Shop</a>
-          </li>
-          <li class="nav-item mx-3">
-            <a class="nav-link" href="">Product</a>
-          </li>
-          <li class="nav-item mx-3">
-            <a class="nav-link" href="">Landscape</a>
-          </li>
-          <li class="nav-item mx-3">
-            <a class="nav-link" href="">Repair</a>
-          </li>
-          <li class="nav-item mx-3">
-            <a class="nav-link" href="">Blog</a>
-          </li>
-        </ul>
+          <div class="leftNavbar">
+            <ul class="navbar-nav mx-auto text-center align-items-center">
+              <li class="nav-item mx-3">
+                <a href="#" class="cart">
+                  <font-awesome-icon icon="fa-solid fa-cart-plus " />
+                </a>
+              </li>
+
+              <li class="lang nav-item dropdown d-flex align-items-center ms-2">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <font-awesome-icon icon="fa-solid fa-globe" />
+                  EN
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">AR</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -87,13 +96,20 @@ export default {};
 nav {
   position: relative;
   transition: all 0.2s;
-
-  .social-block {
-    font-size: 35px;
-    position: absolute;
-    top: 2.5rem;
-    width: 100%;
+  margin: 12px 0;
+  #navbarTogglerDemo02 {
+    svg {
+      font-size: 24px;
+      color: var(--main-color);
+    }
+    .centerNavbar {
+      margin-left: 48px;
+    }
+    .leftNavbar {
+      margin-left: 48px;
+    }
   }
+
   .navbar-logo {
     vertical-align: -4px;
     margin-right: 0.8rem;

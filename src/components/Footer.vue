@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-6 col-lg-6 right">
-          <div class="col-12 col-md-3 padd px-lg-5  ">
+          <div class="col-12 col-md-3 padd px-lg-5">
             <img href="https://mobiri.se/" src="../assets/signature.png" />
           </div>
 
@@ -42,7 +42,9 @@
             <a href="index.html" class="text-success it">Our Services </a>
           </h5>
         </div>
-        <div class="col-12 col-md-6 col-lg-2 top small text-center my-4 my-lg-0">
+        <div
+          class="col-12 col-md-6 col-lg-2 top small text-center my-4 my-lg-0"
+        >
           <h5 class="lin mbr-fonts-style display-5">
             <p class="bottom text-success">Contact</p>
           </h5>
@@ -65,10 +67,27 @@
             ></a>
           </h5>
         </div>
-        <div class="col-12 col-md-6 col-lg-2 top small text-center mt-4 mt-lg-0">
+        <div
+          class="col-12 col-md-6 col-lg-2 top small text-center mt-4 mt-lg-0"
+        >
           <h5 class="lin mbr-fonts-style display-5">
             <p class="bottom text-success">Follow Us</p>
           </h5>
+          <div
+            class="social-block d-lg-flex flex-column justify-content-between"
+          >
+            <a href="#">
+              <font-awesome-icon icon="fa-brands fa-instagram" />
+            </a>
+
+            <a href="#" class="my-4">
+              <font-awesome-icon icon="fa-brands fa-tiktok" />
+            </a>
+
+            <a href="#">
+              <font-awesome-icon icon="fa-brands fa-facebook" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -84,6 +103,10 @@ export default {};
   padding-top: 5rem;
   padding-bottom: 5rem;
   background-color: #e0ecdc;
+  svg {
+    font-size: 24px;
+    color: var(--main-color);
+  }
   .right {
     padding-right: 70px;
     .padd {

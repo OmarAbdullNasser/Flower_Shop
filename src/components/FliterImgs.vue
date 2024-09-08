@@ -17,13 +17,93 @@
           <!--Fliter-->
           <div class="gallery-filter">
             <ul class="list">
-              <li class="active">
-                <a href="" class="Btn display7">
-                  All
-                  <!-- <br /> -->
-                </a>
+              <li class="active me-1">
+                <a href="#" class="Btn display7"> All </a>
+              </li>
+
+              <li class="mx-1">
+                <a href="#" class="Btn display7"> Awesome </a>
+              </li>
+
+              <li class="mx-1">
+                <a href="#" class="Btn display7"> Responsive </a>
+              </li>
+
+              <li class="mx-1">
+                <a href="#" class="Btn display7"> Creative </a>
+              </li>
+
+              <li class="mx-1">
+                <a href="#" class="Btn display7"> Animated </a>
               </li>
             </ul>
+          </div>
+
+          <!-- Gallery -->
+          <div class="gallery-row">
+            <div class="row">
+              <div class="col-12 col-lg-4 p-3">
+                <div class="item">
+                  <img src="../assets/Evenets/1.jpg" alt="" class="img-fluid" />
+                  <span class="icon-focus"></span>
+                  <span class="title display7"> Type caption here </span>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4 p-3">
+                <div class="item">
+                  <img src="../assets/Evenets/2.jpg" alt="" class="img-fluid" />
+                  <span class="icon-focus"></span>
+                  <span class="title display7"> Type caption here </span>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4 p-3">
+                <div class="item">
+                  <img src="../assets/Evenets/3.jpg" alt="" class="img-fluid" />
+                  <span class="icon-focus"></span>
+                  <span class="title display7"> Type caption here </span>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-4 p-3">
+                <div class="item">
+                  <img src="../assets/Evenets/4.jpg" alt="" class="img-fluid" />
+                  <span class="icon-focus"></span>
+                  <span class="title display7"> Type caption here </span>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-4 p-3">
+                <div class="item">
+                  <img src="../assets/Evenets/5.jpg" alt="" class="img-fluid" />
+                  <span class="icon-focus"></span>
+                  <span class="title display7"> Type caption here </span>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-4 p-3">
+                <div class="item">
+                  <img src="../assets/Evenets/6.jpg" alt="" class="img-fluid" />
+                  <span class="icon-focus"></span>
+                  <span class="title display7"> Type caption here </span>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-4 p-3">
+                <div class="item">
+                  <img src="../assets/Evenets/7.jpg" alt="" class="img-fluid" />
+                  <span class="icon-focus"></span>
+                  <span class="title display7"> Type caption here </span>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-4 p-3">
+                <div class="item">
+                  <img src="../assets/Evenets/8.jpg" alt="" class="img-fluid" />
+                  <span class="icon-focus"></span>
+                  <span class="title display7"> Type caption here </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -72,7 +152,12 @@ export default {};
           display: inline-block;
           padding: 5px 0;
           transition: all 0.3s ease-out;
-         
+          &.active {
+            // Target active li elements
+            .Btn::after {
+              border-color: #0c5b47; // Apply your styles here
+            }
+          }
           .Btn {
             position: relative;
             padding: 0.5rem 1rem 0.6rem;
@@ -80,6 +165,7 @@ export default {};
             background-color: transparent;
             border-width: 0;
             color: #0c5b47;
+
             &::after {
               content: "";
               position: absolute;
@@ -90,28 +176,88 @@ export default {};
               border: 1px solid transparent;
               border-radius: 100px;
               opacity: 0.5;
-              &:hover {
-                animation: 1s btn-animation linear infinite;
+              &.active {
+                border-color: #0c5b47 !important;
               }
-              & .active {
-                border-color: #0c5b47;
-                background: #000;
-              }
+            }
+            &:hover::after {
+              border-color: #0c5b47;
             }
           }
         }
       }
     }
-  }
-}
 
-@keyframes btn-animation {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.3);
-    opacity: 0;
+    .gallery-row {
+      position: relative;
+
+      .item {
+        position: relative;
+        &:hover {
+          &::before {
+            opacity: 0.4; // Change opacity on hover
+          }
+
+          img,
+          span {
+            opacity: 1; // Full opacity on hover
+          }
+
+          .title {
+            display: block; // Display title on hover
+          }
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          -webkit-transition: 0.2s opacity ease-in-out;
+          transition: 0.2s opacity ease-in-out;
+          background: linear-gradient(180deg, #0c5b47, #338873);
+        }
+        .icon-focus {
+          position: absolute;
+          font-size: 2rem !important;
+          width: 50px;
+          height: 50px;
+          top: calc(50% - 25px);
+          left: calc(50% - 25px);
+          transition: 0.2s opacity ease-in-out;
+          z-index: 5;
+          color: #fff;
+          opacity: 0;
+
+          &::before {
+            content: "+";
+            border-radius: 100px;
+            background: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 100%;
+            padding-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+        .title {
+          position: absolute;
+          text-align: left;
+          display: none;
+          width: 100%;
+          bottom: 0;
+          right: 0;
+          padding: 1rem;
+          font-weight: bold;
+          background: transparent;
+          transition: all 0.5s ease;
+        }
+      }
+    }
   }
 }
 </style>
