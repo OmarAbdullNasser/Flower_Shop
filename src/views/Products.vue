@@ -8,12 +8,6 @@
         </div>
         <!-- Loader -->
 
-        <!-- <div v-if="loading" class="col-12">
-          <div class="d-flex justify-content-center">
-            <div class="loader text-primary" role="status"></div>
-          </div>
-        </div> -->
-
         <div class="col-12 col-lg-9 row justify-content-evenly">
           <SearchBar
             class="col-12"
@@ -21,7 +15,14 @@
             @sortChanged="handleSortChange"
           />
 
+          <div v-if="loading" class="col-12">
+            <div class="d-flex justify-content-center">
+              <div class="loader text-primary" role="status"></div>
+            </div>
+          </div>
+
           <Card
+            v-else
             v-for="flower in paginatedItems"
             :key="flower.slug"
             :flower="flower"
@@ -42,7 +43,6 @@ import Card from "@/components/Card.vue";
 import Fliter from "@/components/Fliter.vue";
 import Pagination from "@/components/Pagination.vue";
 import SearchBar from "@/components/SearchBar.vue";
-import loader from "sass-loader";
 
 import { ref, onMounted, computed, watch, watchEffect } from "vue";
 
@@ -94,6 +94,7 @@ const fetchFlowers = async () => {
   loading.value = true;
   try {
     // Replace this URL with your actual endpoint or local JSON file path
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const FlowerResponse = await fetch("http://localhost:3000/items");
     flowers.value = await FlowerResponse.json();
@@ -117,4 +118,39 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 60px;
+  aspect-ratio: 1;
+  border: 15px solid #ddd;
+  border-radius: 50%;
+  position: relative;
+  transform: rotate(45deg);
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  border: 15px solid #514b82;
+  animation: l18 2s infinite linear;
+}
+@keyframes l18 {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+}
+</style>
