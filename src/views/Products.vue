@@ -55,9 +55,11 @@ const meta = computed(() => store.getters.Meta);
 const sortOption = ref("name-asc");
 const loading = ref(true);
 const ColorOfFlower = ref(null);
+const SearchObj = ref({});
 
 const handleColorChange = (color) => {
   ColorOfFlower.value = color;
+  SearchObj[color].value = color;
 };
 
 // Computed property for items displayed on the current page
@@ -109,6 +111,7 @@ const sortItems = () => {
 watchEffect(() => {
   sortItems();
   checkLoader();
+  console.log(SearchObj.value);
 });
 
 onMounted(() => {

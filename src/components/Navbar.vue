@@ -32,34 +32,46 @@
         <ul class="navbar-nav mx-auto text-center align-items-center">
           <li class="nav-item mx-3">
             <router-link
-              :to="{ name: 'home', params: { lang: route.params.lang } }"
+              :to="{
+                name: 'home',
+                params: { lang: route.params.lang || 'en' },
+              }"
               class="nav-link"
             >
-              <span v-if="$route.params.lang === 'ar'">الرئيسية </span>
+              <span v-if="$route.params.lang === 'ar'">الرئيسية</span>
               <span v-else>Home</span>
             </router-link>
           </li>
           <li class="nav-item mx-3">
             <router-link
-              :to="{ name: 'Products', params: { lang: route.params.lang } }"
+              :to="{
+                name: 'Products',
+                params: { lang: route.params.lang || 'en' },
+              }"
               class="nav-link"
             >
-              <span v-if="$route.params.lang === 'ar'">المتجر </span>
-              <span v-else>Shop</span></router-link
-            >
+              <span v-if="$route.params.lang === 'ar'">المتجر</span>
+              <span v-else>Shop</span>
+            </router-link>
           </li>
           <li class="nav-item mx-3">
             <router-link
-              :to="{ name: 'Landscape', params: { lang: route.params.lang } }"
+              :to="{
+                name: 'Landscape',
+                params: { lang: route.params.lang || 'en' },
+              }"
               class="nav-link"
             >
-              <span v-if="$route.params.lang === 'ar'">الاراضي الواسعة </span>
-              <span v-else>Landscape</span></router-link
-            >
+              <span v-if="$route.params.lang === 'ar'">الاراضي الواسعة</span>
+              <span v-else>Landscape</span>
+            </router-link>
           </li>
           <li class="nav-item mx-3">
             <router-link
-              :to="{ name: 'Events', params: { lang: route.params.lang } }"
+              :to="{
+                name: 'Events',
+                params: { lang: route.params.lang || 'en' },
+              }"
               class="nav-link"
             >
               <span v-if="$route.params.lang === 'ar'">مناسبات</span>
@@ -68,7 +80,10 @@
           </li>
           <li class="nav-item mx-3">
             <router-link
-              :to="{ name: 'Repair', params: { lang: route.params.lang } }"
+              :to="{
+                name: 'Repair',
+                params: { lang: route.params.lang || 'en' },
+              }"
               class="nav-link"
             >
               <span v-if="$route.params.lang === 'ar'">اصلاح</span>
@@ -80,14 +95,18 @@
         <ul class="navbar-nav text-center align-items-center">
           <li class="nav-item mx-3">
             <router-link
-              :to="{ name: 'Cart', params: { lang: route.params.langs } }"
-              class="cart d-flex algin-items-center"
+              :to="{
+                name: 'Cart',
+                params: { lang: route.params.lang || 'en' },
+              }"
+              class="cart d-flex align-items-center"
             >
-              <font-awesome-icon icon="fa-solid fa-cart-plus " />
+              <font-awesome-icon icon="fa-solid fa-cart-plus" />
               <span class="badge text-bg-secondary ms-2">{{
                 $store.state.cart.length
-              }}</span></router-link
-            >
+              }}</span>
+            </router-link>
+            
           </li>
 
           <li class="lang nav-item dropdown d-flex align-items-center ms-2">
