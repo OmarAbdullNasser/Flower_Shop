@@ -21,7 +21,7 @@
             </div>
           </div>
         </div>
-        <div class="left-side col-12 col-lg text-center">
+        <div class="left-side col-12 col-lg text-center mt-3">
           <img src="../assets/fl1.jpg" alt="" class="img-fluid first" />
           <img
             src="../assets/fl2.jpg"
@@ -58,14 +58,14 @@ export default {};
       .art {
         padding-bottom: 12px;
         text-align: left;
-        color: #0c5b47;
+        color: var(--main-color);
         font-family: "Quicksand", sans-serif;
         font-size: 2.875rem;
         line-height: 1.1;
       }
       p {
         text-align: left;
-        color: #0c5b47;
+        color: var(--main-color);
       }
 
       .si {

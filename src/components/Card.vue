@@ -1,6 +1,13 @@
 <template>
   <div class="card mb-3">
-    <img :src="imgSrc" class="card-img-top" alt="..." />
+    <router-link
+      :to="{
+        name: 'Product',
+        params: { slug: props.flower.slug },
+      }"
+    >
+      <img :src="imgSrc" class="card-img-top" alt="..." />
+    </router-link>
     <div class="card-body text-center p-0">
       <h5 class="card-title m-3">
         <a href="">{{ props.flower.name }}</a>
@@ -13,24 +20,30 @@
           </small>
         </span>
 
-        <span class="mx-1" v-else>
-          EGP {{ props.flower.price }}
-          
-        </span>
-
+        <span class="mx-1" v-else> EGP {{ props.flower.price }} </span>
       </p>
-      <a href="#" class="btn w-100">Add To cart </a>
+      <a href="#" class="btn w-100" @click="addToCart(props.flower)"
+        >Add To cart
+      </a>
     </div>
   </div>
 </template>
 
 <script setup>
 import { defineProps, computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
 const props = defineProps({
   flower: Object,
   require: true,
 });
 const imgSrc = computed(() => require(`@/assets/flowers/${props.flower.img}`));
+// Function to add an item to the cart
+const addToCart = (item) => {
+  store.commit("ADD_TO_CART", { item });
+};
 </script>
 
 <style lang="scss" scoped>

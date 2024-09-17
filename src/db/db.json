@@ -11,56 +11,64 @@
       "img": "1.png",
       "price": 50,
       "price_after_sale": 45,
-      "slug": "red-rose-bouquet"
+      "slug": "red-rose-bouquet",
+      "color": "Red"
     },
     {
       "name": "White Lily Bouquet",
       "img": "2.png",
       "price": 60,
       "price_after_sale": 55,
-      "slug": "white-lily-bouquet"
+      "slug": "white-lily-bouquet",
+      "color": "Red"
     },
     {
       "name": "Sunflower Bunch",
       "img": "3.png",
       "price": 40,
       "price_after_sale": null,
-      "slug": "sunflower-bunch"
+      "slug": "sunflower-bunch",
+      "color": "Red"
     },
     {
       "name": "Orchid Arrangement",
       "img": "4.png",
       "price": 75,
       "price_after_sale": 70,
-      "slug": "orchid-arrangement"
+      "slug": "orchid-arrangement",
+      "color": "Red"
     },
     {
       "name": "Tulip Mix Bouquet",
       "img": "5.png",
       "price": 55,
       "price_after_sale": 50,
-      "slug": "tulip-mix-bouquet"
+      "slug": "tulip-mix-bouquet",
+      "color": "White"
     },
     {
       "name": "Daisy Delight",
       "img": "6.png",
       "price": 30,
       "price_after_sale": null,
-      "slug": "daisy-delight"
+      "slug": "daisy-delight",
+      "color": "White"
     },
     {
       "name": "Peony Bunch",
       "img": "7.png",
       "price": 80,
       "price_after_sale": 75,
-      "slug": "peony-bunch"
+      "slug": "peony-bunch",
+      "color": "Pink"
     },
     {
       "name": "Lavender Stems",
       "img": "8.png",
       "price": 35,
       "price_after_sale": null,
-      "slug": "lavender-stems"
+      "slug": "lavender-stems",
+      "color": "Pink"
     }
   ]
 }

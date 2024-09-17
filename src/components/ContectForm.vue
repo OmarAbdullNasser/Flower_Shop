@@ -128,7 +128,7 @@ export default {};
 .form {
   .title {
     .mbr-section-subtitle {
-      color: #1b745e;
+      color: var(--main-color);
       text-align: center;
       font-style: italic;
       padding-bottom: 12px;
@@ -138,7 +138,7 @@ export default {};
       font-weight: 400;
     }
     .mbr-section-title {
-      color: #0c5b47;
+      color: var(--main-color);
       text-align: center;
       font-family: "Quicksand", sans-serif;
       font-size: 2.875rem;
@@ -199,14 +199,15 @@ export default {};
     .btn {
       padding: 0.6rem 1.5rem;
       border-radius: 0;
-      background-color: #d8e3d5;
+      background-color: var(--main-color);
       border-color: #d8e3d5;
-      color: #10634e;
+      color: #fff;
       font-size: 1rem;
       line-height: 1.5;
       &:hover {
-        background-color: #c4d5c0;
+        background-color: #ffff;
         border-color: #c4d5c0;
+        color: var(--main-color);
       }
     }
   }

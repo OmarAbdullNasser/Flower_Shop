@@ -81,15 +81,12 @@ export default {};
         color: #0c5b47;
         svg {
           font-size: 2.5rem;
-          color: #1b745e;
+          color: var(--main-color);
           margin-right: 15px;
           margin-bottom: 8px;
         }
       }
-
-    
     }
-   
   }
 }
 </stye>

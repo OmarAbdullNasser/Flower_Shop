@@ -38,7 +38,7 @@ export default {};
     padding-left: 9rem;
     .title {
       margin: 0;
-      color: #0c5b47;
+      color: var(--main-color);
       padding: 0;
     }
     .card-box {

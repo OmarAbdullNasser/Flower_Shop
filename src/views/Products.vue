@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row mx-0">
         <div class="col-12 col-lg-3 d-none d-lg-block">
-          <fliter />
+          <fliter @color="handleColorChange" />
         </div>
         <!-- Loader -->
 
@@ -43,31 +43,47 @@ import Card from "@/components/Card.vue";
 import Fliter from "@/components/Fliter.vue";
 import Pagination from "@/components/Pagination.vue";
 import SearchBar from "@/components/SearchBar.vue";
+import { useStore } from "vuex";
 
-import { ref, onMounted, computed, watch, watchEffect } from "vue";
+import { ref, onMounted, computed, watchEffect } from "vue";
 
 name: "Products";
+const store = useStore();
 
-const flowers = ref([]);
+let flowers = computed(() => store.getters.allProducts);
+const meta = computed(() => store.getters.Meta);
 const sortOption = ref("name-asc");
 const loading = ref(true);
+const ColorOfFlower = ref(null);
 
-const meta = ref({
-  totalItems: "",
-  itemsPerPage: 9,
-  currentPage: "",
-  totalPages: "",
-});
+const handleColorChange = (color) => {
+  ColorOfFlower.value = color;
+};
 
 // Computed property for items displayed on the current page
+
 const paginatedItems = computed(() => {
   const start = (meta.value.currentPage - 1) * meta.value.itemsPerPage;
   const end = start + meta.value.itemsPerPage;
 
-  return flowers.value.slice(start, end);
+  if (ColorOfFlower.value?.target.checked) {
+    // Return the filtered result
+    return flowers.value
+      .filter((flower) => flower.color == ColorOfFlower.value?.target.value)
+      .slice(start, end); // Apply pagination after filtering
+  } else {
+    return flowers.value.slice(start, end); // Apply pagination without filterin
+  }
 });
 
+const checkLoader = () => {
+  if (flowers.value.length > 0) {
+    loading.value = false;
+  }
+};
+
 // Handle page change
+
 const handlePageChange = (page) => {
   meta.value.currentPage = page;
 };
@@ -90,31 +106,13 @@ const sortItems = () => {
   }
 };
 
-const fetchFlowers = async () => {
-  loading.value = true;
-  try {
-    // Replace this URL with your actual endpoint or local JSON file path
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    const FlowerResponse = await fetch("http://localhost:3000/items");
-    flowers.value = await FlowerResponse.json();
-
-    //Pagination
-    const MetaResponse = await fetch("http://localhost:3000/meta");
-    meta.value = await MetaResponse.json();
-  } catch (error) {
-    console.error("Failed to fetch flowers:", error);
-  } finally {
-    loading.value = false; // Hide loader once data is fetched
-  }
-};
 watchEffect(() => {
   sortItems();
-  console.log(loading.value);
+  checkLoader();
 });
 
 onMounted(() => {
-  fetchFlowers();
+  store.dispatch("fetchProducts");
 });
 </script>
 

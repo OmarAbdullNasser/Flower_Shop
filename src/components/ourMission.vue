@@ -29,7 +29,7 @@ export default {};
 .ourMission {
   .row {
     align-items: center;
-    background: #1b745e;
+    background: var(--main-color);
     padding: 0px;
     margin: 0;
   }
@@ -56,14 +56,14 @@ export default {};
       .btn-primary {
         padding: 0.5625rem 2.3125rem;
         border-radius: 0px;
-        background-color: #d8e3d5 !important;
+        background-color: var(--main-color) !important;
         border-color: #d8e3d5 !important;
-        color: #10634e !important;
+        color: #ffff !important;
         font-family: "Quicksand", sans-serif;
         font-size: 1rem;
         line-height: 1.5;
         &:hover {
-          color: #10634e !important;
+          color: var(--main-color) !important;
           background-color: #c4d5c0 !important;
           border-color: #c4d5c0 !important;
         }

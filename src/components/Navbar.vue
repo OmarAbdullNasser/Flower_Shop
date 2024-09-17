@@ -1,95 +1,134 @@
 <template>
-  <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg mb-3">
+  <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg mb-4">
     <div class="container">
-      <div class="paret mx-auto d-flex">
-        <div class="navbar-brand text-center">
-          <span class="navbar-logo">
-            <a href="#">
-              <img
-                src="../assets/logo_brand.png"
-                alt="Mobirise"
-                style="height: 5rem"
-              />
+      <div class="navbar-brand text-center">
+        <span class="navbar-logo">
+          <a href="#">
+            <img
+              src="../assets/logo_brand.png"
+              alt="Mobirise"
+              style="height: 5rem"
+            />
+          </a>
+        </span>
+      </div>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div
+        class="collapse navbar-collapse text-center"
+        id="navbarTogglerDemo02"
+      >
+        <ul class="navbar-nav mx-auto text-center align-items-center">
+          <li class="nav-item mx-3">
+            <router-link
+              :to="{ name: 'home', params: { lang: route.params.lang } }"
+              class="nav-link"
+            >
+              <span v-if="$route.params.lang === 'ar'">الرئيسية </span>
+              <span v-else>Home</span>
+            </router-link>
+          </li>
+          <li class="nav-item mx-3">
+            <router-link
+              :to="{ name: 'Products', params: { lang: route.params.lang } }"
+              class="nav-link"
+            >
+              <span v-if="$route.params.lang === 'ar'">المتجر </span>
+              <span v-else>Shop</span></router-link
+            >
+          </li>
+          <li class="nav-item mx-3">
+            <router-link
+              :to="{ name: 'Landscape', params: { lang: route.params.lang } }"
+              class="nav-link"
+            >
+              <span v-if="$route.params.lang === 'ar'">الاراضي الواسعة </span>
+              <span v-else>Landscape</span></router-link
+            >
+          </li>
+          <li class="nav-item mx-3">
+            <router-link
+              :to="{ name: 'Events', params: { lang: route.params.lang } }"
+              class="nav-link"
+            >
+              <span v-if="$route.params.lang === 'ar'">مناسبات</span>
+              <span v-else>Events</span>
+            </router-link>
+          </li>
+          <li class="nav-item mx-3">
+            <router-link
+              :to="{ name: 'Repair', params: { lang: route.params.lang } }"
+              class="nav-link"
+            >
+              <span v-if="$route.params.lang === 'ar'">اصلاح</span>
+              <span v-else>Repair</span>
+            </router-link>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav text-center align-items-center">
+          <li class="nav-item mx-3">
+            <router-link
+              :to="{ name: 'Cart', params: { lang: route.params.langs } }"
+              class="cart d-flex algin-items-center"
+            >
+              <font-awesome-icon icon="fa-solid fa-cart-plus " />
+              <span class="badge text-bg-secondary ms-2">{{
+                $store.state.cart.length
+              }}</span></router-link
+            >
+          </li>
+
+          <li class="lang nav-item dropdown d-flex align-items-center ms-2">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <font-awesome-icon icon="fa-solid fa-globe" class="me-2" />
+              <span v-if="$route.params.lang === 'ar'">AR</span>
+              <span v-else>EN</span>
             </a>
-          </span>
-        </div>
-
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarTogglerDemo02"
-          aria-controls="navbarTogglerDemo02"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div
-          class="collapse navbar-collapse text-center"
-          id="navbarTogglerDemo02"
-        >
-          <div class="centerNavbar">
-            <ul class="navbar-nav mx-auto text-center align-items-center">
-              <li class="nav-item mx-3">
-                <router-link :to="{ name: 'home' }" class="nav-link"
-                  >Home</router-link
-                >
-              </li>
-              <li class="nav-item mx-3">
-                <router-link :to="{ name: 'Products' }" class="nav-link"
-                  >Shop</router-link
-                >
-              </li>
-              <li class="nav-item mx-3">
-                <a class="nav-link" href="">Product</a>
-              </li>
-              <li class="nav-item mx-3">
-                <a class="nav-link" href="">Landscape</a>
-              </li>
-              <li class="nav-item mx-3">
-                <a class="nav-link" href="">Repair</a>
-              </li>
-              <li class="nav-item mx-3">
-                <a class="nav-link" href="">Blog</a>
-              </li>
+            <ul class="dropdown-menu">
+              <router-link
+                v-if="$route.params.lang === 'en'"
+                :to="{ name: route.name, params: { lang: 'ar' } }"
+                class="nav-link"
+                >AR</router-link
+              >
+              <router-link
+                v-else
+                :to="{ name: route.name, params: { lang: 'en' } }"
+                class="nav-link"
+                >EN</router-link
+              >
             </ul>
-          </div>
-
-          <div class="leftNavbar">
-            <ul class="navbar-nav mx-auto text-center align-items-center">
-              <li class="nav-item mx-3">
-                <a href="#" class="cart">
-                  <font-awesome-icon icon="fa-solid fa-cart-plus " />
-                </a>
-              </li>
-
-              <li class="lang nav-item dropdown d-flex align-items-center ms-2">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <font-awesome-icon icon="fa-solid fa-globe" />
-                  EN
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">AR</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </div>
+
+    <!-- <div class="col-12 mx-md-auto justify-content-between"></div> -->
   </nav>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 </script>
 
 <style lang="scss" scoped>

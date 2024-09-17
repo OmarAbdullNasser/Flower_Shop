@@ -334,6 +334,8 @@
                   type="checkbox"
                   id="Pink"
                   class="custom-control-input checkmark"
+                  value="Pink"
+                  @click="printValue"
                 />
                 <label for="Pink" class="custom-control-label"> Pink </label>
               </div>
@@ -345,6 +347,8 @@
                   type="checkbox"
                   id="Red"
                   class="custom-control-input checkmark"
+                  value="Red"
+                  @click="printValue"
                 />
                 <label for="Red" class="custom-control-label"> Red </label>
               </div>
@@ -356,6 +360,8 @@
                   type="checkbox"
                   id="White"
                   class="custom-control-input checkmark"
+                  value="White"
+                  @click="printValue"
                 />
                 <label for="White" class="custom-control-label"> White </label>
               </div>
@@ -368,7 +374,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { watchEffect } from "vue";
+import { ref } from "vue";
+import { defineEmits } from "vue";
+
+// Define emit event
+const emit = defineEmits(["value"]);
 
 const sliderValue = ref(100); // Initial value of the slider
 const min = ref(0); // Minimum value of the slider
@@ -388,7 +399,11 @@ const updateBackground = () => {
     Math.round(22529 * presentage) == 0 ? 840 : Math.round(22529 * presentage);
 };
 
-watch(sliderValue, updateBackground);
+const printValue = (e) => {
+  emit("color", e);
+};
+
+watchEffect(sliderValue, updateBackground);
 </script>
 
 <style lang="scss" scoped>
