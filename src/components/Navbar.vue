@@ -102,11 +102,8 @@
               class="cart d-flex align-items-center"
             >
               <font-awesome-icon icon="fa-solid fa-cart-plus" />
-              <span class="badge text-bg-secondary ms-2">{{
-                $store.state.cart.length
-              }}</span>
+              <span class="badge text-bg-secondary ms-2">{{ totalItems }}</span>
             </router-link>
-            
           </li>
 
           <li class="lang nav-item dropdown d-flex align-items-center ms-2">
@@ -145,8 +142,12 @@
 </template>
 
 <script setup>
+import { computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+const store = useStore();
 
+let totalItems = computed(() => store.getters.cartquantity);
 const route = useRoute();
 </script>
 
@@ -155,6 +156,8 @@ nav {
   position: relative;
   transition: all 0.2s;
   margin: 12px 0;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 15px;
   #navbarTogglerDemo02 {
     svg {
       font-size: 24px;

@@ -10,6 +10,9 @@ export default createStore({
     cart: [],
     flowers: [],
     Meta: {},
+    ids: [],
+    occasions: [],
+    sortby: "",
   },
 
   mutations: {
@@ -33,27 +36,161 @@ export default createStore({
     SET_PRODUCTS(state, products) {
       state.flowers = products;
     },
+    SET_SORT(state, sort) {
+      state.sortby = sort;
+    },
 
     SET_META(state, meta) {
       state.Meta = meta;
     },
+    SET_IDS(state, id) {
+      if (state.ids.includes(id)) {
+        // If the id exists, remove it
+        state.ids = state.ids.filter((existingId) => existingId !== id);
+      } else if (id) {
+        // If the id doesn't exist, add it
+        state.ids.push(id);
+      }
+    },
+    SET_OCCASIONS(state, id) {
+      if (state.occasions.includes(id)) {
+        // If the id exists, remove it
+        state.occasions = state.occasions.filter(
+          (existingId) => existingId !== id
+        );
+      } else if (id) {
+        // If the id doesn't exist, add it
+        state.occasions.push(id);
+      }
+    },
   },
 
   actions: {
-    async fetchProducts({ commit }) {
+    //Get all Producsts
+    async fetchProducts({ commit }, key = 1) {
       try {
-        const FlowerResponse = await fetch("http://localhost:3000/items");
-        const flowers = await FlowerResponse.json();
+        const FlowerResponse = await fetch(
+          `http://flowerest.e1s.me/api/products?page=${key}`
+        );
+        const respons = await FlowerResponse.json();
 
-        commit("SET_PRODUCTS", flowers);
-        //Pagination
-        const MetaResponse = await fetch("http://localhost:3000/meta");
-        const meta = await MetaResponse.json();
-        commit("SET_META", meta);
+        const { items, pagination } = respons.data;
+
+        commit("SET_PRODUCTS", items);
+        commit("SET_META", pagination);
       } catch (error) {
         console.error("Failed to fetch flowers:", error);
       }
     },
+
+    //Get  Category
+    async fetchFliter({ commit }, { catid, occasionid, sort }) {
+      commit("SET_IDS", catid);
+      commit("SET_OCCASIONS", occasionid);
+      commit("SET_SORT", sort);
+      console.log(this.getters.sortby);
+
+      // const categoriesQuery = this.getters.ids.length
+      //   ? `categories=[${this.getters.ids.join(",")}]`
+      //   : "";
+      // const occasionsQuery = this.getters.occasions.length
+      //   ? `occasions=[${this.getters.occasions.join(",")}]`
+      //   : "";
+
+      // const sortbyQuery = this.getters.sort ? `sort=${this.getters.sort}` : "";
+
+      // Constructing the individual query parts
+      const categoriesQuery = this.getters.ids.length
+        ? `categories=[${this.getters.ids.join(",")}]`
+        : "";
+      const occasionsQuery = this.getters.occasions.length
+        ? `occasions=[${this.getters.occasions.join(",")}]`
+        : "";
+      const sortbyQuery = this.getters.sortby
+        ? `sort=${this.getters.sortby}`
+        : "";
+
+      // Joining the queries
+      let query = "";
+
+      if (categoriesQuery) {
+        query += categoriesQuery; // No need to wrap it again
+      }
+      if (occasionsQuery) {
+        query += query ? `&${occasionsQuery}` : occasionsQuery;
+      }
+      if (sortbyQuery) {
+        query += query ? `&${sortbyQuery}` : sortbyQuery;
+      }
+
+      console.log("Final Query:", query); // Logging the final query for debugging
+
+      if (query) {
+        try {
+          const FlowerResponse = await fetch(
+            `http://flowerest.e1s.me/api/products?${query}`
+          );
+          const respons = await FlowerResponse.json();
+          console.log(respons);
+          const { items, pagination } = respons.data;
+
+          commit("SET_PRODUCTS", items);
+          commit("SET_META", pagination);
+        } catch (error) {
+          console.error("Failed to fetch flowers:", error);
+        }
+      } else {
+        try {
+          const FlowerResponse = await fetch(
+            `http://flowerest.e1s.me/api/products`
+          );
+          const respons = await FlowerResponse.json();
+
+          const { items, pagination } = respons.data;
+
+          commit("SET_PRODUCTS", items);
+          commit("SET_META", pagination);
+        } catch (error) {
+          console.error("Failed to fetch flowers:", error);
+        }
+      }
+    },
+
+    //Get  Occasion
+    // async getSingleOccasion({ commit }, id) {
+    //   commit("SET_OCCASIONS", id);
+    //   if (this.getters.occasions.length) {
+    //     try {
+    //       const FlowerResponse = await fetch(
+    //         `http://flowerest.e1s.me/api/products?occasions=[${this.getters.occasions.toString()}]`
+    //       );
+    //       const respons = await FlowerResponse.json();
+
+    //       const { items, pagination } = respons.data;
+
+    //       commit("SET_PRODUCTS", items);
+    //       commit("SET_META", pagination);
+    //     } catch (error) {
+    //       console.error("Failed to fetch flowers:", error);
+    //     }
+    //   } else {
+    //     try {
+    //       const FlowerResponse = await fetch(
+    //         `http://flowerest.e1s.me/api/products`
+    //       );
+    //       const respons = await FlowerResponse.json();
+
+    //       const { items, pagination } = respons.data;
+
+    //       commit("SET_PRODUCTS", items);
+    //       commit("SET_META", pagination);
+    //     } catch (error) {
+    //       console.error("Failed to fetch flowers:", error);
+    //     }
+    //   }
+    // },
+
+    //Search for produect
     SEARCH(state, slug) {
       const flower = state.getters.allProducts.find(
         (flower) => flower.slug == slug
@@ -79,8 +216,23 @@ export default createStore({
     Meta: (state) => {
       return state.Meta;
     },
+    cartquantity: (state) => {
+      return state.cart.reduce(
+        (acc, curretValue) => acc + curretValue.quantity,
+        0
+      );
+    },
+    ids: (state) => {
+      return state.ids;
+    },
+    occasions: (state) => {
+      return state.occasions;
+    },
+    sortby: (state) => {
+      return state.sortby;
+    },
   },
 
   modules: {},
-  plugins: [vuexLocal.plugin],
+  plugins: [],
 });

@@ -9,7 +9,7 @@
           <font-awesome-icon icon="fa-solid fa-list-ul" />
         </div>
         <div class="pages pt-3">
-          <p>Showing 1 - 3</p>
+          <p>Showing {{ meta.currentPage }} - {{ meta.totalPages }}</p>
         </div>
       </div>
 
@@ -24,12 +24,10 @@
             id="sortBy"
             @change="updateSort"
           >
-            <option value="1">Recommended</option>
-            <option value="name-asc" class="">Name (A - Z)</option>
-            <option value="name-desc">Name (Z - A)</option>
-            <option value="price-asc">Price (Low to High)</option>
-            <option value="price-desc">Price (High to Low)</option>
-            <option value="6">Latest Arrival</option>
+            <!-- <option value="1">Recommended</option> -->
+            <option value="low_price">Price (Low to High)</option>
+            <option value="high_price">Price (High to Low)</option>
+            <option value="newest">Latest Arrival</option>
           </select>
         </div>
       </div>
@@ -39,7 +37,10 @@
 
 <script setup>
 // Props for initial sort option
-import { ref} from "vue";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+
 const props = defineProps({
   initialSort: {
     type: String,
@@ -54,9 +55,20 @@ const emit = defineEmits(["sortChanged"]);
 const selectedOption = ref(props.initialSort);
 
 // Emit the selected sort option to the parent component
-const updateSort = () => {
-  emit("sortChanged", selectedOption.value);
+const updateSort = async (e) => {
+  // emit("sortChanged", selectedOption.value);
+  let sort = e.target.value;
+  await store.dispatch("fetchFliter", {
+    catid: undefined,
+    occasionid: undefined,
+    sort: sort,
+  });
 };
+
+const meta = computed(() => store.getters.Meta);
+// const handlePageChange = (page) => {
+//   meta.value.currentPage = page;
+// };
 </script>
 
 <style lang="scss" scoped>

@@ -9,7 +9,7 @@
 
       <div v-else class="row">
         <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-          <img :src="imgSrc" class="img-fluid" alt="" />
+          <img :src="SingleProduct.image" class="img-fluid" alt="" />
         </div>
         <div class="col-12 col-md-6">
           <div class="right">
@@ -17,8 +17,7 @@
               <p class="desc1 display4">SALE</p>
             </div>
             <p class="display2 name">
-              <!-- <strong>Diamond Ring</strong> -->
-              <strong>{{ SingleProduct.name }}</strong>
+              <strong>{{ SingleProduct.title }}</strong>
             </p>
             <div class="price-line d-flex">
               <p class="desc2 display5" v-if="SingleProduct.price_after_sale">
@@ -61,14 +60,19 @@
               <p class="dec display7">
                 <strong> Category:</strong>
               </p>
-              <p class="plus display4">&nbsp; {{ SingleProduct.color }}</p>
+              <p class="plus display4">&nbsp; {{ SingleProduct.category }}</p>
             </div>
 
             <div class="price-line1 d-flex">
               <p class="dec display7">
-                <strong> Tags:</strong>
+                <strong> occasions:</strong>
               </p>
-              <p class="plus display4">&nbsp; ring</p>
+              <span
+                class="plus display4"
+                v-for="occasion in SingleProduct.occasions"
+                :key="occasion"
+                >&nbsp;  , {{ occasion }} </span
+              >
             </div>
 
             <div class="price-line1 d-flex">

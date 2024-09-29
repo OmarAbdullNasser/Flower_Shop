@@ -1,5 +1,5 @@
 <template>
-  <section class="form">
+  <section class="form" :class="{ iscompontent: !props.isCompontent }">
     <div class="container">
       <div class="row">
         <div class="title col-12 text-center my-5">
@@ -43,10 +43,18 @@
                 </div>
               </div>
             </div>
+            <div class="item soical_media_icons" v-if="props.isCompontent">
+              <h5 class="card-title mbr-fonts-style display-5">Soical Media</h5>
+              <ul class="list mbr-fonts-style display-4">
+                <font-awesome-icon icon="fa-brands fa-instagram" />
+                <font-awesome-icon icon="fa-brands fa-tiktok" class="mx-3" />
+                <font-awesome-icon icon="fa-brands fa-facebook" />
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div class="col-12 col-lg-7 mb-5">
+        <div class="col-12 col-lg-7">
           <form>
             <div class="dragArea row">
               <div class="col-12">
@@ -115,13 +123,17 @@
             </div>
           </form>
         </div>
+        <div class="col-12 map my-5" v-if="props.isCompontent"></div>
       </div>
     </div>
   </section>
 </template>
 
-<script>
-export default {};
+<script setup>
+const props = defineProps({
+  isCompontent: Boolean,
+  require: true,
+});
 </script>
 
 <style lang="scss" scoped>
@@ -148,7 +160,7 @@ export default {};
 
   .items {
     .item {
-      margin-bottom: 60px;
+      margin-bottom: 40px;
       h5 {
         margin-bottom: 10px;
         color: #000;
@@ -168,6 +180,16 @@ export default {};
           line-height: 180%;
           cursor: pointer;
         }
+      }
+
+      &:nth-child(4) {
+        margin-bottom: 0;
+      }
+    }
+    .soical_media_icons {
+      svg {
+        font-size: 24px;
+        color: var(--main-color);
       }
     }
   }
@@ -210,6 +232,15 @@ export default {};
         color: var(--main-color);
       }
     }
+  }
+
+  .map {
+    background: #fff;
+    height: 200px;
+    border-radius: 15px;
+  }
+  &.iscompontent {
+    padding-bottom: 60px;
   }
 }
 </style>

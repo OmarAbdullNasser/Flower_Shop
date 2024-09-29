@@ -6,11 +6,11 @@
         params: { slug: props.flower.slug },
       }"
     >
-      <img :src="imgSrc" class="card-img-top" alt="..." />
+      <img :src="props.flower.image" class="card-img-top" alt="..." />
     </router-link>
     <div class="card-body text-center p-0">
       <h5 class="card-title m-3">
-        <a href="">{{ props.flower.name }}</a>
+        <a href="">{{ props.flower.title }}</a>
       </h5>
       <p class="card-text">
         <span class="mx-1" v-if="props.flower.price_after_sale">
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
+import { defineProps, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -39,11 +39,12 @@ const props = defineProps({
   flower: Object,
   require: true,
 });
-const imgSrc = computed(() => require(`@/assets/flowers/${props.flower.img}`));
+// const imgSrc = computed(() => require(`@/assets/flowers/${props.flower.img}`));
 // Function to add an item to the cart
 const addToCart = (item) => {
   store.commit("ADD_TO_CART", { item });
 };
+// watchEffect(() => {});
 </script>
 
 <style lang="scss" scoped>

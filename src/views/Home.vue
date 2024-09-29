@@ -5,7 +5,7 @@
     <Services />
     <Portfolio />
     <Articale />
-    <ContectForm />
+    <ContectForm :isCompontent="false" />
   </div>
 </template>
 

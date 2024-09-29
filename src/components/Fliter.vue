@@ -62,13 +62,21 @@
         <div class="sidebar-body">
           <ul>
             <li>
-              <div class="custom-control custom-checkbox">
+              <div
+                class="custom-control custom-checkbox"
+                v-for="cat in Categories"
+                :key="cat.id"
+              >
                 <input
                   type="checkbox"
                   id="isNotExtraProducts"
                   class="custom-control-input checkmark"
+                  :value="cat.title"
+                  @click="fetchFliter(cat.id, undefined)"
                 />
-                <label for="vases" class="custom-control-label"> vases </label>
+                <label for="vases" class="custom-control-label">
+                  {{ cat.title }}
+                </label>
               </div>
             </li>
           </ul>
@@ -121,22 +129,37 @@
           <ul>
             <li>
               <div class="range-slider">
-                <div class="start"></div>
-                <input
-                  type="range"
-                  :min="min"
-                  :max="max"
-                  v-model="sliderValue"
-                  @input="updateBackground"
-                  id="myinput"
-                />
+                <div class="wrapper">
+                  <div class="slider">
+                    <div
+                      class="progress"
+                      :style="{ left: leftProgress, right: rightProgress }"
+                    ></div>
+                  </div>
+                  <div class="range-input">
+                    <input
+                      type="range"
+                      class="range-min"
+                      :min="minPrice"
+                      :max="maxPrice"
+                      step="1"
+                    />
+
+                    <input
+                      type="range"
+                      class="range-max"
+                      :min="minPrice"
+                      :max="maxPrice"
+                    />
+                  </div>
+                </div>
 
                 <div
                   class="range-values d-flex justify-content-center align-items-center"
                 >
                   <h5 class="amount">
-                    <span id="minValue">840</span> -
-                    <span id="maxValue">20554</span>
+                    <span id="minValue">{{ rang1 }}</span> -
+                    <span id="maxValue">{{ rang2 }}</span>
                   </h5>
                   <h5 class="ms-3 mt-1">EGP</h5>
                 </div>
@@ -153,170 +176,20 @@
         <div class="sidebar-body">
           <ul>
             <li>
-              <div class="custom-control custom-checkbox mb-2">
+              <div
+                class="custom-control custom-checkbox mb-2"
+                v-for="occasion in Occasions"
+                :key="occasion.id"
+              >
                 <input
                   type="checkbox"
                   id="Anniversary"
+                  :value="occasion.title"
                   class="custom-control-input checkmark"
+                  @click="fetchFliter(undefined, occasion.id)"
                 />
                 <label for="Anniversary" class="custom-control-label">
-                  Anniversary
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="Birthdays"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Birthdays" class="custom-control-label">
-                  Birthdays
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="Easter"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Easter" class="custom-control-label">
-                  Easter
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="Eid_elAdha"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Eid_elAdha" class="custom-control-label">
-                  Eid el Adha
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="Eid_El-Fitr"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Eid_El-Fitr" class="custom-control-label">
-                  Eid El-Fitr
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="Father_Day"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Father_Day" class="custom-control-label">
-                  Father's Day
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="GetWell"
-                  class="custom-control-input checkmark"
-                />
-                <label for="GetWell" class="custom-control-label">
-                  Get Well
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="Mother_Day"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Mother_Day" class="custom-control-label">
-                  Mother's Day
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="New_Baby"
-                  class="custom-control-input checkmark"
-                />
-                <label for="New_Baby" class="custom-control-label">
-                  New Baby
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="Ramadan"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Ramadan" class="custom-control-label">
-                  Ramadan
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="New_Baby"
-                  class="custom-control-input checkmark"
-                />
-                <label for="New_Baby" class="custom-control-label">
-                  New Baby
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="Thank_you"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Thank_you" class="custom-control-label">
-                  Thank you
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  id="Valentine_Day"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Valentine_Day" class="custom-control-label">
-                  Valentine's Day
+                  {{ occasion.title }}
                 </label>
               </div>
             </li>
@@ -329,41 +202,15 @@
         <div class="sidebar-body">
           <ul>
             <li>
-              <div class="custom-control custom-checkbox mb-2">
-                <input
-                  type="checkbox"
-                  id="Pink"
-                  class="custom-control-input checkmark"
-                  value="Pink"
-                  @click="printValue"
-                />
-                <label for="Pink" class="custom-control-label"> Pink </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox my-2">
-                <input
-                  type="checkbox"
-                  id="Red"
-                  class="custom-control-input checkmark"
-                  value="Red"
-                  @click="printValue"
-                />
-                <label for="Red" class="custom-control-label"> Red </label>
-              </div>
-            </li>
-
-            <li>
               <div class="custom-control custom-checkbox">
                 <input
                   type="checkbox"
                   id="White"
                   class="custom-control-input checkmark"
-                  value="White"
-                  @click="printValue"
+                  value="Pink"
+                  @change="HandleClick"
                 />
-                <label for="White" class="custom-control-label"> White </label>
+                <label for="White" class="custom-control-label"> Pink </label>
               </div>
             </li>
           </ul>
@@ -374,36 +221,73 @@
 </template>
 
 <script setup>
-import { watchEffect } from "vue";
-import { ref } from "vue";
-import { defineEmits } from "vue";
-
-// Define emit event
+import { watch, onMounted, ref, defineEmits, computed, watchEffect } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
 const emit = defineEmits(["value"]);
 
-const sliderValue = ref(100); // Initial value of the slider
-const min = ref(0); // Minimum value of the slider
-const max = ref(100); // Maximum value of the slider
-let presentage = ref(0);
+//Fliter paramter
+const Categories = ref([]);
+const Occasions = ref([]);
+
+//Price paramter
 
 const updateBackground = () => {
-  const inputElement = document.getElementById("myinput");
-  const minValue = document.getElementById("minValue");
-  const maxValue = document.getElementById("maxValue");
-  const value = inputElement.value;
-
-  inputElement.style.background = `linear-gradient(to right, #82CFD0 0%, #82CFD0 ${value}%, #fff ${value}%, white 100%)`;
-  minValue.textContent = 840;
-  presentage = value / max.value;
-  maxValue.textContent =
-    Math.round(22529 * presentage) == 0 ? 840 : Math.round(22529 * presentage);
+  // const inputElement = document.getElementById("myinput");
+  // const minValue = document.getElementById("minValue");
+  // const maxValue = document.getElementById("maxValue");
+  // const value = inputElement.value;
+  // inputElement.style.background = `linear-gradient(to right, #82CFD0 0%, #82CFD0 ${value}%, #fff ${value}%, white 100%)`;
+  // minValue.textContent = 840;
+  // presentage = value / max.value;
+  // maxValue.textContent =
+  //   Math.round(22529 * presentage) == 0 ? 840 : Math.round(22529 * presentage);
 };
 
-const printValue = (e) => {
-  emit("color", e);
+const PriceChange = () => {
+  // if (rang2.value - rang1.value < priceGap) {
+  //   rang1.value = rang2.value - priceGap;
+  // } else {
+  //   rang2.value = rang1.value + priceGap;
+  // }
+  // } else {
+  //   priceInput[0].value = minVal;
+  //   priceInput[1].value = maxVal;
+  //   range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+  //   range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+  // }
 };
 
-watchEffect(sliderValue, updateBackground);
+const HandleClick = (e) => {
+  if (e.target.checked) {
+    emit("colorname", e.target.value);
+  } else {
+    emit("removecolor", e.target.value);
+  }
+};
+
+const fetchFliter = async (catid = "", occasionid = "") => {
+  await store.dispatch("fetchFliter", { catid, occasionid });
+};
+
+const getAllCategories = async () => {
+  const CategoriesResonse = await fetch(
+    `http://flowerest.e1s.me/api/categories`
+  );
+  const jsonResponse = await CategoriesResonse.json();
+  Categories.value = jsonResponse.data;
+};
+const getAllOccasions = async () => {
+  const OccasionsResonse = await fetch(`http://flowerest.e1s.me/api/occasions`);
+  const jsonResponse = await OccasionsResonse.json();
+  Occasions.value = jsonResponse.data;
+};
+onMounted(() => {
+  getAllCategories();
+  getAllOccasions();
+});
+
+watchEffect(() => CheckGape);
 </script>
 
 <style lang="scss" scoped>
@@ -451,26 +335,6 @@ watchEffect(sliderValue, updateBackground);
     vertical-align: middle;
   }
 
-  /* Style the range input */
-  .range-slider input[type="range"] {
-    position: relative;
-    -webkit-appearance: none;
-    width: 100%;
-    height: 8px;
-    border-radius: 5px;
-    outline: none;
-    opacity: 0.9;
-    transition: opacity 0.2s;
-    position: relative;
-    background: linear-gradient(
-      to right,
-      #82cfd0 0%,
-      #82cfd0 100%,
-      #fff 50%,
-      #fff 100%
-    );
-  }
-
   .start {
     -webkit-appearance: none;
     text-align: center;
@@ -508,34 +372,6 @@ watchEffect(sliderValue, updateBackground);
     }
   }
 
-  .range-slider input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    position: relative;
-    text-align: center;
-    appearance: none;
-    width: 32px;
-    height: 26px;
-    background: white;
-    border: 2px solid #9b59b6;
-    cursor: pointer;
-    border: 1px solid #d9d9d9;
-    border-radius: 3px;
-    z-index: 4 !important;
-    box-shadow: inset 0 0 1px #fff, inset 0 1px 7px #ebebeb, 0 3px 6px -3px #bbb;
-  }
-
-  .range-slider input[type="range"]::-moz-range-thumb {
-    z-index: 2;
-    width: 20px;
-    height: 20px;
-    background: white;
-    border: 2px solid #9b59b6;
-    // border-radius: 50%;
-    cursor: pointer;
-    z-index: 0;
-  }
-
-  /* Style the output text */
   .range-slider .range-values {
     font-family: Arial, sans-serif;
     font-size: 18px;
@@ -558,5 +394,63 @@ watchEffect(sliderValue, updateBackground);
     cursor: pointer;
     color: #b35fa2;
   }
+}
+
+.wrapper {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px 25px 40px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+}
+.slider {
+  height: 5px;
+  position: relative;
+  background: #ddd;
+  border-radius: 5px;
+}
+.slider .progress {
+  height: 100%;
+  left: 25%;
+  right: 25%;
+  position: absolute;
+  border-radius: 5px;
+  background: #17a2b8;
+}
+
+.range-input {
+  position: relative;
+}
+
+.range-input input {
+  position: absolute;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  top: -5px;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  background: #17a2b8;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+input[type="range"]::-moz-range-thumb {
+  height: 17px;
+  width: 17px;
+  border: none;
+  border-radius: 50%;
+  background: #17a2b8;
+  pointer-events: auto;
+  -moz-appearance: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
 </style>

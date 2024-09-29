@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row mx-0">
         <div class="col-12 col-lg-3 d-none d-lg-block">
-          <fliter @color="handleColorChange" />
+          <fliter @colorname="AddColor" @removecolor="RemoveColor" />
         </div>
         <!-- Loader -->
 
@@ -23,12 +23,15 @@
 
           <Card
             v-else
-            v-for="flower in paginatedItems"
+            v-for="flower in flowers"
             :key="flower.slug"
             :flower="flower"
             class="mx-2 col-12 col-md-6 col-lg-4 p-0"
           />
-          <div class="mt-3 d-flex align-items-center justify-content-center">
+          <div
+            class="mt-3 d-flex align-items-center justify-content-center"
+            v-if="flowers.length"
+          >
             <Pagination :meta="meta" @pageChanged="handlePageChange" />
           </div>
         </div>
@@ -45,38 +48,29 @@ import Pagination from "@/components/Pagination.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import { useStore } from "vuex";
 
-import { ref, onMounted, computed, watchEffect } from "vue";
+import { ref, onMounted, computed, watchEffect, onUpdated } from "vue";
 
 name: "Products";
 const store = useStore();
 
-let flowers = computed(() => store.getters.allProducts);
+const flowers = computed(() => store.getters.allProducts);
 const meta = computed(() => store.getters.Meta);
-const sortOption = ref("name-asc");
+const sortOption = ref("low_price");
 const loading = ref(true);
-const ColorOfFlower = ref(null);
-const SearchObj = ref({});
 
-const handleColorChange = (color) => {
-  ColorOfFlower.value = color;
-  SearchObj[color].value = color;
+const SearchObj = ref([]);
+let colorsToFilter = ref([]);
+
+const AddColor = (colorname) => {
+  SearchObj.value.push({ [`color`]: colorname });
+};
+const RemoveColor = (removecolor) => {
+  SearchObj.value = SearchObj.value.filter((ele) => {
+    return ele.color !== removecolor;
+  });
 };
 
 // Computed property for items displayed on the current page
-
-const paginatedItems = computed(() => {
-  const start = (meta.value.currentPage - 1) * meta.value.itemsPerPage;
-  const end = start + meta.value.itemsPerPage;
-
-  if (ColorOfFlower.value?.target.checked) {
-    // Return the filtered result
-    return flowers.value
-      .filter((flower) => flower.color == ColorOfFlower.value?.target.value)
-      .slice(start, end); // Apply pagination after filtering
-  } else {
-    return flowers.value.slice(start, end); // Apply pagination without filterin
-  }
-});
 
 const checkLoader = () => {
   if (flowers.value.length > 0) {
@@ -86,8 +80,9 @@ const checkLoader = () => {
 
 // Handle page change
 
-const handlePageChange = (page) => {
-  meta.value.currentPage = page;
+const handlePageChange = async (page) => {
+  meta.value.current_page = page;
+  await store.dispatch("fetchProducts", meta.value.current_page);
 };
 
 // Handle the sort change event emitted from FilterBar
@@ -96,26 +91,28 @@ const handleSortChange = (newSortOption) => {
 };
 
 // Sort the items based on the selected option
-const sortItems = () => {
-  if (sortOption.value === "name-asc") {
-    paginatedItems.value.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sortOption.value === "name-desc") {
-    paginatedItems.value.sort((a, b) => b.name.localeCompare(a.name));
-  } else if (sortOption.value === "price-asc") {
-    paginatedItems.value.sort((a, b) => a.price - b.price);
-  } else if (sortOption.value === "price-desc") {
-    paginatedItems.value.sort((a, b) => b.price - a.price);
-  }
-};
+// const sortItems = () => {
+//   if (sortOption.value === "name-asc") {
+//     paginatedItems.value.sort((a, b) => a.name.localeCompare(b.name));
+//   } else if (sortOption.value === "name-desc") {
+//     paginatedItems.value.sort((a, b) => b.name.localeCompare(a.name));
+//   } else if (sortOption.value === "price-asc") {
+//     paginatedItems.value.sort((a, b) => a.price - b.price);
+//   } else if (sortOption.value === "price-desc") {
+//     paginatedItems.value.sort((a, b) => b.price - a.price);
+//   }
+// };
 
 watchEffect(() => {
-  sortItems();
   checkLoader();
-  console.log(SearchObj.value);
 });
+// watch(currentPage, async (newPage) => {
+//   await store.dispatch("fetchProducts", newPage); // Fetch products for the new page
+// });
 
 onMounted(() => {
   store.dispatch("fetchProducts");
+  // console.log(flowers.value);
 });
 </script>
 
