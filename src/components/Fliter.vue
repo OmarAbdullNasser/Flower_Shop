@@ -131,25 +131,25 @@
               <div class="range-slider">
                 <div class="wrapper">
                   <div class="slider">
-                    <div
-                      class="progress"
-                      :style="{ left: leftProgress, right: rightProgress }"
-                    ></div>
+                    <div class="progress"></div>
                   </div>
                   <div class="range-input">
                     <input
                       type="range"
                       class="range-min"
-                      :min="minPrice"
-                      :max="maxPrice"
-                      step="1"
+                      min="0"
+                      max="10000"
+                      value="2500"
+                      @input="getRang"
                     />
 
                     <input
                       type="range"
                       class="range-max"
-                      :min="minPrice"
-                      :max="maxPrice"
+                      min="0"
+                      max="10000"
+                      value="7500"
+                      @input="getRang"
                     />
                   </div>
                 </div>
@@ -158,8 +158,8 @@
                   class="range-values d-flex justify-content-center align-items-center"
                 >
                   <h5 class="amount">
-                    <span id="minValue">{{ rang1 }}</span> -
-                    <span id="maxValue">{{ rang2 }}</span>
+                    <span id="minValue">{{ range1 }}</span> -
+                    <span id="maxValue">{{ range2 }}</span>
                   </h5>
                   <h5 class="ms-3 mt-1">EGP</h5>
                 </div>
@@ -231,33 +231,33 @@ const Categories = ref([]);
 const Occasions = ref([]);
 
 //Price paramter
+const range1 = ref(2500);
+const range2 = ref(7500);
+const getRang = () => {
+  const rangeInput = document.querySelectorAll(".range-input input");
+  const range = document.querySelector(".slider .progress");
+  let priceGap = 1000;
 
-const updateBackground = () => {
-  // const inputElement = document.getElementById("myinput");
-  // const minValue = document.getElementById("minValue");
-  // const maxValue = document.getElementById("maxValue");
-  // const value = inputElement.value;
-  // inputElement.style.background = `linear-gradient(to right, #82CFD0 0%, #82CFD0 ${value}%, #fff ${value}%, white 100%)`;
-  // minValue.textContent = 840;
-  // presentage = value / max.value;
-  // maxValue.textContent =
-  //   Math.round(22529 * presentage) == 0 ? 840 : Math.round(22529 * presentage);
+  rangeInput.forEach((input) => {
+    input.addEventListener("input", (e) => {
+      let minVal = parseInt(rangeInput[0].value),
+        maxVal = parseInt(rangeInput[1].value);
+
+      if (maxVal - minVal < priceGap && priceGap <= maxVal) {
+        if (e.target.className === "range-min") {
+          rangeInput[0].value = maxVal - priceGap;
+
+          rangeInput[1].value = minVal + priceGap;
+        }
+      } else {
+        range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+        range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+      }
+      // range1.value = minVal;
+      // range2.value = maxVal;
+    });
+  });
 };
-
-const PriceChange = () => {
-  // if (rang2.value - rang1.value < priceGap) {
-  //   rang1.value = rang2.value - priceGap;
-  // } else {
-  //   rang2.value = rang1.value + priceGap;
-  // }
-  // } else {
-  //   priceInput[0].value = minVal;
-  //   priceInput[1].value = maxVal;
-  //   range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
-  //   range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
-  // }
-};
-
 const HandleClick = (e) => {
   if (e.target.checked) {
     emit("colorname", e.target.value);
@@ -287,7 +287,7 @@ onMounted(() => {
   getAllOccasions();
 });
 
-watchEffect(() => CheckGape);
+watchEffect(() => getRang);
 </script>
 
 <style lang="scss" scoped>

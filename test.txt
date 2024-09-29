@@ -77,3 +77,33 @@ const getRang = (e) => {
     };
   });
 };
+
+
+
+
+
+const updateBackground = () => {
+  // const inputElement = document.getElementById("myinput");
+  // const minValue = document.getElementById("minValue");
+  // const maxValue = document.getElementById("maxValue");
+  // const value = inputElement.value;
+  // inputElement.style.background = `linear-gradient(to right, #82CFD0 0%, #82CFD0 ${value}%, #fff ${value}%, white 100%)`;
+  // minValue.textContent = 840;
+  // presentage = value / max.value;
+  // maxValue.textContent =
+  //   Math.round(22529 * presentage) == 0 ? 840 : Math.round(22529 * presentage);
+};
+
+const PriceChange = () => {
+  // if (rang2.value - rang1.value < priceGap) {
+  //   rang1.value = rang2.value - priceGap;
+  // } else {
+  //   rang2.value = rang1.value + priceGap;
+  // }
+  // } else {
+  //   priceInput[0].value = minVal;
+  //   priceInput[1].value = maxVal;
+  //   range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+  //   range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+  // }
+};
