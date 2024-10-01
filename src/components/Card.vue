@@ -9,7 +9,7 @@
       <img :src="props.flower.image" class="card-img-top" alt="..." />
     </router-link>
     <div class="card-body text-center p-0">
-      <h5 class="card-title m-3">
+      <h5 class="card-title m-3 title">
         <a href="">{{ props.flower.title }}</a>
       </h5>
       <p class="card-text">
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed, watchEffect } from "vue";
+import { defineProps } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -39,12 +39,11 @@ const props = defineProps({
   flower: Object,
   require: true,
 });
-// const imgSrc = computed(() => require(`@/assets/flowers/${props.flower.img}`));
+
 // Function to add an item to the cart
 const addToCart = (item) => {
   store.commit("ADD_TO_CART", { item });
 };
-// watchEffect(() => {});
 </script>
 
 <style lang="scss" scoped>
@@ -52,6 +51,7 @@ const addToCart = (item) => {
   box-sizing: border-box;
   width: 18rem;
   cursor: pointer;
+
   img {
     opacity: 85%;
     transition: all 0.2s ease-in-out;
@@ -60,12 +60,13 @@ const addToCart = (item) => {
     }
   }
   .card-title a {
-    color: #000;
+    color: #784b77;
   }
   .card-text {
     font-weight: 700;
     font-size: 1rem;
     line-height: 1.125rem;
+    color: #968896;
     small span {
       font-weight: 600;
       font-size: 0.75rem;
@@ -86,12 +87,13 @@ const addToCart = (item) => {
   .btn {
     border: 0;
     font-size: 1rem;
-    color: #fff;
+    color: #784b77;
     outline: none;
     border-radius: 0;
-    background: #843e78 0% 0% no-repeat padding-box;
+    background: #ccaccc 0% 0% no-repeat padding-box;
     &:hover {
-      background-color: #000;
+      background-color: #784b77;
+      color: #fcf5fc;
     }
   }
 }

@@ -71,7 +71,6 @@ const RemoveColor = (removecolor) => {
 };
 
 // Computed property for items displayed on the current page
-
 const checkLoader = () => {
   if (flowers.value.length > 0) {
     loading.value = false;
@@ -79,7 +78,6 @@ const checkLoader = () => {
 };
 
 // Handle page change
-
 const handlePageChange = async (page) => {
   meta.value.current_page = page;
   await store.dispatch("fetchProducts", meta.value.current_page);
@@ -90,29 +88,15 @@ const handleSortChange = (newSortOption) => {
   sortOption.value = newSortOption;
 };
 
-// Sort the items based on the selected option
-// const sortItems = () => {
-//   if (sortOption.value === "name-asc") {
-//     paginatedItems.value.sort((a, b) => a.name.localeCompare(b.name));
-//   } else if (sortOption.value === "name-desc") {
-//     paginatedItems.value.sort((a, b) => b.name.localeCompare(a.name));
-//   } else if (sortOption.value === "price-asc") {
-//     paginatedItems.value.sort((a, b) => a.price - b.price);
-//   } else if (sortOption.value === "price-desc") {
-//     paginatedItems.value.sort((a, b) => b.price - a.price);
-//   }
-// };
 
 watchEffect(() => {
   checkLoader();
 });
-// watch(currentPage, async (newPage) => {
-//   await store.dispatch("fetchProducts", newPage); // Fetch products for the new page
-// });
+
 
 onMounted(() => {
   store.dispatch("fetchProducts");
-  // console.log(flowers.value);
+  
 });
 </script>
 

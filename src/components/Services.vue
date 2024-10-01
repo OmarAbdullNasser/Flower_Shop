@@ -1,8 +1,8 @@
 <template>
   <div class="services">
     <div class="container text-center">
-      <h3 class="display5">Services</h3>
-      <h3 class="display1">
+      <h3 class="display1">Services</h3>
+      <h3 class="display5">
         We offer a variety of floral services, from unique bouquets to event
         decoration.
       </h3>
@@ -31,7 +31,7 @@ export default {
 .services {
   padding-top: 60px;
   padding-bottom: 60px;
-  background-image: url("../assets/background2.jpg");
+  background-color: #e7d4e7;
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;

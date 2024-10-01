@@ -97,6 +97,10 @@ export default {
 .swiper-wrapper {
   margin-bottom: 3rem;
   height: auto;
+  
+}
+.card{
+  background: #fcf5fc;
 }
 .card-body {
   padding: 32px 35px 40px !important;

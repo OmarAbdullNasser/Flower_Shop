@@ -27,7 +27,7 @@
 
         <div class="col-12 col-md-6 col-lg-2 small text-center my-4 my-lg-0">
           <h5 class="lin mbr-fonts-style display-5">
-            <p class="bottom text-success">About</p>
+            <p class="bottom">About</p>
           </h5>
 
           <h5 class="small-bottom lin mbr-fonts-style display-7">
@@ -46,7 +46,7 @@
           class="col-12 col-md-6 col-lg-2 top small text-center my-4 my-lg-0"
         >
           <h5 class="lin mbr-fonts-style display-5">
-            <p class="bottom text-success">Contact</p>
+            <p class="bottom">Contact</p>
           </h5>
           <h5 class="small-bottom lin mbr-fonts-style display-7">
             <a href="index.html" class="text-success it"
@@ -71,7 +71,7 @@
           class="col-12 col-md-6 col-lg-2 top small text-center mt-4 mt-lg-0"
         >
           <h5 class="lin mbr-fonts-style display-5">
-            <p class="bottom text-success">Follow Us</p>
+            <p class="bottom">Follow Us</p>
           </h5>
           <div
             class="social-block d-lg-flex flex-column justify-content-between"
@@ -102,10 +102,13 @@ export default {};
 .footer {
   padding-top: 5rem;
   padding-bottom: 5rem;
-  background-color: #e0ecdc;
+  background-color: #400a3f;
   svg {
     font-size: 24px;
-    color: var(--main-color);
+    color: #968896;
+    &:hover {
+      color: #fff;
+    }
   }
   .right {
     padding-right: 70px;
@@ -115,6 +118,9 @@ export default {};
         width: 100px;
       }
     }
+  }
+  .lin {
+    color: #fff;
   }
   .mbr-form {
     margin-right: 10px;
@@ -149,7 +155,6 @@ export default {};
     font-size: 80%;
     font-weight: 800;
     .display-5 {
-      font-family: "Quicksand", sans-serif;
       font-size: 1.375rem;
       line-height: 1.5;
     }
@@ -164,14 +169,17 @@ export default {};
       position: absolute;
       width: 0;
       height: 2px;
-      background-color: #000101;
+      background-color: #fff;
       bottom: -4px;
       left: 0;
 
       transition: all 0.2s ease-out;
     }
     a:hover {
-      color: #000101 !important;
+      color: #fff !important;
+    }
+    a {
+      color: #968896 !important;
     }
     .it:hover::after {
       width: 100%; /* Line expands to full width on hover */

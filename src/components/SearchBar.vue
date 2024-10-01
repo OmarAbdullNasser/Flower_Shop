@@ -6,11 +6,11 @@
       >
         <div class="icons">
           <font-awesome-icon icon="fa-solid fa-table-cells" class="active" />
-          <font-awesome-icon icon="fa-solid fa-list-ul" />
+          <!-- <font-awesome-icon icon="fa-solid fa-list-ul" /> -->
         </div>
-        <div class="pages pt-3">
+        <!-- <div class="pages pt-3">
           <p>Showing {{ meta.currentPage }} - {{ meta.totalPages }}</p>
-        </div>
+        </div> -->
       </div>
 
       <div class="col-12 col-lg-6 col-md-6 order-1 order-md-2">

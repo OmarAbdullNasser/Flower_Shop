@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg mb-4">
+  <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
       <div class="navbar-brand text-center">
         <span class="navbar-logo">
@@ -118,6 +118,7 @@
               <span v-if="$route.params.lang === 'ar'">AR</span>
               <span v-else>EN</span>
             </a>
+
             <ul class="dropdown-menu">
               <router-link
                 v-if="$route.params.lang === 'en'"
@@ -142,22 +143,41 @@
 </template>
 
 <script setup>
-import { computed, watchEffect } from "vue";
+import { computed, onMounted, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import Test from "./test.vue";
+
 const store = useStore();
 
 let totalItems = computed(() => store.getters.cartquantity);
 const route = useRoute();
+
+// const printDir = () => {
+//   if (route.params.lang === "en") {
+//     document.dir = "rtl";
+//   } else {
+//     document.dir = "ltr";
+//   }
+// };
+
+onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
 nav {
   position: relative;
   transition: all 0.2s;
+
   margin: 12px 0;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border-radius: 15px;
+  // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  .nav-item a span {
+    color: #968896;
+    &:hover {
+      color: #784b77;
+    }
+  }
+  border-radius: 20px;
   #navbarTogglerDemo02 {
     svg {
       font-size: 24px;

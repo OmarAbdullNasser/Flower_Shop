@@ -7,9 +7,6 @@
       <div class="row">
         <div class="col-12 col-sm-6 col-lg-4 item features-image">
           <div class="item-wrapper">
-            <div class="item-img">
-              <img src="../assets/bg3.jpg" class="img-fluid" alt="" />
-            </div>
             <div class="text">
               <div class="icon d-flex justify-content-center">
                 <font-awesome-icon icon="fa-regular fa-heart" />
@@ -74,8 +71,14 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+.item:nth-child(1) {
+  background:  #400a3f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 .Portfolio {
-  background-image: url("../assets/bg4.jpg");
   padding-top: 3rem;
   padding-bottom: 5rem;
   .overlay {
@@ -83,13 +86,13 @@ export default {};
     background-color: rgb(255, 255, 255);
   }
   .subtitle {
-    color: #1b745e;
+    color: #968896;
     text-align: center;
     font-style: italic;
     padding-bottom: 12px;
   }
   .title {
-    color: #0c5b47;
+    color: #968896;
     text-align: center;
     padding-bottom: 60px;
   }
@@ -99,23 +102,21 @@ export default {};
   }
 
   .features-image {
-    padding-top: 32px;
+    margin-bottom: 32px;
   }
   .item-wrapper {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    display: contents;
+
     .text {
-      position: absolute;
-      width: 100%;
-      padding: 0 10%;
+      // position: absolute;
+      // width: 100%;
+      // padding: 0 10%;
 
       svg {
         display: block;
         font-size: 3.5rem;
-        color: #1b745e;
+        color: #968896;
         padding-bottom: 7px;
       }
       .btns {
@@ -124,9 +125,9 @@ export default {};
         padding-right: 30px;
         margin-top: 22px;
         .Btn-primary {
-          background-color: #d8e3d5 !important;
-          border-color: #d8e3d5 !important;
-          color: #10634e !important;
+          background-color: #fcf5fc !important;
+          border-color: #fcf5fc !important;
+          color: #968896 !important;
         }
       }
     }

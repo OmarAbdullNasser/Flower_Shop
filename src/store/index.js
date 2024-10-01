@@ -13,6 +13,8 @@ export default createStore({
     ids: [],
     occasions: [],
     sortby: "",
+    priceFrom: 0,
+    priceto: 0,
   },
 
   mutations: {
@@ -43,6 +45,15 @@ export default createStore({
     SET_META(state, meta) {
       state.Meta = meta;
     },
+
+    SET_PRICE_FROM(state, pf) {
+      state.priceFrom = pf;
+    },
+
+    SET_PRICE_TO(state, pt) {
+      state.priceto = pt;
+    },
+
     SET_IDS(state, id) {
       if (state.ids.includes(id)) {
         // If the id exists, remove it
@@ -84,20 +95,15 @@ export default createStore({
     },
 
     //Get  Category
-    async fetchFliter({ commit }, { catid, occasionid, sort }) {
+    async fetchFliter(
+      { commit },
+      { catid, occasionid, sort, priceFrom, pricertTo }
+    ) {
       commit("SET_IDS", catid);
       commit("SET_OCCASIONS", occasionid);
       commit("SET_SORT", sort);
-      console.log(this.getters.sortby);
-
-      // const categoriesQuery = this.getters.ids.length
-      //   ? `categories=[${this.getters.ids.join(",")}]`
-      //   : "";
-      // const occasionsQuery = this.getters.occasions.length
-      //   ? `occasions=[${this.getters.occasions.join(",")}]`
-      //   : "";
-
-      // const sortbyQuery = this.getters.sort ? `sort=${this.getters.sort}` : "";
+      commit("SET_PRICE_FROM", priceFrom);
+      commit("SET_PRICE_TO", pricertTo);
 
       // Constructing the individual query parts
       const categoriesQuery = this.getters.ids.length
@@ -109,6 +115,10 @@ export default createStore({
       const sortbyQuery = this.getters.sortby
         ? `sort=${this.getters.sortby}`
         : "";
+      const pf = this.getters.pf ? `from_price=${this.getters.pf}` : "";
+      const pt = this.getters.pt ? `to_price=${this.getters.pt}` : "";
+
+  
 
       // Joining the queries
       let query = "";
@@ -121,6 +131,12 @@ export default createStore({
       }
       if (sortbyQuery) {
         query += query ? `&${sortbyQuery}` : sortbyQuery;
+      }
+      if (pf) {
+        query += query ? `&${pf}` : pf;
+      }
+      if (pt) {
+        query += query ? `&${pt}` : pt;
       }
 
       console.log("Final Query:", query); // Logging the final query for debugging
@@ -155,40 +171,6 @@ export default createStore({
         }
       }
     },
-
-    //Get  Occasion
-    // async getSingleOccasion({ commit }, id) {
-    //   commit("SET_OCCASIONS", id);
-    //   if (this.getters.occasions.length) {
-    //     try {
-    //       const FlowerResponse = await fetch(
-    //         `http://flowerest.e1s.me/api/products?occasions=[${this.getters.occasions.toString()}]`
-    //       );
-    //       const respons = await FlowerResponse.json();
-
-    //       const { items, pagination } = respons.data;
-
-    //       commit("SET_PRODUCTS", items);
-    //       commit("SET_META", pagination);
-    //     } catch (error) {
-    //       console.error("Failed to fetch flowers:", error);
-    //     }
-    //   } else {
-    //     try {
-    //       const FlowerResponse = await fetch(
-    //         `http://flowerest.e1s.me/api/products`
-    //       );
-    //       const respons = await FlowerResponse.json();
-
-    //       const { items, pagination } = respons.data;
-
-    //       commit("SET_PRODUCTS", items);
-    //       commit("SET_META", pagination);
-    //     } catch (error) {
-    //       console.error("Failed to fetch flowers:", error);
-    //     }
-    //   }
-    // },
 
     //Search for produect
     SEARCH(state, slug) {
@@ -230,6 +212,12 @@ export default createStore({
     },
     sortby: (state) => {
       return state.sortby;
+    },
+    pf: (state) => {
+      return state.priceFrom;
+    },
+    pt: (state) => {
+      return state.priceto;
     },
   },
 

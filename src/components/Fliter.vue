@@ -2,62 +2,6 @@
   <div class="Fliter">
     <aside class="sidebar-wrarpper">
       <div class="sidebar-item">
-        <h3 class="sidebar-title">Extra Products</h3>
-        <div class="sidebar-body">
-          <ul>
-            <li>
-              <div class="custom-control custom-checkbox mb-2">
-                <input
-                  type="checkbox"
-                  id="isNotExtraProducts"
-                  class="custom-control-input checkmark"
-                />
-                <label for="isNotExtraProducts" class="custom-control-label">
-                  Is Not Extra Products
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  id="isNotSpecialDeals_Desktop"
-                  class="custom-control-input checkmark"
-                />
-                <label
-                  for="isNotSpecialDeals_Desktop"
-                  class="custom-control-label"
-                >
-                  Is Not Special Deal
-                </label>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="sidebar-item">
-        <h3 class="sidebar-title">Extra Products</h3>
-        <div class="sidebar-body">
-          <ul>
-            <li>
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  id="isNotExtraProducts"
-                  class="custom-control-input checkmark"
-                />
-                <label for="isNotExtraProducts" class="custom-control-label">
-                  Is Not Extra Products
-                </label>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="sidebar-item">
         <h3 class="sidebar-title">Categories</h3>
         <div class="sidebar-body">
           <ul>
@@ -77,6 +21,106 @@
                 <label for="vases" class="custom-control-label">
                   {{ cat.title }}
                 </label>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-item">
+        <h3 class="sidebar-title">Occasions</h3>
+        <div class="sidebar-body">
+          <ul>
+            <li>
+              <div
+                class="custom-control custom-checkbox mb-2"
+                v-for="occasion in Occasions"
+                :key="occasion.id"
+              >
+                <input
+                  type="checkbox"
+                  id="Anniversary"
+                  :value="occasion.title"
+                  class="custom-control-input checkmark"
+                  @click="fetchFliter(undefined, occasion.id)"
+                />
+                <label for="Anniversary" class="custom-control-label">
+                  {{ occasion.title }}
+                </label>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-item">
+        <h3 class="sidebar-title">Price</h3>
+        <div class="sidebar-body">
+          <ul>
+            <li>
+              <div class="range-slider">
+                <div class="wrapper p-3 pt-5">
+                  <div class="slider">
+                    <div
+                      class="progress"
+                      :style="{ left: leftBar, right: rightBar }"
+                    ></div>
+                  </div>
+                  <div
+                    class="range-input d-flex justify-content-center align-items-center"
+                  >
+                    <input
+                      type="range"
+                      class="range-min"
+                      min="50"
+                      max="10000"
+                      value="2500"
+                      @input="getRang"
+                    />
+
+                    <input
+                      type="range"
+                      class="range-max"
+                      min="100"
+                      max="10000"
+                      value="7500"
+                      @input="getRang"
+                    />
+                    <button @click="PriceFliter">Fliter</button>
+                  </div>
+                </div>
+
+                <div
+                  class="range-values d-flex justify-content-center align-items-center"
+                >
+                  <h5 class="amount">
+                    <span id="minValue">{{ range1 }}</span> -
+                    <span id="maxValue">{{ range2 }}</span>
+                  </h5>
+                  <h5 class="ms-3 mt-1">EGP</h5>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="reset-price clear my-3">Reset</p>
+
+      <div class="sidebar-item">
+        <h3 class="sidebar-title">Color</h3>
+        <div class="sidebar-body">
+          <ul>
+            <li>
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  id="White"
+                  class="custom-control-input checkmark"
+                  value="Pink"
+                  @change="HandleClick"
+                />
+                <label for="White" class="custom-control-label"> Pink </label>
               </div>
             </li>
           </ul>
@@ -124,72 +168,18 @@
       </div>
 
       <div class="sidebar-item">
-        <h3 class="sidebar-title">Price</h3>
+        <h3 class="sidebar-title">Extra Products</h3>
         <div class="sidebar-body">
           <ul>
             <li>
-              <div class="range-slider">
-                <div class="wrapper">
-                  <div class="slider">
-                    <div class="progress"></div>
-                  </div>
-                  <div class="range-input">
-                    <input
-                      type="range"
-                      class="range-min"
-                      min="0"
-                      max="10000"
-                      value="2500"
-                      @input="getRang"
-                    />
-
-                    <input
-                      type="range"
-                      class="range-max"
-                      min="0"
-                      max="10000"
-                      value="7500"
-                      @input="getRang"
-                    />
-                  </div>
-                </div>
-
-                <div
-                  class="range-values d-flex justify-content-center align-items-center"
-                >
-                  <h5 class="amount">
-                    <span id="minValue">{{ range1 }}</span> -
-                    <span id="maxValue">{{ range2 }}</span>
-                  </h5>
-                  <h5 class="ms-3 mt-1">EGP</h5>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <p class="reset-price clear my-3">Reset</p>
-
-      <div class="sidebar-item">
-        <h3 class="sidebar-title">Occasions</h3>
-        <div class="sidebar-body">
-          <ul>
-            <li>
-              <div
-                class="custom-control custom-checkbox mb-2"
-                v-for="occasion in Occasions"
-                :key="occasion.id"
-              >
+              <div class="custom-control custom-checkbox">
                 <input
                   type="checkbox"
-                  id="Anniversary"
-                  :value="occasion.title"
+                  id="isNotExtraProducts"
                   class="custom-control-input checkmark"
-                  @click="fetchFliter(undefined, occasion.id)"
                 />
-                <label for="Anniversary" class="custom-control-label">
-                  {{ occasion.title }}
+                <label for="isNotExtraProducts" class="custom-control-label">
+                  Is Not Extra Products
                 </label>
               </div>
             </li>
@@ -198,19 +188,35 @@
       </div>
 
       <div class="sidebar-item">
-        <h3 class="sidebar-title">Color</h3>
+        <h3 class="sidebar-title">Extra Products</h3>
         <div class="sidebar-body">
           <ul>
+            <li>
+              <div class="custom-control custom-checkbox mb-2">
+                <input
+                  type="checkbox"
+                  id="isNotExtraProducts"
+                  class="custom-control-input checkmark"
+                />
+                <label for="isNotExtraProducts" class="custom-control-label">
+                  Is Not Extra Products
+                </label>
+              </div>
+            </li>
+
             <li>
               <div class="custom-control custom-checkbox">
                 <input
                   type="checkbox"
-                  id="White"
+                  id="isNotSpecialDeals_Desktop"
                   class="custom-control-input checkmark"
-                  value="Pink"
-                  @change="HandleClick"
                 />
-                <label for="White" class="custom-control-label"> Pink </label>
+                <label
+                  for="isNotSpecialDeals_Desktop"
+                  class="custom-control-label"
+                >
+                  Is Not Special Deal
+                </label>
               </div>
             </li>
           </ul>
@@ -223,6 +229,8 @@
 <script setup>
 import { watch, onMounted, ref, defineEmits, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
+import debounce from "lodash.debounce";
+debounce;
 const store = useStore();
 const emit = defineEmits(["value"]);
 
@@ -233,6 +241,10 @@ const Occasions = ref([]);
 //Price paramter
 const range1 = ref(2500);
 const range2 = ref(7500);
+
+const leftBar = computed(() => `${(range1.value / 10000) * 100}%`);
+const rightBar = computed(() => `${100 - (range2.value / 10000) * 100}%`);
+
 const getRang = () => {
   const rangeInput = document.querySelectorAll(".range-input input");
   const range = document.querySelector(".slider .progress");
@@ -243,21 +255,28 @@ const getRang = () => {
       let minVal = parseInt(rangeInput[0].value),
         maxVal = parseInt(rangeInput[1].value);
 
-      if (maxVal - minVal < priceGap && priceGap <= maxVal) {
+      if ((maxVal - minVal < priceGap) & (maxVal <= rangeInput[1].max)) {
         if (e.target.className === "range-min") {
           rangeInput[0].value = maxVal - priceGap;
-
+        } else {
           rangeInput[1].value = minVal + priceGap;
         }
       } else {
         range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
         range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
       }
-      // range1.value = minVal;
-      // range2.value = maxVal;
+      range1.value = minVal;
+      range2.value = maxVal;
     });
   });
 };
+
+const PriceFliter = () => {
+  console.log("start sending api req", range1.value);
+  fetchFliterPrice(range1.value, range2.value);
+  console.log("finish qpi reques", range2.value);
+};
+
 const HandleClick = (e) => {
   if (e.target.checked) {
     emit("colorname", e.target.value);
@@ -268,6 +287,15 @@ const HandleClick = (e) => {
 
 const fetchFliter = async (catid = "", occasionid = "") => {
   await store.dispatch("fetchFliter", { catid, occasionid });
+};
+const fetchFliterPrice = async (pf = 0, pt = 0) => {
+  await store.dispatch("fetchFliter", {
+    catid: undefined,
+    occasionid: undefined,
+    sort: undefined,
+    priceFrom: pf,
+    pricertTo: pt,
+  });
 };
 
 const getAllCategories = async () => {
@@ -287,7 +315,7 @@ onMounted(() => {
   getAllOccasions();
 });
 
-watchEffect(() => getRang);
+watchEffect(() => {});
 </script>
 
 <style lang="scss" scoped>
@@ -399,7 +427,7 @@ watchEffect(() => getRang);
 .wrapper {
   background: #fff;
   border-radius: 10px;
-  padding: 20px 25px 40px;
+
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
 }
 .slider {
@@ -414,11 +442,19 @@ watchEffect(() => getRang);
   right: 25%;
   position: absolute;
   border-radius: 5px;
-  background: #17a2b8;
+  background: #843e78;
 }
 
 .range-input {
   position: relative;
+}
+.range-input button {
+  background: #843e78 0% 0% no-repeat padding-box;
+  color: #fff;
+  padding: 5px 40px;
+  margin: 15px;
+  border: none;
+  border-radius: 15px;
 }
 
 .range-input input {
@@ -438,7 +474,7 @@ input[type="range"]::-webkit-slider-thumb {
   height: 17px;
   width: 17px;
   border-radius: 50%;
-  background: #17a2b8;
+  background: #843e78;
   pointer-events: auto;
   -webkit-appearance: none;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
@@ -448,7 +484,7 @@ input[type="range"]::-moz-range-thumb {
   width: 17px;
   border: none;
   border-radius: 50%;
-  background: #17a2b8;
+  background: #843e78;
   pointer-events: auto;
   -moz-appearance: none;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
