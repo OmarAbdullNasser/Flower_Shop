@@ -8,9 +8,7 @@
             :slides-per-view="1"
             :space-between="50"
             navigation
-            loop="true"
-            @swiper="onSwiper"
-            @slideChange="onSlideChange"
+            :loop="true"
           >
             <swiper-slide>
               <img src="../assets/Swiper/1.jpg" alt="" class="img-fluid" />
@@ -58,15 +56,7 @@ export default {
     SwiperSlide,
   },
   setup() {
-    const onSwiper = (swiper) => {
-      console.log(swiper);
-    };
-    const onSlideChange = () => {
-      console.log("slide change");
-    };
     return {
-      onSwiper,
-      onSlideChange,
       modules: [Navigation, Pagination, A11y, Autoplay],
     };
   },
@@ -78,6 +68,9 @@ export default {
   .swiper {
     position: relative;
   }
+  // .swiper-slide-active[dir="rtl"] {
+  //   margin-right: 0px;
+  // }
   .swiper-slide img {
     max-height: 800px;
     object-fit: cover;
@@ -110,6 +103,12 @@ export default {
   .swiper-button-next:hover::after {
     left: 30px;
   }
+  .swiper-button-prev[dir="rtl"]:hover::after {
+    left: 30px;
+  }
+  .swiper-button-next[dir="rtl"]:hover::after {
+    right: 30px;
+  }
   .carousel-caption {
     z-index: 2 !important;
     left: 1rem !important;
@@ -118,6 +117,10 @@ export default {
     max-width: calc(68%);
     background: #33363b;
     padding: 8px;
+  }
+  .carousel-caption[dir="rtl"] {
+    left: 0;
+    right: 1 !important;
   }
   .carousel-caption p {
     margin-bottom: 0 !important;

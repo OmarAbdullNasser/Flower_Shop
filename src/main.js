@@ -3,8 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-//Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.rtl.min.css";
 import "bootstrap";
 
 //Font awsome
@@ -17,17 +17,11 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 
 library.add(far, fab, fas);
 
-
-
-
-//smaooth scroll
-import VueSmoothScroll from "vue3-smooth-scroll";
-
 //global css file
 import "./global.css";
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
-  .use(VueSmoothScroll)
+
   .use(store)
   .use(router)
   .mount("#app");

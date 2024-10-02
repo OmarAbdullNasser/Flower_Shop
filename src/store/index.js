@@ -1,9 +1,7 @@
 import { createStore } from "vuex";
 import VuexPersistence from "vuex-persist";
 
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
-});
+const url = "http://flowerest.e1s.me/api";
 
 export default createStore({
   state: {
@@ -15,6 +13,7 @@ export default createStore({
     sortby: "",
     priceFrom: 0,
     priceto: 0,
+    menu: [],
   },
 
   mutations: {
@@ -74,6 +73,10 @@ export default createStore({
         state.occasions.push(id);
       }
     },
+
+    SET_MENU(state, menu) {
+      state.menu = menu;
+    },
   },
 
   actions: {
@@ -117,8 +120,6 @@ export default createStore({
         : "";
       const pf = this.getters.pf ? `from_price=${this.getters.pf}` : "";
       const pt = this.getters.pt ? `to_price=${this.getters.pt}` : "";
-
-  
 
       // Joining the queries
       let query = "";
@@ -179,6 +180,24 @@ export default createStore({
       );
       return flower;
     },
+
+    //Fetch Navbar data
+    async fetchNavbarData({ commit }, lang = "en") {
+      try {
+        const FlowerResponse = await fetch(`${url}/menu`, {
+          headers: {
+            "Accept-Language": `${lang}`,
+          },
+        });
+        const respons = await FlowerResponse.json();
+
+        const { main, footer, cart_num, site_setting } = respons.data;
+
+        commit("SET_MENU", main);
+      } catch (error) {
+        console.error("Failed to fetch flowers:", error);
+      }
+    },
   },
 
   getters: {
@@ -218,6 +237,9 @@ export default createStore({
     },
     pt: (state) => {
       return state.priceto;
+    },
+    menu: (state) => {
+      return state.menu;
     },
   },
 

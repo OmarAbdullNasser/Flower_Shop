@@ -2,10 +2,10 @@
   <Hero
     :imageUrl="'HeroImg.jpg'"
     :bgcolor="'rgb(255, 255, 255)'"
-    op="0.3"
+    :op="0.3"
     color="#000"
-    pt="5"
-    pb="8"
+    :pt="5"
+    :pb="8"
     height="133px"
   >
     <h1><strong>An Environmentally Friendly</strong></h1>

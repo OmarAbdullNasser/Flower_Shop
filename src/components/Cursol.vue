@@ -19,9 +19,7 @@
             }"
             :space-between="20"
             :pagination="{ clickable: true }"
-            loop="true"
-            @swiper="onSwiper"
-            @slideChange="onSlideChange"
+            :loop="true"
             class="row"
           >
             <swiper-slide>
@@ -97,9 +95,8 @@ export default {
 .swiper-wrapper {
   margin-bottom: 3rem;
   height: auto;
-  
 }
-.card{
+.card {
   background: #fcf5fc;
 }
 .card-body {

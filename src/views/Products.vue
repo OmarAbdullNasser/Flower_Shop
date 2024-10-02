@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row mx-0">
         <div class="col-12 col-lg-3 d-none d-lg-block">
-          <fliter @colorname="AddColor" @removecolor="RemoveColor" />
+          <fliter />
         </div>
         <!-- Loader -->
 
@@ -50,7 +50,7 @@ import { useStore } from "vuex";
 
 import { ref, onMounted, computed, watchEffect, onUpdated } from "vue";
 
-name: "Products";
+name: "shop";
 const store = useStore();
 
 const flowers = computed(() => store.getters.allProducts);
@@ -88,15 +88,12 @@ const handleSortChange = (newSortOption) => {
   sortOption.value = newSortOption;
 };
 
-
 watchEffect(() => {
   checkLoader();
 });
 
-
 onMounted(() => {
   store.dispatch("fetchProducts");
-  
 });
 </script>
 

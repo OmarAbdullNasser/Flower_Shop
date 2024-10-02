@@ -85,6 +85,9 @@ export default {};
           margin-right: 15px;
           margin-bottom: 8px;
         }
+        svg[dir="rtl"] {
+          margin-left: 15px;
+        }
       }
     }
   }

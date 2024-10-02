@@ -30,64 +30,14 @@
         id="navbarTogglerDemo02"
       >
         <ul class="navbar-nav mx-auto text-center align-items-center">
-          <li class="nav-item mx-3">
+          <li class="nav-item mx-3" v-for="nav in NavbarData" :key="nav.id">
             <router-link
               :to="{
-                name: 'home',
-                params: { lang: route.params.lang || 'en' },
+                path: `/${route.params.lang}${nav.url}`,
               }"
               class="nav-link"
             >
-              <span v-if="$route.params.lang === 'ar'">الرئيسية</span>
-              <span v-else>Home</span>
-            </router-link>
-          </li>
-          <li class="nav-item mx-3">
-            <router-link
-              :to="{
-                name: 'Products',
-                params: { lang: route.params.lang || 'en' },
-              }"
-              class="nav-link"
-            >
-              <span v-if="$route.params.lang === 'ar'">المتجر</span>
-              <span v-else>Shop</span>
-            </router-link>
-          </li>
-          <li class="nav-item mx-3">
-            <router-link
-              :to="{
-                name: 'Landscape',
-                params: { lang: route.params.lang || 'en' },
-              }"
-              class="nav-link"
-            >
-              <span v-if="$route.params.lang === 'ar'">الاراضي الواسعة</span>
-              <span v-else>Landscape</span>
-            </router-link>
-          </li>
-          <li class="nav-item mx-3">
-            <router-link
-              :to="{
-                name: 'Events',
-                params: { lang: route.params.lang || 'en' },
-              }"
-              class="nav-link"
-            >
-              <span v-if="$route.params.lang === 'ar'">مناسبات</span>
-              <span v-else>Events</span>
-            </router-link>
-          </li>
-          <li class="nav-item mx-3">
-            <router-link
-              :to="{
-                name: 'Repair',
-                params: { lang: route.params.lang || 'en' },
-              }"
-              class="nav-link"
-            >
-              <span v-if="$route.params.lang === 'ar'">اصلاح</span>
-              <span v-else>Repair</span>
+              <span>{{ nav.title }}</span>
             </router-link>
           </li>
         </ul>
@@ -97,7 +47,6 @@
             <router-link
               :to="{
                 name: 'Cart',
-                params: { lang: route.params.lang || 'en' },
               }"
               class="cart d-flex align-items-center"
             >
@@ -115,21 +64,28 @@
               aria-expanded="false"
             >
               <font-awesome-icon icon="fa-solid fa-globe" class="me-2" />
-              <span v-if="$route.params.lang === 'ar'">AR</span>
+              <span v-if="route.params.lang === 'ar'">AR</span>
               <span v-else>EN</span>
             </a>
 
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu text-center">
               <router-link
-                v-if="$route.params.lang === 'en'"
-                :to="{ name: route.name, params: { lang: 'ar' } }"
+                v-if="route.params.lang === 'en'"
+                :to="{
+                  name: route.name,
+                }"
+                @click="toggleDirection"
                 class="nav-link"
                 >AR</router-link
               >
               <router-link
                 v-else
-                :to="{ name: route.name, params: { lang: 'en' } }"
+                :to="{
+                  name: route.name,
+                
+                }"
                 class="nav-link"
+                @click="toggleDirection"
                 >EN</router-link
               >
             </ul>
@@ -143,25 +99,35 @@
 </template>
 
 <script setup>
-import { computed, onMounted, watchEffect } from "vue";
+import { computed, onMounted, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import Test from "./test.vue";
+import { useRouter } from "vue-router";
 
 const store = useStore();
+const route = useRoute();
+const router = useRouter();
 
 let totalItems = computed(() => store.getters.cartquantity);
-const route = useRoute();
+const NavbarData = computed(() => store.getters.menu);
 
-// const printDir = () => {
-//   if (route.params.lang === "en") {
-//     document.dir = "rtl";
-//   } else {
-//     document.dir = "ltr";
-//   }
-// };
+const toggleDirection = () => {
+  if (document.dir === "rtl") {
+    document.dir = "ltr";
+    router.push({ name: route.name, params: { lang: "en" } });
+    fetchNavbarData("en");
+  } else {
+    document.dir = "rtl";
+    router.push({ name: route.name, params: { lang: "ar" } });
+    fetchNavbarData("ar");
+  }
+};
 
-onMounted(() => {});
+const fetchNavbarData = async (lang) => {
+  await store.dispatch("fetchNavbarData", lang);
+};
+
+onMounted(() => fetchNavbarData());
 </script>
 
 <style lang="scss" scoped>
@@ -188,6 +154,12 @@ nav {
     }
     .leftNavbar {
       margin-left: 48px;
+    }
+    .centerNavbar[dir="rtl"] {
+      margin-right: 48px;
+    }
+    .leftNavbar[dir="rtl"] {
+      margin-right: 48px;
     }
   }
 

@@ -101,6 +101,9 @@ const meta = computed(() => store.getters.Meta);
     label {
       padding-right: 0.9375rem;
     }
+    label span:lang(ar) {
+      background: red;
+    }
     select {
       font-family: Sansation, sans-serif;
       font-weight: 400;
@@ -109,9 +112,9 @@ const meta = computed(() => store.getters.Meta);
       border: 1px solid #eed8ea;
       border-radius: 3px;
       padding: 10px;
-      text-align: left;
+      // text-align: left;
       width: 75%;
-      text-align: left;
+
       &:focus {
         border: 2px solid #ad559c;
         background-color: #fff;

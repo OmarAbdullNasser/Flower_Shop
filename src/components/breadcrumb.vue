@@ -31,11 +31,12 @@ export default {};
   .breadcrumb-wrap {
     padding-top: 20px;
     padding-bottom: 20px;
-    text-align: left;
+
     .breadcrumb-title {
       font-size: 26px;
       font-weight: 500;
     }
+
     .breadcrumb-item {
       font-family: Montserrat-Arabic, sans-serif;
       font-weight: 400;
@@ -52,6 +53,9 @@ export default {};
       }
       &.active {
         color: #843e78;
+      }
+      &::before {
+        float: none;
       }
     }
   }

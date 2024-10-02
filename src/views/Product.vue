@@ -71,8 +71,8 @@
                 class="plus display4"
                 v-for="occasion in SingleProduct.occasions"
                 :key="occasion"
-                >&nbsp;  , {{ occasion }} </span
-              >
+                >&nbsp; , {{ occasion }}
+              </span>
             </div>
 
             <div class="price-line1 d-flex">
@@ -98,25 +98,7 @@ const store = useStore();
 const SingleProduct = ref(null);
 const loading = ref(true);
 const quantity = ref(1);
-const imgSrc = computed(() =>
-  require(`@/assets/flowers/${SingleProduct.value.img}`)
-);
 
-//OPTIMIZE get elemnt by new requst
-let slug = route.params.slug;
-
-// const getSingleProductByLink = async () => {
-//   try {
-//     const FlowerResponse = await fetch(
-//       `http://localhost:3000/items?slug=${slug}`
-//     );
-//     SingleProduct.value = await FlowerResponse.json();
-//   } catch (error) {
-//     console.error("Failed to fetch flower:", error);
-//   } finally {
-//     loading.value = false;
-//   }
-// };
 const getSingleProductByFliter = async () => {
   try {
     const result = await store.dispatch("SEARCH", slug);

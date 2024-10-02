@@ -7,20 +7,25 @@ import Repair from "@/views/Repair.vue";
 import Product from "@/views/Product.vue";
 import Cart from "@/views/Cart.vue";
 import ContentUs from "@/views/ContentUs.vue";
+import NotFound from "@/views/NotFound.vue";
+import store from "@/store";
+import { computed, watchEffect } from "vue";
+
+// const lang = computed(() => store.getters.lang);
 
 const routes = [
   {
     path: "/",
-    redirect: "/en/home",
+    redirect: "/en",
   },
   {
-    path: "/:lang(en|ar)/home",
+    path: "/:lang(en|ar)",
     name: "home",
     component: Home,
   },
   {
     path: "/:lang(en|ar)/shop",
-    name: "Products",
+    name: "shop",
     component: Products,
   },
   {
@@ -39,19 +44,24 @@ const routes = [
     component: Repair,
   },
   {
-    path: "/:lang(en|ar)/Product/:slug",
+    path: "/Product/:slug",
     name: "Product",
     component: Product,
   },
   {
-    path: "/:lang(en|ar)/Cart",
+    path: "/Cart",
     name: "Cart",
     component: Cart,
   },
   {
-    path: "/:lang(en|ar)/Conenctus",
+    path: "/Conenctus",
     name: "Conenctus",
     component: ContentUs,
+  },
+  {
+    path: "/:pathMatch(.*)*", // Catch-all route for not found pages
+    name: "NotFound",
+    component: NotFound,
   },
 ];
 
@@ -60,15 +70,24 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  const { lang } = to.params;
+const fetchNavbarData = async (lang) => {
+  await store.dispatch("fetchNavbarData", lang);
+};
 
-  // If no language is specified or it's invalid, default to 'en'
+router.beforeEach((to, from, next) => {
+  // Check the path to see if it contains '/en' or '/ar'
+  const lang = to.params.lang;
+  if (to.path.startsWith("/en")) {
+    document.dir = "ltr";
+    fetchNavbarData("en");
+  } else if (to.path.startsWith("/ar")) {
+    document.dir = "rtl";
+    fetchNavbarData("ar");
+  }
   if (!lang || (lang !== "en" && lang !== "ar")) {
     next({ path: `/en${to.path.replace(/\/(en|ar)/, "")}` });
   } else {
     next(); // Continue with the route
   }
 });
-
 export default router;

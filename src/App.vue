@@ -4,15 +4,10 @@
   <Footer />
 </template>
 
-<script>
+<script setup>
 import Navbar from "./components/Navbar.vue";
 import Footer from "./components/Footer.vue";
-export default {
-  components: {
-    Navbar,
-    Footer,
-  },
-};
+import { onMounted } from "vue";
 </script>
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap");
