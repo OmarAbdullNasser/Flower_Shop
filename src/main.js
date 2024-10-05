@@ -21,7 +21,6 @@ library.add(far, fab, fas);
 import "./global.css";
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
-
   .use(store)
   .use(router)
   .mount("#app");

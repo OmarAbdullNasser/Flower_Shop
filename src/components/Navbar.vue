@@ -46,7 +46,8 @@
           <li class="nav-item mx-3">
             <router-link
               :to="{
-                name: 'Cart',
+                path: `/${route.params.lang}/Cart`,
+                
               }"
               class="cart d-flex align-items-center"
             >
@@ -82,7 +83,6 @@
                 v-else
                 :to="{
                   name: route.name,
-                
                 }"
                 class="nav-link"
                 @click="toggleDirection"

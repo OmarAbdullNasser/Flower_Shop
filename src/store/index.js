@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
-import VuexPersistence from "vuex-persist";
+
+
 
 const url = "http://flowerest.e1s.me/api";
 

@@ -9,9 +9,7 @@ import Cart from "@/views/Cart.vue";
 import ContentUs from "@/views/ContentUs.vue";
 import NotFound from "@/views/NotFound.vue";
 import store from "@/store";
-import { computed, watchEffect } from "vue";
-
-// const lang = computed(() => store.getters.lang);
+import Chechout from "@/views/Chechout.vue";
 
 const routes = [
   {
@@ -49,19 +47,32 @@ const routes = [
     component: Product,
   },
   {
-    path: "/Cart",
+    path: "/:lang(en|ar)/Cart",
     name: "Cart",
     component: Cart,
   },
   {
-    path: "/Conenctus",
+    path: "/:lang(en|ar)/contact-us",
     name: "Conenctus",
     component: ContentUs,
   },
   {
-    path: "/:pathMatch(.*)*", // Catch-all route for not found pages
+    path: "/:lang(en|ar)/checkout",
+    name: "checkout",
+    component: Chechout,
+  },
+  {
+    path: "/:lang(en|ar)?/:pathMatch(.*)*", // Catch-all route for not found pages
     name: "NotFound",
     component: NotFound,
+    beforeEnter: (to, from, next) => {
+      // If lang is not specified, redirect to default ('en')
+      if (!to.params.lang) {
+        next({ path: `/en/${to.params.pathMatch || ""}`, replace: true });
+      } else {
+        next(); // Continue to the NotFound component
+      }
+    },
   },
 ];
 
@@ -76,7 +87,7 @@ const fetchNavbarData = async (lang) => {
 
 router.beforeEach((to, from, next) => {
   // Check the path to see if it contains '/en' or '/ar'
-  const lang = to.params.lang;
+
   if (to.path.startsWith("/en")) {
     document.dir = "ltr";
     fetchNavbarData("en");
@@ -84,10 +95,8 @@ router.beforeEach((to, from, next) => {
     document.dir = "rtl";
     fetchNavbarData("ar");
   }
-  if (!lang || (lang !== "en" && lang !== "ar")) {
-    next({ path: `/en${to.path.replace(/\/(en|ar)/, "")}` });
-  } else {
-    next(); // Continue with the route
-  }
+
+  next();
 });
+
 export default router;
