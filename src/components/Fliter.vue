@@ -412,7 +412,7 @@ watchEffect(() => {});
     max-width: 60%;
     pointer-events: none;
     text-align: center;
-    padding: 9px 20px;
+    padding: 9px 12px;
     border-radius: 5px;
   }
   .reset-price {

@@ -22,38 +22,11 @@
             :loop="true"
             class="row"
           >
-            <swiper-slide>
+            <swiper-slide v-for="img in items" :key="img.id">
               <div class="card">
-                <img src="../assets/swiper2/1.jpg" alt="" class="img-fluid" />
+                <img :src="img.image" alt="" class="img-fluid" />
                 <div class="card-body">
-                  <h5 class="card-title">Repair</h5>
-                </div>
-              </div>
-            </swiper-slide>
-
-            <swiper-slide>
-              <div class="card">
-                <img src="../assets/swiper2/2.jpg" alt="" class="img-fluid" />
-                <div class="card-body">
-                  <h5 class="card-title">Landscape</h5>
-                </div>
-              </div>
-            </swiper-slide>
-
-            <swiper-slide>
-              <div class="card">
-                <img src="../assets/swiper2/3.jpg" alt="" class="img-fluid" />
-                <div class="card-body">
-                  <h5 class="card-title">Events</h5>
-                </div>
-              </div>
-            </swiper-slide>
-
-            <swiper-slide>
-              <div class="card">
-                <img src="../assets/swiper2/1.jpg" alt="" class="img-fluid" />
-                <div class="card-body">
-                  <h5 class="card-title">Bouquet Design</h5>
+                  <h5 class="card-title">{{ img.title }}</h5>
                 </div>
               </div>
             </swiper-slide>
@@ -64,7 +37,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 // import Swiper core and required modules
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 
@@ -77,18 +50,11 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
+import { inject } from "vue";
 
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  setup() {
-    return {
-      modules: [Navigation, Pagination, A11y, Autoplay],
-    };
-  },
-};
+const items = inject("CursolData");
+
+const modules = [Navigation, Pagination, A11y, Autoplay];
 </script>
 
 <style scoped>

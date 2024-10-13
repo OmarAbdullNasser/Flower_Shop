@@ -61,15 +61,6 @@ const loading = ref(true);
 const SearchObj = ref([]);
 let colorsToFilter = ref([]);
 
-const AddColor = (colorname) => {
-  SearchObj.value.push({ [`color`]: colorname });
-};
-const RemoveColor = (removecolor) => {
-  SearchObj.value = SearchObj.value.filter((ele) => {
-    return ele.color !== removecolor;
-  });
-};
-
 // Computed property for items displayed on the current page
 const checkLoader = () => {
   if (flowers.value.length > 0) {

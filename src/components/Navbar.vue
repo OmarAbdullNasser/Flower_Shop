@@ -30,7 +30,7 @@
         id="navbarTogglerDemo02"
       >
         <ul class="navbar-nav mx-auto text-center align-items-center">
-          <li class="nav-item mx-3" v-for="nav in NavbarData" :key="nav.id">
+          <li class="nav-item mx-xl-3" v-for="nav in NavbarData" :key="nav.id">
             <router-link
               :to="{
                 path: `/${route.params.lang}${nav.url}`,
@@ -47,7 +47,6 @@
             <router-link
               :to="{
                 path: `/${route.params.lang}/Cart`,
-                
               }"
               class="cart d-flex align-items-center"
             >

@@ -1,10 +1,9 @@
 <template>
   <div class="services">
     <div class="container text-center">
-      <h3 class="display1">Services</h3>
+      <h3 class="display1">{{ info.title }}</h3>
       <h3 class="display5">
-        We offer a variety of floral services, from unique bouquets to event
-        decoration.
+        {{ info.sub_title }}
       </h3>
       <Cursol />
       <OurMission />
@@ -13,18 +12,25 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import Cursol from "./Cursol.vue";
 import OurMission from "@/components/ourMission.vue";
 import Feature from "./feature.vue";
+import { provide, watchEffect } from "vue";
 
-export default {
-  components: {
-    Cursol,
-    OurMission,
-    Feature,
+const props = defineProps({
+  initialData: {
+    type: Object,
+    required: true,
   },
-};
+});
+const { service, mission, tabs } = props.initialData;
+
+const { info, items } = service;
+
+provide("CursolData", items);
+provide("MissionData", mission);
+provide("FeatureData", tabs);
 </script>
 
 <style lang="scss" scoped>

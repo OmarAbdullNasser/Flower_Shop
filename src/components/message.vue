@@ -22,9 +22,9 @@
           </div>
         </div>
         <div class="left-side col-12 col-lg text-center mt-3">
-          <img src="../assets/fl1.jpg" alt="" class="img-fluid first" />
+          <img src="../assets/fl2.jpg" alt="" class="img-fluid first" />
           <img
-            src="../assets/fl2.jpg"
+            src="../assets/fl1.jpg"
             alt=""
             class="img-fluid secand d-none d-lg-block"
           />
@@ -34,8 +34,9 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+
+console.log();
 </script>
 
 <style lang="scss" scoped>

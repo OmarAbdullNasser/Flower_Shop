@@ -3,10 +3,9 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="left-side col-12 col-md-6">
-          <h5 class="display1 title">Our Mission</h5>
+          <h5 class="display1 title">{{ MissionData.title }}</h5>
           <p class="display4 dec">
-            Lorem ipsum dolor sit amet, pri omnium verterem id, sit labore
-            dicunt an, ea civibus.
+            {{ MissionData.description }}
           </p>
           <div class="btnn">
             <a href="" class="btn btn-primary display4">Read more</a>
@@ -14,15 +13,17 @@
         </div>
 
         <div class="right-side col-12 col-md-6 item-wrapper">
-          <img src="../assets/b4.jpg" alt="" />
+          <img :src="MissionData.image" alt="" />
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { inject } from "vue";
+
+const MissionData = inject("MissionData");
 </script>
 
 <style lang="scss" scoped>

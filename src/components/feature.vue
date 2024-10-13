@@ -2,58 +2,16 @@
   <div class="feature mt-5">
     <div class="container">
       <div class="row text-start">
-        <div class="col-12 col-md-6 col-lg-3">
+        <div class="col-12 col-md-6 col-lg-3" v-for="tab in tabs" :key="tab.id">
           <div class="card-wrapper">
             <div class="card-box">
               <div class="iconfont-wrapper">
                 <font-awesome-icon icon="fa-regular fa-face-smile" />
               </div>
-              <h5 class="display2">Happiness</h5>
+              <h5 class="display2">{{ tab.title }}</h5>
             </div>
             <h5 class="display4">
-              Vis ne postulant principes accommodare ius modo
-            </h5>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-3">
-          <div class="card-wrapper">
-            <div class="card-box">
-              <div class="iconfont-wrapper">
-                <font-awesome-icon icon="fa-regular fa-heart" />
-              </div>
-              <h5 class="display2">Organic</h5>
-            </div>
-            <h5 class="display4">
-              Vis ne postulant principes accommodare ius modo
-            </h5>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-3">
-          <div class="card-wrapper">
-            <div class="card-box">
-              <div class="iconfont-wrapper">
-                <font-awesome-icon icon="fa-regular fa-sun" />
-              </div>
-              <h5 class="display2">Freshness</h5>
-            </div>
-            <h5 class="display4">
-              Vis ne postulant principes accommodare ius modo
-            </h5>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-3">
-          <div class="card-wrapper">
-            <div class="card-box">
-              <div class="iconfont-wrapper">
-                <font-awesome-icon icon="fa-solid fa-truck" />
-              </div>
-              <h5 class="display2">Delivery</h5>
-            </div>
-            <h5 class="display4">
-              Vis ne postulant principes accommodare ius modo
+              {{ tab.description }}
             </h5>
           </div>
         </div>
@@ -62,8 +20,10 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { inject } from "vue";
+
+const tabs = inject("FeatureData");
 </script>
 
 <stye lang="scss" scoped>

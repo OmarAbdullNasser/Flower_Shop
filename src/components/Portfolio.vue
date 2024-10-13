@@ -2,8 +2,8 @@
   <div class="Portfolio">
     <div class="overlay"></div>
     <div class="container">
-      <h3 class="subtitle display7">Devoted to wonderful beauty</h3>
-      <h3 class="title display1">Our Portfolio</h3>
+      <h3 class="subtitle display7">{{ info.sub_title }}</h3>
+      <h3 class="title display1">{{ info.title }}</h3>
       <div class="row">
         <div class="col-12 col-sm-6 col-lg-4 item features-image">
           <div class="item-wrapper">
@@ -66,13 +66,20 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+const props = defineProps({
+  initialData: {
+    type: Object,
+    required: true,
+  },
+});
+const { info, items } = props.initialData;
+
 </script>
 
 <style lang="scss" scoped>
 .item:nth-child(1) {
-  background:  #400a3f;
+  background: #400a3f;
   display: flex;
   align-items: center;
   justify-content: center;

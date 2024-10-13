@@ -3,45 +3,28 @@
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-12">
-          <swiper
-            :modules="modules"
+          <Swiper
             :slides-per-view="1"
             :space-between="50"
             navigation
-            :loop="true"
+            :modules="modules"
           >
-            <swiper-slide>
-              <img src="../assets/Swiper/1.jpg" alt="" class="img-fluid" />
+            <swiper-slide v-for="Img in initialImages" :key="Img.id">
+              <img :src="Img.image" alt="" class="img-fluid" />
 
               <div class="carousel-caption">
                 <p>Lorem ipsum dolor sit amet</p>
               </div>
             </swiper-slide>
-            <swiper-slide>
-              <img src="../assets/Swiper/2.jpg" alt="" class="img-fluid" />
-              <div class="carousel-caption">
-                <p>Lorem ipsum dolor sit amet</p>
-              </div>
-            </swiper-slide>
-            <swiper-slide>
-              <img src="../assets/Swiper/3.jpg" alt="" class="img-fluid" />
-              <div class="carousel-caption">
-                <p>Lorem ipsum dolor sit amet</p>
-              </div>
-            </swiper-slide>
-          </swiper>
+          </Swiper>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-// import Swiper core and required modules
-import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
-
+<script setup>
 // Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from "swiper/vue";
 
 // Import Swiper styles
 import "swiper/css";
@@ -49,18 +32,21 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
+import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { watchEffect, ref, onMounted } from "vue";
 
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
+const props = defineProps({
+  initialImages: {
+    type: Array,
+    required: true,
   },
-  setup() {
-    return {
-      modules: [Navigation, Pagination, A11y, Autoplay],
-    };
-  },
-};
+});
+
+
+const modules = [Navigation, Pagination, A11y, Autoplay];
+
+onMounted(() => {});
 </script>
 
 <style lang="scss">
@@ -72,7 +58,6 @@ export default {
   //   margin-right: 0px;
   // }
   .swiper-slide img {
-    max-height: 800px;
     object-fit: cover;
     width: 100%;
     height: 100%;

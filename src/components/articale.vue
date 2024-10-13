@@ -4,19 +4,17 @@
       <div class="row">
         <div class="left-side col-12 col-lg">
           <div class="card-box">
-            <h5 class="title display1">The fine makers of flora</h5>
+            <h5 class="title display1">{{ initialData.title }}</h5>
 
             <div class="si">
-              <img src="../assets/signature.png" class="img-fluid" alt="" />
+              <img :src="initialData.image" class="img-fluid" alt="" />
             </div>
           </div>
         </div>
 
         <div class="right-side col-12 col-lg-6 d-flex align-items-center">
           <p class="display4">
-            Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem
-            fierent ullamcorper ius no, nec ea quodsi invenire. Pri facilisi
-            eleifend ad, ad eos scripta oblique. Vix cu oratio.
+            {{ initialData.description }}
           </p>
         </div>
       </div>
@@ -24,8 +22,13 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+const props = defineProps({
+  initialData: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 
 <style lang="scss" scoped>
