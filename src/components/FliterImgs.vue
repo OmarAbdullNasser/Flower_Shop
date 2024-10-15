@@ -2,14 +2,10 @@
   <div class="Fliter">
     <div class="container">
       <div class="Text">
-        <h3 class="display7">LOREM</h3>
         <h2 class="title display2 mb-2">
           <strong>Gallery</strong>
           <strong> With Tabs</strong>
         </h2>
-        <h3 class="display5">
-          <em>Lorem Ipsum Dolor Sit Amet</em>
-        </h3>
       </div>
 
       <div class="Imgs">
@@ -19,6 +15,10 @@
             <ul class="list">
               <li class="active me-1">
                 <a href="#" class="Btn display7"> All </a>
+              </li>
+
+              <li class="me-1" v-for="title in Data" :key="title.id">
+                <a href="#" class="Btn display7"> {{ title.title }} </a>
               </li>
 
               <li class="mx-1">
@@ -49,6 +49,19 @@
                   <span class="title display7"> Type caption here </span>
                 </div>
               </div>
+
+              <div
+                class="col-12 col-lg-4 p-3"
+                v-for="img in Data.gallery"
+                :key="img.id"
+              >
+                <div class="item">
+                  <img :src="img" alt="" class="img-fluid" />
+                  <span class="icon-focus"></span>
+                  <span class="title display7"> Type caption here </span>
+                </div>
+              </div>
+
               <div class="col-12 col-lg-4 p-3">
                 <div class="item">
                   <img src="../assets/Evenets/2.jpg" alt="" class="img-fluid" />
@@ -111,8 +124,11 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { inject } from "vue";
+
+const Data = inject("OccassionData");
+console.log(Data.value);
 </script>
 
 <style lang="scss" scoped>

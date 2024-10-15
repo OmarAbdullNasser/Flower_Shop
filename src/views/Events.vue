@@ -3,15 +3,15 @@
 
   <div v-else>
     <Hero
-      :imageUrl="'Hero2.jpg'"
+      :imageUrl="bgUrl"
       :bgcolor="'rgb(0, 0,0)'"
       color="#fff"
-      op="0.5"
-      pt="8"
-      pb="8"
+      :op="0.5"
+      :pt="8"
+      :pb="8"
       height="133px"
     >
-      <h1>Professional construction company for projects of any complexity</h1>
+      <h1>{{ HeroText }}</h1>
     </Hero>
 
     <Description :bgcolor="'rgb(206, 205, 199)'" />
@@ -33,7 +33,7 @@ const EventsData = ref([]);
 const bgUrl = ref("");
 const HeroText = ref("");
 const DescripationData = ref({});
-const ImgGallery = ref([]);
+const OccassionData = ref([]);
 
 const fetchHomeData = async (lang) => {
   try {
@@ -47,28 +47,30 @@ const fetchHomeData = async (lang) => {
     const respons = await HomeResponse.json();
     EventsData.value = respons.data;
 
-    const { gallery, service } = LandscapeData.value;
+    console.log(EventsData.value);
+
     const {
       description,
       image: bgImg,
       meta,
       middle_content,
       middle_title,
+      occasions,
       slug,
       title,
-    } = service;
+    } = EventsData.value;
     bgUrl.value = bgImg;
-    console.log();
+
     HeroText.value = title;
     DescripationData.value = { middle_title, middle_content };
-    ImgGallery.value = gallery;
+    OccassionData.value = occasions;
   } catch (error) {
     console.error("Failed to fetch flowers:", error);
   }
 };
 
 provide("DescripationData", DescripationData);
-provide("GalleryData", ImgGallery);
+provide("OccassionData", OccassionData);
 const checkLoader = () => {
   if (Object.keys(EventsData).length > 0) {
     loading.value = false;
@@ -77,6 +79,9 @@ const checkLoader = () => {
 
 watchEffect(async () => {
   checkLoader();
+});
+onMounted(async () => {
+  await fetchHomeData(route.params.lang);
 });
 </script>
 
