@@ -58,9 +58,6 @@ const meta = computed(() => store.getters.Meta);
 const sortOption = ref("low_price");
 const loading = ref(true);
 
-const SearchObj = ref([]);
-let colorsToFilter = ref([]);
-
 // Computed property for items displayed on the current page
 const checkLoader = () => {
   if (flowers.value.length > 0) {

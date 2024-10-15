@@ -25,48 +25,33 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-6 col-lg-2 small text-center my-4 my-lg-0">
-          <h5 class="lin mbr-fonts-style display-5">
-            <p class="bottom">About</p>
-          </h5>
-
-          <h5 class="small-bottom lin mbr-fonts-style display-7">
-            <a href="index.html" class="text-success it">About Us </a>
-          </h5>
-
-          <h5 class="small-bottom lin mbr-fonts-style display-7">
-            <a href="index.html" class="text-success it">Our Partners </a>
-          </h5>
-
-          <h5 class="lin mbr-fonts-style display-7">
-            <a href="index.html" class="text-success it">Our Services </a>
-          </h5>
-        </div>
         <div
-          class="col-12 col-md-6 col-lg-2 top small text-center my-4 my-lg-0"
+          class="col-12 col-md-6 col-lg-2 small  my-4 my-lg-0"
+          v-for="Data in DatatFooter"
+          :key="Data.id"
         >
           <h5 class="lin mbr-fonts-style display-5">
-            <p class="bottom">Contact</p>
+            <p class="bottom">{{ Data.title }}</p>
           </h5>
-          <h5 class="small-bottom lin mbr-fonts-style display-7">
-            <a href="index.html" class="text-success it"
-              >Contact Us
-              <div class="line"></div
-            ></a>
-          </h5>
-          <h5 class="small-bottom lin mbr-fonts-style display-7">
-            <a href="index.html" class="text-success it"
-              >FAQ Page
-              <div class="line"></div
-            ></a>
-          </h5>
-          <h5 class="lin mbr-fonts-style display-7">
-            <a href="index.html" class="text-success it"
-              >About Me
-              <div class="line"></div
-            ></a>
-          </h5>
+
+          <ul class="px-0">
+            <li class="" v-for="link in Data.children" :key="link.id">
+              <h5
+                class="small-bottom lin mbr-fonts-style display-7 text-center"
+              >
+                <router-link
+                  class="nav-link it"
+                  :to="{
+                    path: `/${route.params.lang}${link.url}`,
+                  }"
+                >
+                  {{ link.title }}
+                </router-link>
+              </h5>
+            </li>
+          </ul>
         </div>
+
         <div
           class="col-12 col-md-6 col-lg-2 top small text-center mt-4 mt-lg-0"
         >
@@ -94,8 +79,13 @@
   </section>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { computed, watchEffect, onBeforeUnmount } from "vue";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+const store = useStore();
+const route = useRoute();
+const DatatFooter = computed(() => store.getters.footer);
 </script>
 
 <style scoped lang="scss">
@@ -103,6 +93,9 @@ export default {};
   padding-top: 5rem;
   padding-bottom: 5rem;
   background-color: #400a3f;
+  .form-control {
+    border-radius: 0;
+  }
   svg {
     font-size: 24px;
     color: #968896;
@@ -163,11 +156,12 @@ export default {};
     }
     .it {
       position: relative;
+      width: fit-content;
     }
     .it::after {
       content: "";
       position: absolute;
-      width: 0;
+      width: auto;
       height: 2px;
       background-color: #fff;
       bottom: -4px;

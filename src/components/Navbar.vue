@@ -51,7 +51,9 @@
               class="cart d-flex align-items-center"
             >
               <font-awesome-icon icon="fa-solid fa-cart-plus" />
-              <span class="badge text-bg-secondary ms-2">{{ totalItems }}</span>
+              <span class="badge text-bg-secondary ms-2">{{
+                store.getters.cart
+              }}</span>
             </router-link>
           </li>
 
@@ -102,12 +104,13 @@ import { computed, onMounted, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
+const { locale } = useI18n();
 
-let totalItems = computed(() => store.getters.cartquantity);
 const NavbarData = computed(() => store.getters.menu);
 
 const toggleDirection = () => {
@@ -115,10 +118,12 @@ const toggleDirection = () => {
     document.dir = "ltr";
     router.push({ name: route.name, params: { lang: "en" } });
     fetchNavbarData("en");
+    store.commit("SET_LOCALE", "en");
   } else {
     document.dir = "rtl";
     router.push({ name: route.name, params: { lang: "ar" } });
     fetchNavbarData("ar");
+    store.commit("SET_LOCALE", "ar");
   }
 };
 

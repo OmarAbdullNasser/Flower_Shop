@@ -8,7 +8,7 @@
             {{ MissionData.description }}
           </p>
           <div class="btnn">
-            <a href="" class="btn btn-primary display4">Read more</a>
+            <a href="" class="btn btn-primary display4">{{ $t("ReadMore") }}</a>
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouterLink } from "vue-router";
 import Home from "../views/Home.vue";
 import Products from "@/views/Products.vue";
 import Landscape from "@/views/Landscape.vue";
@@ -87,12 +87,12 @@ const fetchNavbarData = async (lang) => {
 
 router.beforeEach((to, from, next) => {
   // Check the path to see if it contains '/en' or '/ar'
-
   if (to.path.startsWith("/en")) {
     document.dir = "ltr";
     fetchNavbarData("en");
   } else if (to.path.startsWith("/ar")) {
     document.dir = "rtl";
+
     fetchNavbarData("ar");
   }
 

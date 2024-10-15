@@ -6,7 +6,7 @@
           <div class="card-wrapper">
             <div class="card-box">
               <div class="iconfont-wrapper">
-                <font-awesome-icon icon="fa-regular fa-face-smile" />
+                <img :src="tab.image" alt="" class="mx-3" width="50px" />
               </div>
               <h5 class="display2">{{ tab.title }}</h5>
             </div>

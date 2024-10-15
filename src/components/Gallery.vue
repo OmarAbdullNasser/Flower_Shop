@@ -2,11 +2,15 @@
   <div class="Gallery">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12 col-lg-4 item features-image">
+        <div
+          class="col-12 col-lg-4 item features-image"
+          v-for="img in Data"
+          :key="img.id"
+        >
           <div class="item-wrapper">
             <a href="#">
               <div class="item-img">
-                <img src="../assets/Landscape/1.jpg" alt="" />
+                <img :src="img.image" alt="" />
               </div>
             </a>
           </div>
@@ -66,8 +70,10 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { inject, watchEffect } from "vue";
+
+const Data = inject("GalleryData");
 </script>
 
 <style lang="scss" scoped>

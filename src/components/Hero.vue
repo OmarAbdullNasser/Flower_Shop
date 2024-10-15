@@ -14,7 +14,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <div class="title-wrapper display1" :style="{ color: color }">
+          <div class="title-wrapper display1 d-flex" :style="{ color: color }">
             <slot></slot>
           </div>
         </div>
@@ -52,25 +52,22 @@ const props = defineProps({
   },
   height: {
     type: String,
-    required: true,
     default: "auto",
   },
   N_height: {
     type: String,
-    required: true,
-    default:"auto"
+    default: "auto",
   },
 });
 
-const imgSrc = computed(() => require(`@/assets/${props.imageUrl}`));
 const backgroundImgStyle = computed(() => ({
-  backgroundImage: `url(${imgSrc.value})`,
+  backgroundImage: `url(${props.imageUrl})`,
   paddingTop: `${props.pt}rem`,
   paddingBottom: `${props.pb}rem`,
 }));
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 html {
   scroll-behavior: smooth;
 }

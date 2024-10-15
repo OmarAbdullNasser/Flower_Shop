@@ -5,23 +5,9 @@
         <div class="col-12">
           <div class="content-wrapper">
             <h2>
-              <strong>Intuitive Rental Process </strong>
+              <strong>{{ data.middle_title }} </strong>
             </h2>
-            <p>
-              Simply download our mobile app, locate the nearest scooter using
-              GPS technology, and unlock it with just a tap of your smartphone.
-              With adjustable speed settings and user-friendly controls, our
-              scooters are suitable for riders of all experience levels.
-            </p>
-
-            <div class="logo-wrapper">
-              <div class="logo-wrap d-inline-flex align-items-center">
-                <div class="img-wrap me-3">
-                  <img src="../assets/logo-Gallery.png" alt="" />
-                </div>
-                <p><strong>Ride</strong></p>
-              </div>
-            </div>
+            <p v-html="data.middle_content"></p>
           </div>
         </div>
       </div>
@@ -30,7 +16,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
+import { defineProps, computed, inject } from "vue";
 const props = defineProps({
   bgcolor: {
     type: String,
@@ -40,6 +26,7 @@ const props = defineProps({
 const backgroundImgStyle = computed(() => ({
   backgroundColor: `${props.bgcolor}`,
 }));
+const data = inject("DescripationData");
 </script>
 
 <style lang="scss" scoped>

@@ -55,7 +55,7 @@
         </div>
 
         <div class="col-12 col-lg-7">
-          <form>
+          <form @submit.prevent="submitForm">
             <div class="dragArea row">
               <div class="col-12">
                 <h2 class="mbr-section-title">Send your messages</h2>
@@ -68,7 +68,8 @@
                   placeholder="Name"
                   data-form-field="name"
                   class="form-control"
-                  value=""
+                  v-model="formData.name"
+                  required
                   id="name-form01-c"
                 />
               </div>
@@ -84,7 +85,8 @@
                   placeholder="Email"
                   data-form-field="email"
                   class="form-control"
-                  value=""
+                  v-model="formData.email"
+                  required
                   id="email-form01-c"
                 />
               </div>
@@ -94,12 +96,14 @@
                 class="col-lg-12 col-md-12 col-sm-12 form-group"
               >
                 <input
-                  type="text"
-                  name="text"
-                  placeholder="Brand"
+                  type="tel"
+                  name="phone"
+                  placeholder="010XXXXXXXXX"
                   data-form-field="text"
+                  @input="validateNumberInput"
                   class="form-control"
-                  value=""
+                  v-model="formData.phone"
+                  required
                   id="text-form01-c"
                 />
               </div>
@@ -109,9 +113,11 @@
                 data-for="textarea1"
               >
                 <textarea
-                  name="textarea1"
+                  name="Message"
                   placeholder="Message"
                   data-form-field="textarea"
+                  v-model="formData.message"
+                  required
                   class="form-control"
                   id="textarea1-form01-c"
                 ></textarea>
@@ -130,10 +136,63 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+import { createToaster } from "@meforma/vue-toaster";
+const url = "https://flowerest.e1s.me/api";
+const toaster = createToaster();
+
 const props = defineProps({
   isCompontent: Boolean,
   require: true,
 });
+const validateNumberInput = (e) => {
+  e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Replace any non-digit character with an empty string
+};
+
+const formData = ref({
+  name: "",
+  email: "",
+  phone: "",
+  message: "",
+});
+const showSuccessPopup = ref(false);
+const submitForm = async () => {
+  try {
+    // Prepare the data for the POST request
+    const response = await fetch(`${url}/contact_us`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData.value),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to send message");
+    }
+
+    toaster.success("Message sent successfully!", {
+      duration: 3000,
+      position: "top",
+    });
+
+    // Optionally, reset the form after success
+    formData.value = {
+      name: "",
+      email: "",
+      message: "",
+    };
+  } catch (error) {
+    console.error("Error:", error);
+    toaster.error(
+      "There was an issue sending your message. Please try again.",
+      {
+        duration: 3000, // Optional duration for the toast
+        position: "top",
+      }
+    );
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -197,6 +256,9 @@ const props = defineProps({
   .dragArea {
     padding-left: 0.6rem;
     padding-right: 0.6rem;
+    textarea {
+      resize: none;
+    }
     h2 {
       margin-bottom: 45px;
       color: #000;

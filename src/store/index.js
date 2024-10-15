@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
-
-
+import router from "@/router";
 
 const url = "http://flowerest.e1s.me/api";
 
@@ -15,6 +14,9 @@ export default createStore({
     priceFrom: 0,
     priceto: 0,
     menu: [],
+    footer: [],
+    CartNum: 0,
+    locale: "",
   },
 
   mutations: {
@@ -75,8 +77,17 @@ export default createStore({
       }
     },
 
-    SET_MENU(state, menu) {
-      state.menu = menu;
+    SET_MENU(state, data) {
+      state.menu = data;
+    },
+    SET_FOOTER(state, data) {
+      state.footer = data;
+    },
+    SET_CART(state, data) {
+      state.CartNum = data;
+    },
+    SET_LOCALE(state, data) {
+      state.locale = data;
     },
   },
 
@@ -195,6 +206,8 @@ export default createStore({
         const { main, footer, cart_num, site_setting } = respons.data;
 
         commit("SET_MENU", main);
+        commit("SET_FOOTER", footer);
+        commit("SET_CART", cart_num);
       } catch (error) {
         console.error("Failed to fetch flowers:", error);
       }
@@ -241,6 +254,15 @@ export default createStore({
     },
     menu: (state) => {
       return state.menu;
+    },
+    footer: (state) => {
+      return state.footer;
+    },
+    cart: (state) => {
+      return state.CartNum;
+    },
+    locale: (state) => {
+      return state.locale;
     },
   },
 

@@ -17,19 +17,29 @@ import Message from "@/components/message.vue";
 import Portfolio from "@/components/Portfolio.vue";
 import Services from "@/components/Services.vue";
 import Swiper from "@/components/Swiper.vue";
-import { onMounted, ref, watchEffect } from "vue";
-
+import { onMounted, ref, watchEffect, watch, computed } from "vue";
+import { useHead } from "@vueuse/head";
+import { useRoute } from "vue-router";
 name: "Home";
 const url = "https://flowerest.e1s.me/api";
 
+const route = useRoute();
 const loading = ref(true);
 const SwiperImg = ref([]);
 const ServiceData = ref({});
 const PortfolioData = ref({});
 const ArticaleData = ref({});
-const fetchHomeData = async () => {
+const metaData = ref(null);
+
+const fetchHomeData = async (lang) => {
   try {
-    const HomeResponse = await fetch(`${url}/home`);
+    const HomeResponse = await fetch(`${url}/home`, {
+      method: "GET", // Specify the method if needed
+      headers: {
+        "Accept-Language": `${lang}`,
+      },
+    });
+
     const respons = await HomeResponse.json();
     const {
       sliders,
@@ -46,23 +56,49 @@ const fetchHomeData = async () => {
     ServiceData.value = { service, mission, tabs };
     PortfolioData.value = portfolio;
     ArticaleData.value = makers;
-    console.log(respons.data);
+    metaData.value = meta;
+    // console.log(respons.data);
   } catch (error) {
     console.error("Failed to fetch flowers:", error);
   }
 };
+
 const checkLoader = () => {
   if (SwiperImg.value.length > 0) {
     loading.value = false;
   }
 };
 
-watchEffect(() => {
+// Watch for changes in the route's lang parameter and refetch the data
+watch(
+  () => route.params.lang, // Watch the 'lang' parameter in the route
+  async (newLang) => {
+    loading.value = true; // Set loading state to true while fetching
+    await fetchHomeData(newLang); // Call fetchHomeData with the new language
+  },
+  { immediate: true } // Call the watcher immediately upon component mount
+);
+
+watchEffect(async () => {
   checkLoader();
 });
+onMounted(async () => {
+  await fetchHomeData(route.params.lang);
 
-onMounted(() => {
-  fetchHomeData();
+  if (metaData.value) {
+    // Use vue-meta to dynamically set meta tags based on the fetched metaData
+
+    useHead({
+      title: metaData.title,
+      meta: [
+        {
+          name: "description",
+          content: `${metaData.value.description}`,
+        },
+        { name: "keywords", content: `${metaData.value.key}` },
+      ],
+    });
+  }
 });
 </script>
 <style>
