@@ -10,6 +10,7 @@ import ContentUs from "@/views/ContentUs.vue";
 import NotFound from "@/views/NotFound.vue";
 import store from "@/store";
 import Chechout from "@/views/Chechout.vue";
+import SinglePage from "@/views/SinglePage.vue";
 
 const routes = [
   {
@@ -42,7 +43,7 @@ const routes = [
     component: Repair,
   },
   {
-    path: "/Product/:slug",
+    path: "/:lang(en|ar)/Product/:slug",
     name: "Product",
     component: Product,
   },
@@ -60,6 +61,11 @@ const routes = [
     path: "/:lang(en|ar)/checkout",
     name: "checkout",
     component: Chechout,
+  },
+  {
+    path: "/:lang(en|ar)/SingelPage",
+    name: "SinglePage",
+    component: SinglePage,
   },
   {
     path: "/:lang(en|ar)?/:pathMatch(.*)*", // Catch-all route for not found pages

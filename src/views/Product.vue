@@ -28,21 +28,8 @@
                 $ {{ SingleProduct.price }}
               </p>
             </div>
-            <p class="display4 text">
-              Dicta sunt explicabo. Nemo enim ipsam voluptatem voluptas sit odit
-              aut fugit, sed quia consequuntur. Lorem ipsum nonum eirmod dolor.
-              <br />
-              <br />
-              Aquia sit amet, elitr, sed diam nonum eirmod tempor invidunt
-              labore et dolore magna aliquyam.erat, sed diam voluptua. At vero
-              accusam et justo duo dolores et ea rebum. Stet clitain vidunt ut
-              labore eirmod tempor invidunt magna aliquyam. Stet clitain vidunt
-              ut labore.
-            </p>
+            <p class="display4 text" v-html="SingleProduct.description"></p>
             <div class="btn-section d-flex">
-              <a href="#" class="display7" @click="addToCart(SingleProduct)"
-                >Buy Now</a
-              >
               <div class="counter mx-3">
                 <button
                   @click="decrement"
@@ -54,6 +41,12 @@
                 <span>{{ quantity }}</span>
                 <button @click="increment" class="btn-increment">+</button>
               </div>
+              <button
+                class="btn display7 mb-0"
+                @click="addToCart(SingleProduct)"
+              >
+                Buy Now
+              </button>
             </div>
 
             <div class="price-line1 d-flex">
@@ -89,22 +82,39 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { inject, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import { createToaster } from "@meforma/vue-toaster";
 
+const toaster = createToaster();
+const url = inject("url");
 const route = useRoute();
 const store = useStore();
 const SingleProduct = ref(null);
 const loading = ref(true);
 const quantity = ref(1);
+const slugparam = route.params.slug;
 
-const getSingleProductByFliter = async () => {
+const ProductData = ref({
+  product_id: 0,
+  product_name: "",
+  quantity: 0,
+  price: 0,
+});
+const getSingleProductByFliter = async (lang) => {
   try {
-    const result = await store.dispatch("SEARCH", slug);
+    const result = await fetch(`${url}/products/${slugparam}`, {
+      method: "GET", // Specify the method if needed
+      headers: {
+        "Accept-Language": `${lang}`,
+      },
+    });
+    const respons = await result.json();
+    SingleProduct.value = respons.data;
+
     if (result) {
-      SingleProduct.value = result;
-      console.log("Found:", result);
+      console.log("Found =>", SingleProduct.value);
       loading.value = false;
     } else {
       console.log("Product not found");
@@ -114,8 +124,50 @@ const getSingleProductByFliter = async () => {
   }
 };
 
-const addToCart = (item) => {
-  store.commit("ADD_TO_CART", { item, q: quantity.value });
+const addToCart = async (item) => {
+  try {
+    // Prepare the data for the POST request
+    ProductData.value = {
+      product_id: item.id,
+      product_name: item.title,
+      quantity: quantity.value, // Make sure quantity is a reactive property if needed
+      price: item.price,
+    };
+    const response = await fetch(`${url}/add-to-cart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify(ProductData.value),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to send message");
+    }
+
+    toaster.success("Prodect Added to Cart successfully!", {
+      duration: 3000,
+      position: "top",
+    });
+
+    // Optionally, reset the form after success
+    ProductData.value = {
+      product_id: 0,
+      product_name: "",
+      quantity: 0,
+      price: 0,
+    };
+  } catch (error) {
+    console.error("Error:", error);
+    toaster.error(
+      "There was an issue sending your message. Please try again.",
+      {
+        duration: 3000, // Optional duration for the toast
+        position: "top",
+      }
+    );
+  }
 };
 
 const increment = () => {
@@ -127,8 +179,17 @@ const decrement = () => {
   }
 };
 
+watch(
+  () => route.params.lang, // Watch the 'lang' parameter in the route
+  async (newLang) => {
+    loading.value = true; // Set loading state to true while fetching
+    await getSingleProductByFliter(newLang); // Call fetchHomeData with the new language
+  },
+  { immediate: true } // Call the watcher immediately upon component mount
+);
+
 onMounted(() => {
-  getSingleProductByFliter();
+  getSingleProductByFliter(route.params.lang);
 });
 </script>
 
