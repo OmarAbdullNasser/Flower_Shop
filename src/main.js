@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { createHead } from "@vueuse/head";
-import Toaster from "@meforma/vue-toaster";
+import Vue3Toastify, { toast } from "vue3-toastify";
 import { createI18n } from "vue-i18n";
 import en from "./locale/en.json";
 import ar from "./locale/ar.json";
@@ -19,10 +19,12 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
-
+import "vue3-toastify/dist/index.css";
 library.add(far, fab, fas);
 
 const head = createHead();
+
+store.dispatch("Cart/initializeCart");
 
 const i18n = createI18n({
   locale: router.currentRoute.value.params.lang,
@@ -39,6 +41,8 @@ createApp(App)
   .use(store)
   .use(router)
   .use(head)
-  .use(Toaster)
+  .use(Vue3Toastify, {
+    autoClose: 2000,
+  })
   .use(i18n)
   .mount("#app");

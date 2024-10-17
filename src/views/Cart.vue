@@ -36,7 +36,7 @@
             </div>
           </li>
 
-          <li
+          <!-- <li
             class="product p-3 mb-3 d-flex g-2 flex-column flex-lg-row justify-content-between align-items-center flex-wrap"
           >
             <div class="img-box mb-3 mb-lg-0">
@@ -64,7 +64,7 @@
             <div class="remove_producet d-flex align-items-center">
               <button class="btn btn-danger">X</button>
             </div>
-          </li>
+          </li> -->
         </ul>
       </div>
 
@@ -104,21 +104,41 @@
 
 <script setup>
 import { useStore } from "vuex";
-import { computed, watchEffect } from "vue";
+import { computed, inject, onMounted, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 
 name = "Cart";
 // Access Vuex store
 const store = useStore();
 const route = useRoute();
-// Use computed properties to get the cart items and total from Vuex
-const cartItems = computed(() => store.getters.cartItems);
-const cartTotal = computed(() => store.getters.cartTotal);
+const url = inject("url");
+const Product = computed(() => store.getters["Cart/cartItems"]);
+// Create an asynchronous function to perform the GET request
+const FetchDataCart = async () => {
+  try {
+    // Use the fetch API to send a GET request
+    const response = await fetch(`${url}/show-cart`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-// Function to remove an item from the cart
-const removeFromCart = (itemId) => {
-  store.commit("REMOVE_FROM_CART", itemId);
+    // Check if the response is successful (status code 200-299)
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the response as JSON
+    const data = await response.json();
+
+    // Display the fetched data in the console
+    console.log("Fetched Data:", data);
+  } catch (error) {
+    // Handle and log any errors
+    console.error("Error fetching data:", error);
+  }
 };
+onMounted(() => console.log(Product.value));
 </script>
 
 <style lang="scss" scoped>

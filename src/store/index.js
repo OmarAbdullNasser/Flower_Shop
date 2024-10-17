@@ -1,11 +1,11 @@
-import { createStore } from "vuex";
-import router from "@/router";
+import {  createStore } from "vuex";
+import Cart from "./Cart";
 
 const url = "http://flowerest.e1s.me/api";
 
 export default createStore({
   state: {
-    cart: [],
+    // cart: [],
     flowers: [],
     Meta: {},
     ids: [],
@@ -266,6 +266,8 @@ export default createStore({
     },
   },
 
-  modules: {},
+  modules: {
+    Cart,
+  },
   plugins: [],
 });

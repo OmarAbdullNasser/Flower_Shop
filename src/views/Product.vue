@@ -11,6 +11,7 @@
         <div class="col-12 col-lg-6 mb-3 mb-lg-0">
           <img :src="SingleProduct.image" class="img-fluid" alt="" />
         </div>
+
         <div class="col-12 col-md-6">
           <div class="right">
             <div class="Card" v-if="SingleProduct.price_after_sale">
@@ -29,8 +30,8 @@
               </p>
             </div>
             <p class="display4 text" v-html="SingleProduct.description"></p>
-            <div class="btn-section d-flex">
-              <div class="counter mx-3">
+            <div class="btn-section d-flex flex-column">
+              <div class="counter mx-3 my-3">
                 <button
                   @click="decrement"
                   class="btn-decrement"
@@ -38,12 +39,12 @@
                 >
                   -
                 </button>
-                <span>{{ quantity }}</span>
+                <span class="QuantityValue">{{ quantity }}</span>
                 <button @click="increment" class="btn-increment">+</button>
               </div>
               <button
-                class="btn display7 mb-0"
-                @click="addToCart(SingleProduct)"
+                class="buy-btn btn display7 mx-3 mb-0"
+                @click="addToCart2(SingleProduct)"
               >
                 Buy Now
               </button>
@@ -82,12 +83,11 @@
 </template>
 
 <script setup>
-import { inject, onMounted, ref, watch } from "vue";
+import { inject, onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import { createToaster } from "@meforma/vue-toaster";
+import { toast } from "vue3-toastify";
 
-const toaster = createToaster();
 const url = inject("url");
 const route = useRoute();
 const store = useStore();
@@ -95,6 +95,8 @@ const SingleProduct = ref(null);
 const loading = ref(true);
 const quantity = ref(1);
 const slugparam = route.params.slug;
+const isToastVisible = ref(false);
+const TotalProduct = computed(() => store.getters["Cart/cartLength"]);
 
 const ProductData = ref({
   product_id: 0,
@@ -114,7 +116,6 @@ const getSingleProductByFliter = async (lang) => {
     SingleProduct.value = respons.data;
 
     if (result) {
-      console.log("Found =>", SingleProduct.value);
       loading.value = false;
     } else {
       console.log("Product not found");
@@ -124,50 +125,76 @@ const getSingleProductByFliter = async (lang) => {
   }
 };
 
-const addToCart = async (item) => {
-  try {
-    // Prepare the data for the POST request
-    ProductData.value = {
-      product_id: item.id,
-      product_name: item.title,
-      quantity: quantity.value, // Make sure quantity is a reactive property if needed
-      price: item.price,
-    };
-    const response = await fetch(`${url}/add-to-cart`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+// const addToCart = async (item) => {
+//   try {
+//     ProductData.value = {
+//       product_id: item.id,
+//       product_name: item.title,
+//       quantity: quantity.value, // Make sure quantity is a reactive property if needed
+//       price: item.price,
+//     };
+//     const response = await fetch(`${url}/add-to-cart`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(ProductData.value),
+//     });
+//     console.log(await response.json());
+//     if (!response.ok) {
+//       throw new Error("Failed to send message");
+//     }
+
+//     toaster.success("Prodect Added to Cart successfully!", {
+//       duration: 3000,
+//       position: "top",
+//     });
+
+//     // Optionally, reset the form after success
+//     ProductData.value = {
+//       product_id: 0,
+//       product_name: "",
+//       quantity: 0,
+//       price: 0,
+//     };
+//   } catch (error) {
+//     console.error("Error:", error);
+//     toaster.error(
+//       "There was an issue sending your message. Please try again.",
+//       {
+//         duration: 3000, // Optional duration for the toast
+//         position: "top",
+//       }
+//     );
+//   }
+// };
+
+const addToCart2 = async (item) => {
+  ProductData.value = {
+    product_id: item.id,
+    product_name: item.title,
+    quantity: quantity.value, // Make sure quantity is a reactive property if needed
+    price: item.price,
+  };
+  const previousTotalQuantity = TotalProduct.value;
+  await store.dispatch("Cart/addToCart", ProductData.value);
+  const newTotalQuantity = TotalProduct.value;
+  if (previousTotalQuantity !== newTotalQuantity && !isToastVisible.value) {
+    isToastVisible.value = true;
+    toast.success("Product added successfully!", {
+      autoClose: 2000, // Close after 2 seconds
+      position: "top-right",
+      onClose: () => {
+        isToastVisible.value = false; // Reset the flag when the toast closes
       },
-
-      body: JSON.stringify(ProductData.value),
     });
-
-    if (!response.ok) {
-      throw new Error("Failed to send message");
-    }
-
-    toaster.success("Prodect Added to Cart successfully!", {
-      duration: 3000,
-      position: "top",
-    });
-
-    // Optionally, reset the form after success
-    ProductData.value = {
-      product_id: 0,
-      product_name: "",
-      quantity: 0,
-      price: 0,
-    };
-  } catch (error) {
-    console.error("Error:", error);
-    toaster.error(
-      "There was an issue sending your message. Please try again.",
-      {
-        duration: 3000, // Optional duration for the toast
-        position: "top",
-      }
-    );
   }
+  ProductData.value = {
+    product_id: 0,
+    product_name: "",
+    quantity: 0,
+    price: 0,
+  };
 };
 
 const increment = () => {
@@ -198,6 +225,7 @@ onMounted(() => {
   padding-top: 75px;
   padding-bottom: 75px;
   background-color: #ffffff;
+
   .img-fluid {
     height: 614px;
     max-width: 100%;
@@ -235,6 +263,14 @@ onMounted(() => {
     .btn-section {
       margin-bottom: 34px;
       color: #52586a;
+      .QuantityValue {
+        color: blue;
+      }
+      .buy-btn {
+        border: 2px solid #400a3f;
+        background-color: #fedadc;
+        width: 107px;
+      }
       a {
         padding: 0.5625rem 2.3125rem;
         font-weight: 400;

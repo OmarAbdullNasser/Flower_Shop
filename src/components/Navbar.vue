@@ -52,7 +52,7 @@
             >
               <font-awesome-icon icon="fa-solid fa-cart-plus" />
               <span class="badge text-bg-secondary ms-2">{{
-                store.getters.cart
+                TotalProduct
               }}</span>
             </router-link>
           </li>
@@ -112,7 +112,7 @@ const router = useRouter();
 const { locale } = useI18n();
 
 const NavbarData = computed(() => store.getters.menu);
-
+const TotalProduct = computed(() => store.getters["Cart/cartLength"]);
 const toggleDirection = () => {
   if (document.dir === "rtl") {
     document.dir = "ltr";

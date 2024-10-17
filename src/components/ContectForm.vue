@@ -137,7 +137,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { createToaster } from "@meforma/vue-toaster";
+
 const url = "https://flowerest.e1s.me/api";
 const toaster = createToaster();
 
@@ -171,10 +171,7 @@ const submitForm = async () => {
       throw new Error("Failed to send message");
     }
 
-    toaster.success("Message sent successfully!", {
-      duration: 3000,
-      position: "top",
-    });
+
 
     // Optionally, reset the form after success
     formData.value = {
@@ -184,13 +181,7 @@ const submitForm = async () => {
     };
   } catch (error) {
     console.error("Error:", error);
-    toaster.error(
-      "There was an issue sending your message. Please try again.",
-      {
-        duration: 3000, // Optional duration for the toast
-        position: "top",
-      }
-    );
+ 
   }
 };
 </script>
