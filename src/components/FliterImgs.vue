@@ -13,28 +13,21 @@
           <!--Fliter-->
           <div class="gallery-filter">
             <ul class="list">
-              <li class="active me-1">
-                <a href="#" class="Btn display7"> All </a>
+              <li
+                class="me-1"
+                :class="{ active: selectedCategory === 'all' }"
+                @click="selectCategory('all')"
+              >
+                <span href="#" class="Btn display7"> All </span>
               </li>
 
-              <li class="me-1" v-for="title in Data" :key="title.id">
-                <a href="#" class="Btn display7"> {{ title.title }} </a>
-              </li>
-
-              <li class="mx-1">
-                <a href="#" class="Btn display7"> Awesome </a>
-              </li>
-
-              <li class="mx-1">
-                <a href="#" class="Btn display7"> Responsive </a>
-              </li>
-
-              <li class="mx-1">
-                <a href="#" class="Btn display7"> Creative </a>
-              </li>
-
-              <li class="mx-1">
-                <a href="#" class="Btn display7"> Animated </a>
+              <li
+                v-for="(item, index) in Data"
+                :key="index"
+                :class="{ active: selectedCategory === item.title }"
+                @click="selectCategory(item.title)"
+              >
+                <span class="Btn display7">{{ item.title }}</span>
               </li>
             </ul>
           </div>
@@ -42,76 +35,17 @@
           <!-- Gallery -->
           <div class="gallery-row">
             <div class="row">
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img src="../assets/Evenets/1.jpg" alt="" class="img-fluid" />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
               <div
                 class="col-12 col-lg-4 p-3"
-                v-for="img in Data.gallery"
-                :key="img.id"
+                v-for="item in filteredImages"
+                :key="item.title"
               >
-                <div class="item">
+                <div
+                  class="item"
+                  v-for="(img, imgIndex) in item.gallery"
+                  :key="imgIndex"
+                >
                   <img :src="img" alt="" class="img-fluid" />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img src="../assets/Evenets/2.jpg" alt="" class="img-fluid" />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img src="../assets/Evenets/3.jpg" alt="" class="img-fluid" />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img src="../assets/Evenets/4.jpg" alt="" class="img-fluid" />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img src="../assets/Evenets/5.jpg" alt="" class="img-fluid" />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img src="../assets/Evenets/6.jpg" alt="" class="img-fluid" />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img src="../assets/Evenets/7.jpg" alt="" class="img-fluid" />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img src="../assets/Evenets/8.jpg" alt="" class="img-fluid" />
                   <span class="icon-focus"></span>
                   <span class="title display7"> Type caption here </span>
                 </div>
@@ -125,9 +59,27 @@
 </template>
 
 <script setup>
-import { inject } from "vue";
+import { inject, ref, computed } from "vue";
 
 const Data = inject("OccassionData");
+// Reactive state for the selected category
+const selectedCategory = ref("all");
+
+// Method to set the selected category
+const selectCategory = (category) => {
+  selectedCategory.value = category;
+};
+
+// Computed property to filter images based on the selected category
+const filteredImages = computed(() => {
+  if (selectedCategory.value === "all") {
+    // Return all images if "All" is selected
+    return Data.value;
+  } else {
+    // Filter images based on the selected category
+    return Data.value.filter((item) => item.title === selectedCategory.value);
+  }
+});
 console.log(Data.value);
 </script>
 

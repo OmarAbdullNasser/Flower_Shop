@@ -3,7 +3,6 @@ import Home from "../views/Home.vue";
 import Products from "@/views/Products.vue";
 import Landscape from "@/views/Landscape.vue";
 import Events from "@/views/Events.vue";
-
 import Product from "@/views/Product.vue";
 import Cart from "@/views/Cart.vue";
 import ContentUs from "@/views/ContentUs.vue";
