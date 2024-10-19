@@ -137,7 +137,7 @@
 
 <script setup>
 import { ref } from "vue";
-
+import { toast } from "vue3-toastify";
 const url = "https://flowerest.e1s.me/api";
 
 const props = defineProps({
@@ -168,6 +168,11 @@ const submitForm = async () => {
 
     if (!response.ok) {
       throw new Error("Failed to send message");
+    } else {
+      toast.success("Product added successfully!", {
+        autoClose: 2000, // Close after 2 seconds
+        position: "top-right",
+      });
     }
 
     // Optionally, reset the form after success
