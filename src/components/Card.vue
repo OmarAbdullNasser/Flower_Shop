@@ -51,6 +51,7 @@ const addToCart = (item) => {
   box-sizing: border-box;
   width: 18rem;
   cursor: pointer;
+  height: fit-content;
 
   img {
     opacity: 85%;
