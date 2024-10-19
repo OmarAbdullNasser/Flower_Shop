@@ -139,7 +139,6 @@
 import { ref } from "vue";
 
 const url = "https://flowerest.e1s.me/api";
-const toaster = createToaster();
 
 const props = defineProps({
   isCompontent: Boolean,
@@ -171,8 +170,6 @@ const submitForm = async () => {
       throw new Error("Failed to send message");
     }
 
-
-
     // Optionally, reset the form after success
     formData.value = {
       name: "",
@@ -181,7 +178,6 @@ const submitForm = async () => {
     };
   } catch (error) {
     console.error("Error:", error);
- 
   }
 };
 </script>

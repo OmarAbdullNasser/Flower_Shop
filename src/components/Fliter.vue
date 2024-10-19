@@ -272,9 +272,7 @@ const getRang = () => {
 };
 
 const PriceFliter = () => {
-  console.log("start sending api req", range1.value);
   fetchFliterPrice(range1.value, range2.value);
-  console.log("finish qpi reques", range2.value);
 };
 
 const HandleClick = (e) => {

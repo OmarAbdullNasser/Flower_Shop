@@ -7,6 +7,8 @@
       <div class="product_list col-12 col-lg-8">
         <ul class="m-0 px-0">
           <li
+            v-for="Prodect in Products"
+            :key="Prodect.id"
             class="product p-3 mb-3 d-flex g-2 flex-column flex-lg-row justify-content-between align-items-center flex-wrap"
           >
             <div class="img-box mb-3 mb-lg-0">
@@ -17,19 +19,25 @@
               class="product_info mx-auto d-flex flex-column align-items-center justify-content-center mx-lg-2 my-3 my-lg-0"
             >
               <h5>
-                <a href="#"> كل يوم صدقة </a>
+                <span> {{ Prodect.product_name }} </span>
               </h5>
-              <span class="my-3">كل يوم 3 ريال</span>
-              <span> 1095 ريال </span>
+              <!-- <span class="my-3">كل يوم 3 ريال</span> -->
+              <span> {{ Prodect.price }}</span>
             </div>
 
             <div class="product_amounts text-center">
-              <input type="number" min="1" class="mx-3" />
+              <input
+                type="number"
+                min="1"
+                class="mx-3"
+                :value="Prodect.quantity"
+                readonly
+              />
               <button class="btn btn-secondary">تعديل</button>
             </div>
 
             <div class="total my-3 my-lg-0">
-              <h4 class="mx-auto">1095 ريال</h4>
+              <h4 class="mx-auto">{{ Prodect.total }}</h4>
             </div>
             <div class="remove_producet d-flex align-items-center">
               <button class="btn btn-danger">X</button>
@@ -83,22 +91,6 @@
         </div>
       </div>
     </div>
-    <!-- <ul class="list-group mb-3">
-      <li
-        class="list-group-item"
-        v-for="item in $store.state.cart"
-        :key="item.slug"
-      >
-        {{ item.name }} - ${{ item.price }} x {{ item.quantity }}
-        <button
-          class="btn btn-danger float-end"
-          @click="removeFromCart(item.slug)"
-        >
-          Remove
-        </button>
-      </li>
-    </ul> -->
-    <!-- <h4>Total: ${{ cartTotal }}</h4> -->
   </div>
 </template>
 
@@ -112,16 +104,14 @@ name = "Cart";
 const store = useStore();
 const route = useRoute();
 const url = inject("url");
-const Product = computed(() => store.getters["Cart/cartItems"]);
+const Products = computed(() => store.getters["Cart/cartItems"]);
 // Create an asynchronous function to perform the GET request
 const FetchDataCart = async () => {
   try {
     // Use the fetch API to send a GET request
-    const response = await fetch(`${url}/show-cart`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${url}/show-recent-cart?cart_param=${Products.value[0].cookeries}`
+    );
 
     // Check if the response is successful (status code 200-299)
     if (!response.ok) {
@@ -138,7 +128,7 @@ const FetchDataCart = async () => {
     console.error("Error fetching data:", error);
   }
 };
-onMounted(() => console.log(Product.value));
+onMounted(() => console.log(Products.value[0].cookeries), FetchDataCart());
 </script>
 
 <style lang="scss" scoped>
