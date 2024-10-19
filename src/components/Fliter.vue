@@ -13,12 +13,12 @@
               >
                 <input
                   type="checkbox"
-                  id="isNotExtraProducts"
+                  :id="`category_` + cat.id"
                   class="custom-control-input checkmark"
                   :value="cat.title"
                   @click="fetchFliter(cat.id, undefined)"
                 />
-                <label for="vases" class="custom-control-label">
+                <label :for="`category_` + cat.id" class="custom-control-label">
                   {{ cat.title }}
                 </label>
               </div>
@@ -39,12 +39,12 @@
               >
                 <input
                   type="checkbox"
-                  id="Anniversary"
+                  :id="`occasion_` + occasion.id"
                   :value="occasion.title"
                   class="custom-control-input checkmark"
                   @click="fetchFliter(undefined, occasion.id)"
                 />
-                <label for="Anniversary" class="custom-control-label">
+                <label :for="`occasion_` + occasion.id" class="custom-control-label">
                   {{ occasion.title }}
                 </label>
               </div>

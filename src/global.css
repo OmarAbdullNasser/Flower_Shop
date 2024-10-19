@@ -234,6 +234,21 @@ section .mbr-background-video-preview {
   z-index: 0;
   pointer-events: none;
 }
+/* paginate ----------------- */
+.active > .page-link,
+.page-link.active {
+  background-color: #843e78 !important;
+  border-color: #843e78 !important;
+}
+.page-link {
+  color: #843e78;
+}
+.page-link:hover{
+  color: #ccaccc;
+}
+.page-item[data-v-849a166c] {
+  margin: 0px 2px;
+}
 @media screen and (max-width: 991px) {
   .display1 {
     font-size: 2.0125rem;
