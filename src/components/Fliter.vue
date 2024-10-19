@@ -298,13 +298,13 @@ const fetchFliterPrice = async (pf = 0, pt = 0) => {
 
 const getAllCategories = async () => {
   const CategoriesResonse = await fetch(
-    `http://flowerest.e1s.me/api/categories`
+    `https://flowerest.e1s.me/api/categories`
   );
   const jsonResponse = await CategoriesResonse.json();
   Categories.value = jsonResponse.data;
 };
 const getAllOccasions = async () => {
-  const OccasionsResonse = await fetch(`http://flowerest.e1s.me/api/occasions`);
+  const OccasionsResonse = await fetch(`https://flowerest.e1s.me/api/occasions`);
   const jsonResponse = await OccasionsResonse.json();
   Occasions.value = jsonResponse.data;
 };

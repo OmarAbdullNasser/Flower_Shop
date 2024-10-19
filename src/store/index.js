@@ -1,7 +1,7 @@
 import {  createStore } from "vuex";
 import Cart from "./Cart";
 
-const url = "http://flowerest.e1s.me/api";
+const url = "https://flowerest.e1s.me/api";
 
 export default createStore({
   state: {
@@ -96,7 +96,7 @@ export default createStore({
     async fetchProducts({ commit }, key = 1) {
       try {
         const FlowerResponse = await fetch(
-          `http://flowerest.e1s.me/api/products?page=${key}`
+          `https://flowerest.e1s.me/api/products?page=${key}`
         );
         const respons = await FlowerResponse.json();
 
@@ -157,7 +157,7 @@ export default createStore({
       if (query) {
         try {
           const FlowerResponse = await fetch(
-            `http://flowerest.e1s.me/api/products?${query}`
+            `https://flowerest.e1s.me/api/products?${query}`
           );
           const respons = await FlowerResponse.json();
           console.log(respons);
@@ -171,7 +171,7 @@ export default createStore({
       } else {
         try {
           const FlowerResponse = await fetch(
-            `http://flowerest.e1s.me/api/products`
+            `https://flowerest.e1s.me/api/products`
           );
           const respons = await FlowerResponse.json();
 
