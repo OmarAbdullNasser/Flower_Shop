@@ -7,7 +7,7 @@
       <div class="product_list col-12 col-lg-8">
         <ul class="m-0 px-0">
           <li
-            v-for="Prodect in Products"
+            v-for="Prodect in Prodects"
             :key="Prodect.id"
             class="product p-3 mb-3 d-flex g-2 flex-column flex-lg-row justify-content-between align-items-center flex-wrap"
           >
@@ -40,7 +40,9 @@
               <h4 class="mx-auto">{{ Prodect.total }}</h4>
             </div>
             <div class="remove_producet d-flex align-items-center">
-              <button class="btn btn-danger">X</button>
+              <button @click="DeletItem(Prodect.id)" class="btn btn-danger">
+                X
+              </button>
             </div>
           </li>
 
@@ -96,7 +98,7 @@
 
 <script setup>
 import { useStore } from "vuex";
-import { computed, inject, onMounted, watchEffect } from "vue";
+import { computed, inject, onMounted, watchEffect, ref } from "vue";
 import { useRoute } from "vue-router";
 
 name = "Cart";
@@ -104,14 +106,14 @@ name = "Cart";
 const store = useStore();
 const route = useRoute();
 const url = inject("url");
-const Products = computed(() => store.getters["Cart/cartItems"]);
+const Prodects = ref([]);
+const CartCookie = computed(() => store.getters["Cart/Cookies"]);
 // Create an asynchronous function to perform the GET request
 const FetchDataCart = async () => {
   try {
     // Use the fetch API to send a GET request
-    const response = await fetch(
-      `${url}/show-recent-cart?cart_param=${Products.value[0].cookeries}`
-    );
+
+    const response = await fetch(`${url}/cart-items?cart=${CartCookie.value}`);
 
     // Check if the response is successful (status code 200-299)
     if (!response.ok) {
@@ -119,16 +121,48 @@ const FetchDataCart = async () => {
     }
 
     // Parse the response as JSON
-    const data = await response.json();
-
+    const CartData = await response.json();
+    const data = CartData.data;
     // Display the fetched data in the console
+    Prodects.value = data;
     console.log("Fetched Data:", data);
   } catch (error) {
     // Handle and log any errors
     console.error("Error fetching data:", error);
   }
 };
-onMounted(() => console.log(Products.value[0].cookeries), FetchDataCart());
+
+const DeletItem = async (id) => {
+  try {
+    const response = await fetch(
+      `${url}/delete-item?cart_cookie=${CartCookie}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cart_id: id,
+        }),
+      }
+    );
+
+    // Parse the JSON response
+    const DeletResponse = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        DeletResponse.message || "Failed to add/update product in cart"
+      );
+    }
+
+    console.log(DeletResponse);
+  } catch (error) {
+    console.error("Error remove from cart:", error);
+    // Handle error appropriately (e.g., show notification)
+  }
+};
+onMounted(() => console.log(FetchDataCart()));
 </script>
 
 <style lang="scss" scoped>

@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 
 const Cart = {
   namespaced: true,
-  state: () => ({ cart: null }),
+  state: () => ({ cart: null, cart_cookie: null }),
   getters: {
     cartItems: (state) => {
       return state.cart;
@@ -12,6 +12,9 @@ const Cart = {
         return 0;
       }
       return state.cart.reduce((total, product) => total + product.quantity, 0);
+    },
+    Cookies: (state) => {
+      return state.cart_cookie;
     },
   },
   actions: {
@@ -79,29 +82,22 @@ const Cart = {
     //   }
     // },
 
-    async addToCart({ commit }, product) {
-      const headers = {
-        "Content-Type": "application/json",
-        // Cookie: "cart=DPSjVe1O0CB6JZebCGiIJkfm4f1rfY",
-      };
-      try {
-        // const cartCookieValue = Cookies.get("cart");
-        // if (cartCookieValue) {
-        //   headers["Cookie"] = `cart=DPSjVe1O0CB6JZebCGiIJkfm4f1rfY`;
-        // // }
-        // console.log(cartCookieValue);
+    async addToCart({ commit, getters }, product) {
+      const User_Cookie = getters.Cookies;
 
-        console.log(headers);
+      if (User_Cookie) {
+        product["cart_cookie"] = `${User_Cookie}`;
+      }
+
+      try {
         const response = await fetch(
           "https://flowerest.e1s.me/api/add-to-cart",
           {
             method: "POST",
-            credentials: "include",
-            headers: headers,
-            body: JSON.stringify({
-              ...product,
-              cart: "DPSjVe1O0CB6JZebCGiIJkfm4f1rfY",
-            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(product),
           }
         );
 
@@ -116,14 +112,8 @@ const Cart = {
         }
 
         if (CartData.cookie_value) {
-          Cookies.set("cart", CartData.cookie_value, {
-            path: "/",
-            sameSite: "Lax",
-            secure: true,
-          });
+          commit("SET_COOKIE", CartData.cookie_value);
         }
-
-        console.log(CartData);
       } catch (error) {
         console.error("Error adding to cart:", error);
         // Handle error appropriately (e.g., show notification)
@@ -154,6 +144,9 @@ const Cart = {
     },
     CLEAR_CART(state) {
       state.cart = null;
+    },
+    SET_COOKIE(state, data) {
+      state.cart_cookie = data;
     },
   },
 };

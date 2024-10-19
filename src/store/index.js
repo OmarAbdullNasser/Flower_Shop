@@ -1,7 +1,14 @@
-import {  createStore } from "vuex";
+import { createStore } from "vuex";
 import Cart from "./Cart";
+import VuexPersist from "vuex-persist";
 
 const url = "https://flowerest.e1s.me/api";
+
+const vuexLocalStorage = new VuexPersist({
+  key: "Cart", // Name of the key in storage
+  storage: window.Cookies, // Use localStorage to store state
+  modules: ["Cart"], // Specify which modules to persist
+});
 
 export default createStore({
   state: {
@@ -269,5 +276,5 @@ export default createStore({
   modules: {
     Cart,
   },
-  plugins: [],
+  plugins: [vuexLocalStorage.plugin],
 });
