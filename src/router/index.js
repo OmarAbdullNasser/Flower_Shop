@@ -3,7 +3,7 @@ import Home from "../views/Home.vue";
 import Products from "@/views/Products.vue";
 import Landscape from "@/views/Landscape.vue";
 import Events from "@/views/Events.vue";
-import Repair from "@/views/Repair.vue";
+
 import Product from "@/views/Product.vue";
 import Cart from "@/views/Cart.vue";
 import ContentUs from "@/views/ContentUs.vue";
@@ -37,11 +37,7 @@ const routes = [
     name: "Events",
     component: Events,
   },
-  {
-    path: "/:lang(en|ar)/Repair",
-    name: "Repair",
-    component: Repair,
-  },
+
   {
     path: "/:lang(en|ar)/Product/:slug",
     name: "Product",
