@@ -176,19 +176,10 @@ const addToCart2 = async (item) => {
     quantity: quantity.value, // Make sure quantity is a reactive property if needed
     price: item.price,
   };
-  const previousTotalQuantity = TotalProduct.value;
+
   await store.dispatch("Cart/addToCart", ProductData.value);
-  const newTotalQuantity = TotalProduct.value;
-  if (previousTotalQuantity !== newTotalQuantity && !isToastVisible.value) {
-    isToastVisible.value = true;
-    toast.success("Product added successfully!", {
-      autoClose: 2000, // Close after 2 seconds
-      position: "top-right",
-      onClose: () => {
-        isToastVisible.value = false; // Reset the flag when the toast closes
-      },
-    });
-  }
+
+
   ProductData.value = {
     product_id: 0,
     product_name: "",

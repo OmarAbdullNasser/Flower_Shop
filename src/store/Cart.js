@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { toast } from "vue3-toastify";
 
 const Cart = {
   namespaced: true,
@@ -114,6 +115,11 @@ const Cart = {
         if (CartData.cookie_value) {
           commit("SET_COOKIE", CartData.cookie_value);
         }
+
+        toast.success("Product added successfully!", {
+          autoClose: 2000, // Close after 2 seconds
+          position: "top-right",
+        });
       } catch (error) {
         console.error("Error adding to cart:", error);
         // Handle error appropriately (e.g., show notification)
