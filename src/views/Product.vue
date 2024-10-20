@@ -86,7 +86,6 @@
 import { inject, onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import { toast } from "vue3-toastify";
 
 const url = inject("url");
 const route = useRoute();
@@ -95,8 +94,6 @@ const SingleProduct = ref(null);
 const loading = ref(true);
 const quantity = ref(1);
 const slugparam = route.params.slug;
-const isToastVisible = ref(false);
-const TotalProduct = computed(() => store.getters["Cart/cartLength"]);
 
 const ProductData = ref({
   product_id: 0,
@@ -176,9 +173,7 @@ const addToCart2 = async (item) => {
     quantity: quantity.value, // Make sure quantity is a reactive property if needed
     price: item.price,
   };
-
   await store.dispatch("Cart/addToCart", ProductData.value);
-
 
   ProductData.value = {
     product_id: 0,

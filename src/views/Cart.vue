@@ -31,9 +31,14 @@
                 min="1"
                 class="mx-3"
                 :value="Prodect.quantity"
-                readonly
+                @input="ChangeQuintity($event)"
               />
-              <button class="btn btn-secondary">تعديل</button>
+              <button
+                class="btn btn-secondary"
+                @click="updateItemQuantity(Prodect.id, quantity)"
+              >
+                تعديل
+              </button>
             </div>
 
             <div class="total my-3 my-lg-0">
@@ -108,6 +113,16 @@ const route = useRoute();
 const url = inject("url");
 const Prodects = ref([]);
 const CartCookie = computed(() => store.getters["Cart/Cookies"]);
+const quantity = ref(0);
+console.log(CartCookie.value);
+const ChangeQuintity = (e) => {
+  if (e.target.value > 0) {
+    quantity.value = e.target.value;
+  } else {
+    e.target.value = 1;
+  }
+};
+
 // Create an asynchronous function to perform the GET request
 const FetchDataCart = async () => {
   try {
@@ -125,7 +140,8 @@ const FetchDataCart = async () => {
     const data = CartData.data;
     // Display the fetched data in the console
     Prodects.value = data;
-    console.log("Fetched Data:", data);
+    console.log(data);
+    store.commit("Cart/SET_CART", Prodects.value);
   } catch (error) {
     // Handle and log any errors
     console.error("Error fetching data:", error);
@@ -152,7 +168,7 @@ const DeletItem = async (id) => {
     Prodects.value = Prodects.value.filter((item) => item.id !== id);
     if (!response.ok) {
       throw new Error(
-        DeletResponse.message || "Failed to add/update product in cart"
+        DeletResponse.message || "Failed to remove product in cart"
       );
     }
   } catch (error) {
@@ -161,6 +177,34 @@ const DeletItem = async (id) => {
   }
 };
 
+const updateItemQuantity = async (id, q) => {
+  try {
+    const response = await fetch(`${url}/update-quantity`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cart_id: id,
+        quantity: q,
+      }),
+    });
+
+    // Parse the JSON response
+    const UpdateResponse = await response.json();
+    // Prodects.value = Prodects.value.filter((item) => item.id !== id);
+
+    if (!response.ok) {
+      throw new Error(
+        DeletResponse.message || "Failed to update product in cart"
+      );
+    }
+  } catch (error) {
+    console.error("Error remove from cart:", error);
+    // Handle error appropriately (e.g., show notification)
+  }
+};
+watchEffect(() => Prodects);
 onMounted(() => FetchDataCart());
 </script>
 

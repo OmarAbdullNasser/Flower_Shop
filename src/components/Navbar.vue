@@ -130,7 +130,7 @@ const toggleDirection = () => {
 const fetchNavbarData = async (lang) => {
   await store.dispatch("fetchNavbarData", lang);
 };
-
+watchEffect(() => TotalProduct);
 onMounted(() => fetchNavbarData());
 </script>
 

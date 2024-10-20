@@ -24,7 +24,7 @@ library.add(far, fab, fas);
 
 const head = createHead();
 
-store.dispatch("Cart/initializeCart");
+
 
 const i18n = createI18n({
   locale: router.currentRoute.value.params.lang,

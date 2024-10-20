@@ -115,7 +115,7 @@ const Cart = {
         if (CartData.cookie_value) {
           commit("SET_COOKIE", CartData.cookie_value);
         }
-
+        commit("ADD_PRODUCT_TO_CART", product);
         toast.success("Product added successfully!", {
           autoClose: 2000, // Close after 2 seconds
           position: "top-right",
@@ -125,34 +125,29 @@ const Cart = {
         // Handle error appropriately (e.g., show notification)
       }
     },
-
-    initializeCart({ commit }) {
-      // Retrieve the cart from cookies when the app initializes
-      const cookieName = "cart"; // Replace with your actual cookie name
-      const cartCookie = Cookies.get(cookieName);
-
-      if (cartCookie) {
-        try {
-          const cartData = JSON.parse(cartCookie);
-          // commit("SET_CART2", cartData);
-        } catch (error) {
-          console.error("Error parsing cart cookie:", error);
-          // Handle parsing error (e.g., clear invalid cookie)
-          Cookies.remove(cookieName, { path: "/" });
-        }
-      }
-    },
   },
 
   mutations: {
-    SET_CART2(state, cart) {
-      state.cart = cart;
+    SET_CART(state, data) {
+      state.cart = data;
     },
     CLEAR_CART(state) {
       state.cart = null;
     },
     SET_COOKIE(state, data) {
       state.cart_cookie = data;
+    },
+    ADD_PRODUCT_TO_CART(state, product) {
+      // Check if the product already exists in the cart
+      const existingProduct = state.cart.find((item) => item.id === product.id);
+
+      if (existingProduct) {
+        // If the product already exists, increase its quantity
+        existingProduct.quantity += product.quantity || 1;
+      } else {
+        // If the product is new, add it to the cart
+        state.cart.push({ ...product, quantity: product.quantity || 1 });
+      }
     },
   },
 };

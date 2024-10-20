@@ -40,9 +40,17 @@ const props = defineProps({
   require: true,
 });
 
-// Function to add an item to the cart
-const addToCart = (item) => {
-  store.commit("ADD_TO_CART", { item });
+const addToCart = async (item) => {
+  console.log(item);
+
+  await store.dispatch("Cart/addToCart", {
+    product_id: item.id,
+    product_name: item.title,
+    quantity: 1, // Make sure quantity is a reactive property if needed
+    price: item.price,
+  });
+
+
 };
 </script>
 
