@@ -149,20 +149,19 @@ const DeletItem = async (id) => {
 
     // Parse the JSON response
     const DeletResponse = await response.json();
-
+    Prodects.value = Prodects.value.filter((item) => item.id !== id);
     if (!response.ok) {
       throw new Error(
         DeletResponse.message || "Failed to add/update product in cart"
       );
     }
-
-    console.log(DeletResponse);
   } catch (error) {
     console.error("Error remove from cart:", error);
     // Handle error appropriately (e.g., show notification)
   }
 };
-onMounted(() => console.log(FetchDataCart()));
+
+onMounted(() => FetchDataCart());
 </script>
 
 <style lang="scss" scoped>
