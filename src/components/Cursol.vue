@@ -24,10 +24,16 @@
           >
             <swiper-slide v-for="img in items" :key="img.id">
               <div class="card">
-                <img :src="img.image" alt="" class="img-fluid" />
-                <div class="card-body">
-                  <h5 class="card-title">{{ img.title }}</h5>
-                </div>
+                <router-link
+                  :to="{
+                    path: `/${route.params.lang}/${img.slug}`,
+                  }"
+                >
+                  <img :src="img.image" alt="" class="img-fluid" />
+                  <div class="card-body">
+                    <h5 class="card-title">{{ img.title }}</h5>
+                  </div>
+                </router-link>
               </div>
             </swiper-slide>
           </swiper>
@@ -51,7 +57,9 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import { inject } from "vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const items = inject("CursolData");
 
 const modules = [Navigation, Pagination, A11y, Autoplay];

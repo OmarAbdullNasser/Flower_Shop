@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="title col-12 text-center my-5">
-          <h3 class="mbr-section-subtitle">Contacts</h3>
+          <h3 class="mbr-section-subtitle"> {{ $t('contact_us') }} </h3>
           <h3 class="mbr-section-title">Where to find</h3>
         </div>
 
@@ -169,7 +169,7 @@ const submitForm = async () => {
     if (!response.ok) {
       throw new Error("Failed to send message");
     } else {
-      toast.success("Product added successfully!", {
+      toast.success("Thanks, Your order has been send successfully!", {
         autoClose: 2000, // Close after 2 seconds
         position: "top-right",
       });
