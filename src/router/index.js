@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouterLink } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Products from "@/views/Products.vue";
 import Landscape from "@/views/Landscape.vue";
@@ -10,6 +10,7 @@ import NotFound from "@/views/NotFound.vue";
 import store from "@/store";
 import Chechout from "@/views/Chechout.vue";
 import SinglePage from "@/views/SinglePage.vue";
+import Router from "vue-router";
 
 const routes = [
   {
@@ -58,7 +59,7 @@ const routes = [
     component: Chechout,
   },
   {
-    path: "/:lang(en|ar)/SingelPage",
+    path: "/:lang(en|ar)/pages/:Pagename",
     name: "SinglePage",
     component: SinglePage,
   },
@@ -93,11 +94,34 @@ router.beforeEach((to, from, next) => {
     fetchNavbarData("en");
   } else if (to.path.startsWith("/ar")) {
     document.dir = "rtl";
-
     fetchNavbarData("ar");
   }
+  addDynamicRoute(to);
 
   next();
 });
 
+function addDynamicRoute(newRoute) {
+  if (newRoute.path.includes("pages")) {
+    newRoute.p;
+  }
+  // let routesArray = router.path.split("/");
+  // let pathArray = newRoute.path.split("/");
+  // const isRoutePresent = router.options.routes.find((route) => {
+  //   console.log(route);
+  // });
+  // if (!isRoutePresent) {
+  //   // Add the new route dynamically
+  //   // router.addRoute([
+  //   //   {
+  //   //     path: newRoute.path,
+  //   //     component: PageTemplate,
+  //   //     props: { data: newRoute.data },
+  //   //   },
+  //   // ]);
+  //   return "We don't have this page";
+  // } else {
+  //   return "We have this page";
+  // }
+}
 export default router;

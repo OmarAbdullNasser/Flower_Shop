@@ -140,7 +140,6 @@ const FetchDataCart = async () => {
     const data = CartData.data;
     // Display the fetched data in the console
     Prodects.value = data;
-    console.log(data);
     store.commit("Cart/SET_CART", Prodects.value);
   } catch (error) {
     // Handle and log any errors
@@ -166,6 +165,7 @@ const DeletItem = async (id) => {
     // Parse the JSON response
     const DeletResponse = await response.json();
     Prodects.value = Prodects.value.filter((item) => item.id !== id);
+    store.commit("Cart/SET_CART", Prodects.value);
     if (!response.ok) {
       throw new Error(
         DeletResponse.message || "Failed to remove product in cart"
