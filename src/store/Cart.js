@@ -134,8 +134,9 @@ const Cart = {
     CLEAR_CART(state) {
       state.cart = null;
     },
-    DElETE_ITEM_CART(getters, id) {
-      getters["Cart/cart"].filter((item) => item.id !== id);
+    DElETE_ITEM_CART(state, id) {
+      state.cart = state.cart.filter((item) => item.id !== id);
+      
     },
     SET_COOKIE(state, data) {
       state.cart_cookie = data;

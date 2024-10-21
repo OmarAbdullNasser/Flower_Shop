@@ -165,7 +165,7 @@ const DeletItem = async (id) => {
     // Parse the JSON response
     const DeletResponse = await response.json();
     Prodects.value = Prodects.value.filter((item) => item.id !== id);
-    store.commit("Cart/SET_CART", Prodects.value);
+    store.commit("Cart/DElETE_ITEM_CART", id);
     if (!response.ok) {
       throw new Error(
         DeletResponse.message || "Failed to remove product in cart"
