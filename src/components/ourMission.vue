@@ -8,7 +8,15 @@
             {{ MissionData.description }}
           </p>
           <div class="btnn">
-            <a href="" class="btn btn-primary display4">{{ $t("ReadMore") }}</a>
+            <router-link
+              :to="{
+                // path: `/pages/about-us`,
+                name: 'SinglePage',
+                params: { lang: route.params.lang, Pagename: `about-us` },
+              }"
+              class="btn btn-primary display4"
+              >{{ $t("ReadMore") }}</router-link
+            >
           </div>
         </div>
 
@@ -22,7 +30,8 @@
 
 <script setup>
 import { inject } from "vue";
-
+import { useRoute } from "vue-router";
+const route = useRoute();
 const MissionData = inject("MissionData");
 </script>
 

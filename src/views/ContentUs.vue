@@ -1,6 +1,6 @@
 <template>
   <div class="ContentUs">
-    <ContectForm :isCompontent="true" />
+    <ContectForm />
   </div>
 </template>
 

@@ -47,7 +47,7 @@ const fetchHomeData = async (lang) => {
 
     const respons = await HomeResponse.json();
     LandscapeData.value = respons.data;
-
+   
     const { gallery, service } = LandscapeData.value;
     const {
       description,

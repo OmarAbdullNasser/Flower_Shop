@@ -6,7 +6,7 @@
     <Services :initialData="ServiceData" />
     <Portfolio :initialData="PortfolioData" />
     <Articale :initialData="ArticaleData" />
-    <ContectForm :isCompontent="false" />
+    <ContectForm />
   </div>
 </template>
 
@@ -57,7 +57,6 @@ const fetchHomeData = async (lang) => {
     PortfolioData.value = portfolio;
     ArticaleData.value = makers;
     metaData.value = meta;
-    // console.log(respons.data);
   } catch (error) {
     console.error("Failed to fetch flowers:", error);
   }

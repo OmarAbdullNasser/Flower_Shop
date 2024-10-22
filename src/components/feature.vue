@@ -1,7 +1,7 @@
 <template>
   <div class="feature mt-5">
     <div class="container">
-      <div class="row text-start">
+      <div class="row text-center">
         <div class="col-12 col-md-6 col-lg-3" v-for="tab in tabs" :key="tab.id">
           <div class="card-wrapper">
             <div class="card-box">

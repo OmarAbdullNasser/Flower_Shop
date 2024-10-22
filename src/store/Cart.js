@@ -14,75 +14,20 @@ const Cart = {
       }
       return state.cart.reduce((total, product) => total + product.quantity, 0);
     },
+    TotalMoney: (state) => {
+      if (!state.cart) {
+        return 0;
+      }
+      return state.cart.reduce((total, product) => {
+        const productTotal = Number(product.total) || 0; // Ensure it's a number
+        return total + productTotal;
+      }, 0);
+    },
     Cookies: (state) => {
       return state.cart_cookie;
     },
   },
   actions: {
-    // async addToCart({ commit }, product) {
-    //   try {
-    //     // Make the POST request to add the product to the cart
-
-    //     const response = await fetch(
-    //       "https://flowerest.e1s.me/api/add-to-cart",
-    //       {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Cookies: "cart=jj11ezRHmHxWeJiRnWrOrr7Fx23LsQ",
-    //         },
-
-    //         body: JSON.stringify(product),
-    //       }
-    //     );
-
-    //     // Parse the JSON response
-    //     const CartRespons = await response.json();
-
-    //     if (!response.ok || !CartRespons.success) {
-    //       throw new Error(
-    //         data.message || "Failed to add/update product in cart"
-    //       );
-    //     }
-    //     console.log(CartRespons);
-    //     // Fetch the existing cart from the cookie
-    //     const existingCartCookie = Cookies.get("cart");
-    //     let existingCart = existingCartCookie
-    //       ? JSON.parse(existingCartCookie)
-    //       : [];
-
-    //     // Find if the product already exists in the cart
-    //     const existingProductIndex = existingCart.findIndex(
-    //       (item) => item.product_id === product.product_id
-    //     );
-
-    //     // If the product already exists, update the quantity and price
-    //     if (existingProductIndex !== -1) {
-    //       existingCart[existingProductIndex].quantity =
-    //         CartRespons.data.cart.quantity;
-    //       existingCart[existingProductIndex].price =
-    //         CartRespons.data.cart.price;
-    //       existingCart[existingProductIndex].total =
-    //         CartRespons.data.cart.total;
-    //     } else {
-    //       // Otherwise, add the new product to the cart
-    //       existingCart.push(CartRespons.data.cart);
-    //     }
-    //     // Save the updated cart back to the cookie
-    //     Cookies.set("cart", JSON.stringify(existingCart), {
-    //       path: "/",
-    //       sameSite: "Lax",
-    //       secure: true,
-    //     });
-
-    //     // Commit the updated cart to Vuex
-    //     commit("SET_CART2", existingCart);
-    //   } catch (error) {
-    //     console.error("Error adding to cart:", error);
-    //     // Handle error appropriately (e.g., show notification)
-    //   }
-    // },
-
     async addToCart({ commit, getters }, product) {
       const User_Cookie = getters.Cookies;
 
@@ -136,7 +81,6 @@ const Cart = {
     },
     DElETE_ITEM_CART(state, id) {
       state.cart = state.cart.filter((item) => item.id !== id);
-      
     },
     SET_COOKIE(state, data) {
       state.cart_cookie = data;

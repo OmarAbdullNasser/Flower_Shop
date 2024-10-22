@@ -26,7 +26,7 @@
         </div>
 
         <div
-          class="col-12 col-md-6 col-lg-2 small  my-4 my-lg-0"
+          class="col-12 col-md-6 col-lg-2 small my-4 my-lg-0"
           v-for="Data in DatatFooter"
           :key="Data.id"
         >
@@ -59,13 +59,13 @@
             <p class="bottom">Follow Us</p>
           </h5>
           <div
-            class="social-block d-lg-flex flex-column justify-content-between"
+            class="social-block d-flex flex-lg-column justify-content-between"
           >
             <a href="#">
               <font-awesome-icon icon="fa-brands fa-instagram" />
             </a>
 
-            <a href="#" class="my-4">
+            <a href="#" class="my-lg-4">
               <font-awesome-icon icon="fa-brands fa-tiktok" />
             </a>
 

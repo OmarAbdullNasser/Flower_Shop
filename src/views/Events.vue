@@ -25,6 +25,7 @@ import FliterImgs from "@/components/FliterImgs.vue";
 import Hero from "@/components/Hero.vue";
 import { inject, ref, onMounted, watchEffect, provide } from "vue";
 import { useRoute } from "vue-router";
+import { useHead } from "@vueuse/head";
 name: "Events";
 const url = inject("url");
 const route = useRoute();
@@ -34,7 +35,7 @@ const bgUrl = ref("");
 const HeroText = ref("");
 const DescripationData = ref({});
 const OccassionData = ref([]);
-
+const Meta = ref(null);
 const fetchHomeData = async (lang) => {
   try {
     const HomeResponse = await fetch(`${url}/events`, {
@@ -60,7 +61,7 @@ const fetchHomeData = async (lang) => {
       title,
     } = EventsData.value;
     bgUrl.value = bgImg;
-
+    Meta.value = meta;
     HeroText.value = title;
     DescripationData.value = { middle_title, middle_content };
     OccassionData.value = occasions;
@@ -82,6 +83,21 @@ watchEffect(async () => {
 });
 onMounted(async () => {
   await fetchHomeData(route.params.lang);
+  console.log(Meta.value);
+  if (Meta.value) {
+    // Use vue-meta to dynamically set meta tags based on the fetched metaData
+
+    useHead({
+      title: Meta.meta_title,
+      meta: [
+        {
+          name: "description",
+          content: `${Meta.value.meta_desc}`,
+        },
+        { name: "keywords", content: `${Meta.value.meta_key}` },
+      ],
+    });
+  }
 });
 </script>
 

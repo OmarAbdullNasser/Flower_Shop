@@ -5,7 +5,7 @@
       <h3 class="subtitle display7">{{ info.sub_title }}</h3>
       <h3 class="title display1">{{ info.title }}</h3>
       <div class="row">
-        <div class="col-12 col-sm-6 col-lg-4 item features-image">
+        <div class="col-12 col-sm-6 col-lg-4 item features-image p-5">
           <div class="item-wrapper">
             <div class="text">
               <div class="icon d-flex justify-content-center">
@@ -16,16 +16,28 @@
                 <em> summer sale under 50% </em>
               </h5>
               <div class="btns">
-                <a class="Btn Btn-primary display4">Shop now</a>
+                <router-link
+                  :to="{
+                    // path: `/pages/about-us`,
+                    name: 'shop',
+                    params: { lang: route.params.lang },
+                  }"
+                  class="Btn Btn-primary display4"
+                  >Shop now</router-link
+                >
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-12 col-sm-6 col-lg-4 item features-image">
+        <div
+          class="col-12 col-sm-6 col-lg-4 item features-image"
+          v-for="item in items"
+          :key="item.id"
+        >
           <div class="item-wrapper">
             <div class="item-img">
-              <img src="../assets/b4.jpg" class="img-fluid" alt="" />
+              <img :src="item.image" class="img-fluid" alt="" />
             </div>
           </div>
         </div>
@@ -74,7 +86,8 @@ const props = defineProps({
   },
 });
 const { info, items } = props.initialData;
-
+import { useRoute } from "vue-router";
+const route = useRoute();
 </script>
 
 <style lang="scss" scoped>

@@ -45,8 +45,8 @@
             <div
               class="total_price px-4 py-3 d-flex justify-content-between align-items-center"
             >
-              <h4>إجمالي</h4>
-              <h4>300 ﷼</h4>
+              <h4>Total</h4>
+              <h4>{{ TotalMoney }} L.E</h4>
             </div>
           </div>
         </div>
@@ -141,6 +141,7 @@ const url = inject("url");
 const selectedMethod = ref(0); // Holds the currently selected method
 const CartCookie = computed(() => store.getters["Cart/Cookies"]);
 const CartItem = computed(() => store.getters["Cart/cartItems"]);
+const TotalMoney = computed(() => store.getters["Cart/TotalMoney"]);
 const FullName = ref("");
 const phone = ref();
 const adders = ref("");

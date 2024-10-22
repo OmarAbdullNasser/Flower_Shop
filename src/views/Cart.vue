@@ -2,9 +2,61 @@
   <div class="heaader p-3">
     <h2 class="text-center">Your Cart</h2>
   </div>
-  <div class="container my-5">
-    <div class="row">
+  <div class="container my-5" v-if="!isLoading">
+    <div class="row" v-if="TotalMoney">
       <div class="product_list col-12 col-lg-8">
+        <div class="d-flex justify-content-end align-items-center my-3">
+          <button
+            class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#confirmDeleteModal"
+          >
+            Remove All Products
+          </button>
+          <div
+            class="modal fade"
+            id="confirmDeleteModal"
+            tabindex="-1"
+            aria-labelledby="confirmDeleteModalLabel"
+            aria-hidden="true"
+            ref="modalRef"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="confirmDeleteModalLabel">
+                    Confirm Deletion
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you want to remove all products from the cart?
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    @click="removeAllProducts"
+                  >
+                    Sure
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <ul class="m-0 px-0">
           <li
             v-for="Prodect in Prodects"
@@ -50,53 +102,41 @@
               </button>
             </div>
           </li>
-
-          <!-- <li
-            class="product p-3 mb-3 d-flex g-2 flex-column flex-lg-row justify-content-between align-items-center flex-wrap"
-          >
-            <div class="img-box mb-3 mb-lg-0">
-              <img src="../assets/flower-img.jpg" class="img-fluid" alt="" />
-            </div>
-
-            <div
-              class="product_info mx-auto d-flex flex-column align-items-center justify-content-center mx-lg-2 my-3 my-lg-0"
-            >
-              <h5>
-                <a href="#"> كل يوم صدقة </a>
-              </h5>
-              <span class="my-3">كل يوم 3 ريال</span>
-              <span> 1095 ريال </span>
-            </div>
-
-            <div class="product_amounts text-center">
-              <input type="number" min="1" class="mx-3" />
-              <button class="btn btn-secondary">تعديل</button>
-            </div>
-
-            <div class="total my-3 my-lg-0">
-              <h4 class="mx-auto">1095 ريال</h4>
-            </div>
-            <div class="remove_producet d-flex align-items-center">
-              <button class="btn btn-danger">X</button>
-            </div>
-          </li> -->
         </ul>
       </div>
 
       <div class="total_price col-12 col-lg-4">
         <div class="total d-flex flex-column p-5">
           <div class="total_product d-flex justify-content-between">
-            <span>المجموع</span>
-            <span>2095 ريال </span>
+            <span>Total</span>
+            <span>{{ TotalMoney }} L.E</span>
           </div>
           <hr />
           <button class="btn btn-success w-50 mx-auto mt-1">
             <router-link :to="{ path: `/${route.params.lang}/checkout` }">
-              المتابعه للدفع
+              Checkout
             </router-link>
           </button>
         </div>
       </div>
+    </div>
+    <div
+      class="d-flex flex-column justify-content-center align-items-center empty-card"
+      v-else
+    >
+      <h1 class="mb-4">Your card is empty</h1>
+      <router-link
+        :to="{
+          name: 'home',
+        }"
+        class="btn"
+        >Return to Home Page</router-link
+      >
+    </div>
+  </div>
+  <div v-if="isLoading" class="col-12 my-5">
+    <div class="d-flex justify-content-center">
+      <div class="loader text-primary" role="status"></div>
     </div>
   </div>
 </template>
@@ -105,6 +145,7 @@
 import { useStore } from "vuex";
 import { computed, inject, onMounted, watchEffect, ref } from "vue";
 import { useRoute } from "vue-router";
+import { Modal } from "bootstrap";
 
 name = "Cart";
 // Access Vuex store
@@ -113,8 +154,13 @@ const route = useRoute();
 const url = inject("url");
 const Prodects = ref([]);
 const CartCookie = computed(() => store.getters["Cart/Cookies"]);
+const TotalMoney = computed(() => store.getters["Cart/TotalMoney"]);
 const quantity = ref(0);
-console.log(CartCookie.value);
+const isLoading = ref(true);
+
+const modalRef = ref(null);
+const closeModal = () => Modal.getInstance(modalRef.value)?.hide();
+
 const ChangeQuintity = (e) => {
   if (e.target.value > 0) {
     quantity.value = e.target.value;
@@ -139,11 +185,15 @@ const FetchDataCart = async () => {
     const CartData = await response.json();
     const data = CartData.data;
     // Display the fetched data in the console
+    console.log(data);
     Prodects.value = data;
+
     store.commit("Cart/SET_CART", Prodects.value);
   } catch (error) {
     // Handle and log any errors
     console.error("Error fetching data:", error);
+  } finally {
+    isLoading.value = false; // Set loading to false after fetching
   }
 };
 
@@ -204,7 +254,35 @@ const updateItemQuantity = async (id, q) => {
     // Handle error appropriately (e.g., show notification)
   }
 };
-watchEffect(() => Prodects);
+const removeAllProducts = async () => {
+  try {
+    const response = await fetch(
+      `${url}/empty-cart?cart_cookie=${CartCookie.value}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    // Parse the JSON response
+    const RemoveAllResponse = await response.json();
+    console.log(RemoveAllResponse);
+    store.commit("Cart/CLEAR_CART");
+    closeModal();
+    const modalBackdrops = document.querySelectorAll(".modal-backdrop");
+    modalBackdrops.forEach((backdrop) => backdrop.remove());
+    if (!response.ok) {
+      throw new Error(
+        RemoveAllResponse.message || "Failed to remove product in cart"
+      );
+    }
+  } catch (error) {
+    console.error("Error Empty  cart:", error);
+    // Handle error appropriately (e.g., show notification)
+  }
+};
 onMounted(() => FetchDataCart());
 </script>
 
@@ -255,6 +333,22 @@ onMounted(() => FetchDataCart());
   }
 }
 
+.empty-card {
+  a {
+    background-color: #400a3f;
+    color: #fff;
+    padding: 0.5rem;
+  }
+}
+.modal-dialog {
+  .modal-header {
+    button {
+      margin-left: 16rem;
+      margin-right: 0;
+    }
+  }
+}
+
 @media screen and (max-width: 998.1px) {
   .product {
     .img-box {
@@ -276,6 +370,40 @@ onMounted(() => FetchDataCart());
         border-radius: 0 15px 15px 0;
       }
     }
+  }
+}
+
+.loader {
+  width: 60px;
+  aspect-ratio: 1;
+  border: 15px solid #ddd;
+  border-radius: 50%;
+  position: relative;
+  transform: rotate(45deg);
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  border: 15px solid #514b82;
+  animation: l18 2s infinite linear;
+}
+@keyframes l18 {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
   }
 }
 </style>

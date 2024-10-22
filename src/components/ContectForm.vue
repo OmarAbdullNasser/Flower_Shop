@@ -1,9 +1,9 @@
 <template>
-  <section class="form" :class="{ iscompontent: !props.isCompontent }">
+  <section class="form">
     <div class="container">
       <div class="row">
         <div class="title col-12 text-center my-5">
-          <h3 class="mbr-section-subtitle"> {{ $t('contact_us') }} </h3>
+          <h3 class="mbr-section-subtitle">{{ $t("contact_us") }}</h3>
           <h3 class="mbr-section-title">Where to find</h3>
         </div>
 
@@ -43,7 +43,7 @@
                 </div>
               </div>
             </div>
-            <div class="item soical_media_icons" v-if="props.isCompontent">
+            <div class="item soical_media_icons">
               <h5 class="card-title mbr-fonts-style display-5">Soical Media</h5>
               <ul class="list mbr-fonts-style display-4">
                 <font-awesome-icon icon="fa-brands fa-instagram" />
@@ -56,7 +56,7 @@
 
         <div class="col-12 col-lg-7">
           <form @submit.prevent="submitForm">
-            <div class="dragArea row">
+            <div class="dragArea row p-3">
               <div class="col-12">
                 <h2 class="mbr-section-title">Send your messages</h2>
               </div>
@@ -129,7 +129,6 @@
             </div>
           </form>
         </div>
-        <div class="col-12 map my-5" v-if="props.isCompontent"></div>
       </div>
     </div>
   </section>
@@ -140,10 +139,6 @@ import { ref } from "vue";
 import { toast } from "vue3-toastify";
 const url = "https://flowerest.e1s.me/api";
 
-const props = defineProps({
-  isCompontent: Boolean,
-  require: true,
-});
 const validateNumberInput = (e) => {
   e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Replace any non-digit character with an empty string
 };

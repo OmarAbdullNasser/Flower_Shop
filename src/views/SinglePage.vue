@@ -24,6 +24,7 @@
 import { onMounted } from "vue";
 import { inject, watchEffect, ref } from "vue";
 import { useRoute } from "vue-router";
+import { useHead } from "@vueuse/head";
 
 name: "SinglePage";
 const route = useRoute();
@@ -33,7 +34,7 @@ const DataPage = ref({
   description: "",
   image: "",
 });
-
+const Meta = ref(null);
 const fetchHomeData = async (lang, pagename) => {
   try {
     const HomeResponse = await fetch(`${url}/pages?slug=${pagename}`, {
@@ -45,15 +46,33 @@ const fetchHomeData = async (lang, pagename) => {
 
     const PageRespons = await HomeResponse.json();
     const Data = PageRespons.data;
-    const { title, description, image } = Data;
+    console.log(Data);
+    const { title, description, image, meta } = Data;
     DataPage.value.title = title;
     DataPage.value.description = description;
     DataPage.value.image = image;
+    Meta.value = meta;
   } catch (error) {
     console.error("Failed to fetch flowers:", error);
   }
 };
-onMounted(() => fetchHomeData(route.params.lang, route.params.Pagename));
+onMounted(async () => {
+  await fetchHomeData(route.params.lang, route.params.Pagename);
+  if (Meta.value) {
+    // Use vue-meta to dynamically set meta tags based on the fetched metaData
+
+    useHead({
+      title: Meta.title,
+      meta: [
+        {
+          name: "description",
+          content: `${Meta.value.description}`,
+        },
+        { name: "keywords", content: `${Meta.value.key}` },
+      ],
+    });
+  }
+});
 </script>
 
 <style lang="scss" scoped>

@@ -10,6 +10,7 @@ import ar from "./locale/ar.json";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap.rtl.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap";
 
 //Font awsome
@@ -23,8 +24,6 @@ import "vue3-toastify/dist/index.css";
 library.add(far, fab, fas);
 
 const head = createHead();
-
-
 
 const i18n = createI18n({
   locale: router.currentRoute.value.params.lang,

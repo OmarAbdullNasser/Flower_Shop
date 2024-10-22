@@ -15,56 +15,6 @@
             </a>
           </div>
         </div>
-
-        <div class="col-12 col-lg-4 item features-image">
-          <div class="item-wrapper">
-            <a href="#">
-              <div class="item-img">
-                <img src="../assets/Landscape/2.jpg" alt="" />
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-4 item features-image">
-          <div class="item-wrapper">
-            <a href="#">
-              <div class="item-img">
-                <img src="../assets/Landscape/3.jpg" alt="" />
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-4 item features-image">
-          <div class="item-wrapper">
-            <a href="#">
-              <div class="item-img">
-                <img src="../assets/Landscape/4.jpg" alt="" />
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-4 item features-image">
-          <div class="item-wrapper">
-            <a href="#">
-              <div class="item-img">
-                <img src="../assets/Landscape/5.jpg" alt="" />
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-4 item features-image">
-          <div class="item-wrapper">
-            <a href="#">
-              <div class="item-img">
-                <img src="../assets/Landscape/6.jpg" alt="" />
-              </div>
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   </div>
