@@ -3,8 +3,56 @@
     <h2 class="text-center">Your Cart</h2>
   </div>
   <div class="container my-5" v-if="!isLoading">
-    <div class="row" v-if="TotalMoney">
+    <div class="row" v-if="cartLength">
       <div class="product_list col-12 col-lg-8">
+        <ul class="m-0 px-0">
+          <li
+            v-for="Prodect in Prodects"
+            :key="Prodect.id"
+            class="product p-3 mb-3 d-flex g-2 flex-column flex-lg-row justify-content-between align-items-center flex-wrap"
+          >
+            <div class="img-box mb-3 mb-lg-0">
+              <img :src="Prodect.product_image" class="img-fluid" alt="" />
+            </div>
+
+            <div
+              class="product_info mx-auto d-flex flex-column align-items-center justify-content-center mx-lg-2 my-3 my-lg-0"
+            >
+              <h5>
+                <span> {{ Prodect.product_name }} </span>
+              </h5>
+              <!-- <span class="my-3">كل يوم 3 ريال</span> -->
+              <span> {{ Prodect.price }}</span>
+            </div>
+
+            <div class="product_amounts text-center">
+              <input
+                type="number"
+                min="1"
+                class="mx-3"
+                :value="Prodect.quantity"
+                @input="ChangeQuintity($event)"
+                @change="ChangeQuintity($event)"
+              />
+              <button
+                class="btn btn-secondary"
+                @click="updateItemQuantity(Prodect.id, quantity)"
+              >
+                Edit
+              </button>
+            </div>
+
+            <div class="total my-3 my-lg-0">
+              <h4 class="mx-auto">{{ Prodect.quantity * Prodect.price }}</h4>
+            </div>
+            <div class="remove_producet d-flex align-items-center">
+              <button @click="DeletItem(Prodect.id)" class="btn btn-danger">
+                X
+              </button>
+            </div>
+          </li>
+        </ul>
+
         <div class="d-flex justify-content-end align-items-center my-3">
           <button
             class="btn btn-danger"
@@ -57,62 +105,16 @@
             </div>
           </div>
         </div>
-        <ul class="m-0 px-0">
-          <li
-            v-for="Prodect in Prodects"
-            :key="Prodect.id"
-            class="product p-3 mb-3 d-flex g-2 flex-column flex-lg-row justify-content-between align-items-center flex-wrap"
-          >
-            <div class="img-box mb-3 mb-lg-0">
-              <img src="../assets/flower-img.jpg" class="img-fluid" alt="" />
-            </div>
-
-            <div
-              class="product_info mx-auto d-flex flex-column align-items-center justify-content-center mx-lg-2 my-3 my-lg-0"
-            >
-              <h5>
-                <span> {{ Prodect.product_name }} </span>
-              </h5>
-              <!-- <span class="my-3">كل يوم 3 ريال</span> -->
-              <span> {{ Prodect.price }}</span>
-            </div>
-
-            <div class="product_amounts text-center">
-              <input
-                type="number"
-                min="1"
-                class="mx-3"
-                :value="Prodect.quantity"
-                @input="ChangeQuintity($event)"
-              />
-              <button
-                class="btn btn-secondary"
-                @click="updateItemQuantity(Prodect.id, quantity)"
-              >
-                تعديل
-              </button>
-            </div>
-
-            <div class="total my-3 my-lg-0">
-              <h4 class="mx-auto">{{ Prodect.total }}</h4>
-            </div>
-            <div class="remove_producet d-flex align-items-center">
-              <button @click="DeletItem(Prodect.id)" class="btn btn-danger">
-                X
-              </button>
-            </div>
-          </li>
-        </ul>
       </div>
 
       <div class="total_price col-12 col-lg-4">
         <div class="total d-flex flex-column p-5">
           <div class="total_product d-flex justify-content-between">
-            <span>Total</span>
-            <span>{{ TotalMoney }} L.E</span>
+            <h4>Total</h4>
+            <h4>{{ TM }} L.E</h4>
           </div>
           <hr />
-          <button class="btn btn-success w-50 mx-auto mt-1">
+          <button class="btn btn-checkout w-50 mx-auto mt-1">
             <router-link :to="{ path: `/${route.params.lang}/checkout` }">
               Checkout
             </router-link>
@@ -146,6 +148,7 @@ import { useStore } from "vuex";
 import { computed, inject, onMounted, watchEffect, ref } from "vue";
 import { useRoute } from "vue-router";
 import { Modal } from "bootstrap";
+import { toast } from "vue3-toastify";
 
 name = "Cart";
 // Access Vuex store
@@ -154,7 +157,8 @@ const route = useRoute();
 const url = inject("url");
 const Prodects = ref([]);
 const CartCookie = computed(() => store.getters["Cart/Cookies"]);
-const TotalMoney = computed(() => store.getters["Cart/TotalMoney"]);
+const cartLength = computed(() => store.getters["Cart/cartLength"]);
+const TM = ref(0);
 const quantity = ref(0);
 const isLoading = ref(true);
 
@@ -174,7 +178,9 @@ const FetchDataCart = async () => {
   try {
     // Use the fetch API to send a GET request
 
-    const response = await fetch(`${url}/cart-items?cart=${CartCookie.value}`);
+    const response = await fetch(
+      `${url}/show-cart?cart_cookie=${CartCookie.value}`
+    );
 
     // Check if the response is successful (status code 200-299)
     if (!response.ok) {
@@ -184,9 +190,10 @@ const FetchDataCart = async () => {
     // Parse the response as JSON
     const CartData = await response.json();
     const data = CartData.data;
+
     // Display the fetched data in the console
-    console.log(data);
-    Prodects.value = data;
+    Prodects.value = data.cart;
+    TM.value = data.total_sum;
 
     store.commit("Cart/SET_CART", Prodects.value);
   } catch (error) {
@@ -200,7 +207,7 @@ const FetchDataCart = async () => {
 const DeletItem = async (id) => {
   try {
     const response = await fetch(
-      `${url}/delete-item?cart_cookie=${CartCookie}`,
+      `${url}/delete-item?cart_cookie=${CartCookie.value}`,
       {
         method: "POST",
         headers: {
@@ -214,7 +221,9 @@ const DeletItem = async (id) => {
 
     // Parse the JSON response
     const DeletResponse = await response.json();
+    const data = DeletResponse.data;
     Prodects.value = Prodects.value.filter((item) => item.id !== id);
+    TM.value = data.total;
     store.commit("Cart/DElETE_ITEM_CART", id);
     if (!response.ok) {
       throw new Error(
@@ -235,6 +244,7 @@ const updateItemQuantity = async (id, q) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        cart_cookie: CartCookie.value,
         cart_id: id,
         quantity: q,
       }),
@@ -242,12 +252,19 @@ const updateItemQuantity = async (id, q) => {
 
     // Parse the JSON response
     const UpdateResponse = await response.json();
-    // Prodects.value = Prodects.value.filter((item) => item.id !== id);
-
+    TM.value = UpdateResponse.data.total;
+    const Prodect = Prodects.value.filter((item) => item.id == id);
+    Prodect[0].quantity = Number(q);
+    store.commit("Cart/ADD_PRODUCT_TO_CART", Prodect[0]);
     if (!response.ok) {
       throw new Error(
         DeletResponse.message || "Failed to update product in cart"
       );
+    } else {
+      toast.success("Product Updated successfully!", {
+        autoClose: 4000, // Close after 2 seconds
+        position: "top-right",
+      });
     }
   } catch (error) {
     console.error("Error remove from cart:", error);
@@ -330,6 +347,9 @@ onMounted(() => FetchDataCart());
     a {
       color: #fff;
     }
+  }
+  .btn-checkout {
+    background-color: #400a3f;
   }
 }
 

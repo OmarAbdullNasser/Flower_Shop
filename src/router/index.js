@@ -61,13 +61,13 @@ const routes = [
     //   // Check if the cart is empty using Vuex state
     //   const isCartEmpty = store.getters["Cart/cartItems"];
     //   console.log(isCartEmpty);
-    //   if (isCartEmpty) {
-    //     // Allow access if the cart has items
-    //     next();
-    //   } else {
-    //     // Redirect to the cart page if empty
-    //     next({ path: "/" });
-    //   }
+    //   // if (isCartEmpty) {
+    //   //   // Allow access if the cart has items
+    //   //   next();
+    //   // } else {
+    //   //   // Redirect to the cart page if empty
+    //   //   next({ path: "/" });
+    //   // }
     // },
   },
   {
@@ -108,32 +108,8 @@ router.beforeEach((to, from, next) => {
     document.dir = "rtl";
     fetchNavbarData("ar");
   }
-  addDynamicRoute(to);
 
   next();
 });
 
-function addDynamicRoute(newRoute) {
-  if (newRoute.path.includes("pages")) {
-    newRoute.p;
-  }
-  // let routesArray = router.path.split("/");
-  // let pathArray = newRoute.path.split("/");
-  // const isRoutePresent = router.options.routes.find((route) => {
-  //   console.log(route);
-  // });
-  // if (!isRoutePresent) {
-  //   // Add the new route dynamically
-  //   // router.addRoute([
-  //   //   {
-  //   //     path: newRoute.path,
-  //   //     component: PageTemplate,
-  //   //     props: { data: newRoute.data },
-  //   //   },
-  //   // ]);
-  //   return "We don't have this page";
-  // } else {
-  //   return "We have this page";
-  // }
-}
 export default router;

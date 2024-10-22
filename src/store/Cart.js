@@ -3,7 +3,7 @@ import { toast } from "vue3-toastify";
 
 const Cart = {
   namespaced: true,
-  state: () => ({ cart: null, cart_cookie: null }),
+  state: () => ({ cart: [], cart_cookie: null }),
   getters: {
     cartItems: (state) => {
       return state.cart;
@@ -59,8 +59,8 @@ const Cart = {
 
         if (CartData.cookie_value) {
           commit("SET_COOKIE", CartData.cookie_value);
+          commit("ADD_PRODUCT_TO_CART", product);
         }
-        commit("ADD_PRODUCT_TO_CART", product);
         toast.success("Product added successfully!", {
           autoClose: 2000, // Close after 2 seconds
           position: "top-right",
@@ -86,6 +86,9 @@ const Cart = {
       state.cart_cookie = data;
     },
     ADD_PRODUCT_TO_CART(state, product) {
+      if (!Array.isArray(state.cart)) {
+        state.cart = [];
+      }
       // Check if the product already exists in the cart
       const existingProduct = state.cart.find((item) => item.id === product.id);
 

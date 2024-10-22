@@ -22,9 +22,7 @@
 
         <span class="mx-1" v-else> EGP {{ props.flower.price }} </span>
       </p>
-      <a href="#" class="btn w-100" @click="addToCart(props.flower)"
-        >Add To cart
-      </a>
+      <a class="btn w-100" @click="addToCart(props.flower)">Add To cart </a>
     </div>
   </div>
 </template>
@@ -49,8 +47,6 @@ const addToCart = async (item) => {
     quantity: 1, // Make sure quantity is a reactive property if needed
     price: item.price,
   });
-
-
 };
 </script>
 

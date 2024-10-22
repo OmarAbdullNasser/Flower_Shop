@@ -17,6 +17,7 @@ body {
   background-color: #fcf5fc;
 }
 
+
 section,
 .container,
 .container-fluid {
@@ -243,7 +244,7 @@ section .mbr-background-video-preview {
 .page-link {
   color: #843e78;
 }
-.page-link:hover{
+.page-link:hover {
   color: #ccaccc;
 }
 .page-item[data-v-849a166c] {

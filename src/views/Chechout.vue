@@ -10,18 +10,21 @@
           </div>
 
           <div class="proudect_list">
+            <div
+              class="total_price px-4 py-3 d-flex justify-content-between align-items-center my-3"
+            >
+              <h4>Total</h4>
+              <h4>{{ TM }} L.E</h4>
+            </div>
+            <hr />
             <ul class="p-0">
               <li
-                v-for="item in CartItem"
+                v-for="item in Prodects"
                 :key="item.id"
                 class="product p-3 mb-3 d-flex justify-content-between align-items-center flex-wrap"
               >
                 <div class="img-box mb-3 mb-lg-0">
-                  <img
-                    src="../assets/flower-img.jpg"
-                    class="img-fluid"
-                    alt=""
-                  />
+                  <img :src="item.product_image" class="img-fluid" alt="" />
                 </div>
 
                 <div
@@ -38,16 +41,7 @@
                   <h4 class="mx-auto">{{ item.total }}</h4>
                 </div>
               </li>
-
-              <hr />
             </ul>
-
-            <div
-              class="total_price px-4 py-3 d-flex justify-content-between align-items-center"
-            >
-              <h4>Total</h4>
-              <h4>{{ TotalMoney }} L.E</h4>
-            </div>
           </div>
         </div>
         <div class="payment col-12 col-lg-4">
@@ -140,8 +134,10 @@ const store = useStore();
 const url = inject("url");
 const selectedMethod = ref(0); // Holds the currently selected method
 const CartCookie = computed(() => store.getters["Cart/Cookies"]);
-const CartItem = computed(() => store.getters["Cart/cartItems"]);
-const TotalMoney = computed(() => store.getters["Cart/TotalMoney"]);
+// const CartItem = computed(() => store.getters["Cart/cartItems"]);
+// const TotalMoney = computed(() => store.getters["Cart/TotalMoney"]);
+const Prodects = ref([]);
+const TM = ref(0);
 const FullName = ref("");
 const phone = ref();
 const adders = ref("");
@@ -154,6 +150,30 @@ const selectMethod = (method) => {
 };
 
 // Create an asynchronous function to perform the GET request
+const FetchDataCart = async () => {
+  try {
+    // Use the fetch API to send a GET request
+
+    const response = await fetch(
+      `${url}/show-cart?cart_cookie=${CartCookie.value}`
+    );
+
+    // Check if the response is successful (status code 200-299)
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the response as JSON
+    const CartData = await response.json();
+    const data = CartData.data;
+    // Display the fetched data in the console
+    Prodects.value = data.cart;
+    TM.value = data.total_sum;
+  } catch (error) {
+    // Handle and log any errors
+    console.error("Error fetching data:", error);
+  }
+};
 
 const validateNumberInput = (e) => {
   e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Replace any non-digit character with an empty string
@@ -195,7 +215,7 @@ const SendOrder = async (name, phone, adders, email) => {
     // Handle error appropriately (e.g., show notification)
   }
 };
-onMounted(() => console.log(CartItem.value));
+onMounted(() => FetchDataCart());
 </script>
 
 <style lang="scss" scoped>
@@ -256,6 +276,7 @@ onMounted(() => console.log(CartItem.value));
       input,
       textarea {
         border-radius: 10px;
+        border-color: none !important;
         resize: none;
       }
     }
