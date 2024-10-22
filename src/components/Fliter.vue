@@ -107,7 +107,7 @@
 
       <p class="reset-price clear my-3">Reset</p>
 
-      <div class="sidebar-item">
+      <!-- <div class="sidebar-item">
         <h3 class="sidebar-title">Color</h3>
         <div class="sidebar-body">
           <ul>
@@ -125,9 +125,9 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
 
-      <div class="sidebar-item">
+      <!-- <div class="sidebar-item">
         <h3 class="sidebar-title">Brands</h3>
         <div class="sidebar-body">
           <ul>
@@ -221,7 +221,7 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
     </aside>
   </div>
 </template>

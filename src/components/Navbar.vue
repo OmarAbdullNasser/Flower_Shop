@@ -44,12 +44,7 @@
 
         <ul class="navbar-nav text-center align-items-center">
           <li class="nav-item mx-3">
-            <router-link
-              :to="{
-                path: `/${route.params.lang}/Cart`,
-              }"
-              class="cart d-flex align-items-center"
-            >
+            <router-link :to="{ path: `/${route.params.lang}/Cart`}" class="cart d-flex align-items-center" >
               <font-awesome-icon icon="fa-solid fa-cart-plus" />
               <span class="badge text-bg-secondary ms-2">{{
                 TotalProduct
