@@ -1,7 +1,9 @@
 <template>
   <div>
     <Navbar />
-    <router-view />
+    <div class="content">
+      <router-view />
+    </div>
     <Footer />
   </div>
 </template>
@@ -22,7 +24,9 @@ body {
   font-weight: 400;
   font-style: normal;
 }
+
 #app {
   font-family: "Alexandria", sans-serif;
 }
+
 </style>

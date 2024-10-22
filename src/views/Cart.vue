@@ -1,144 +1,146 @@
 <template>
-  <div class="heaader p-3">
-    <h2 class="text-center">Your Cart</h2>
-  </div>
-  <div class="container my-5" v-if="!isLoading">
-    <div class="row" v-if="cartLength">
-      <div class="product_list col-12 col-lg-8">
-        <ul class="m-0 px-0">
-          <li
-            v-for="Prodect in Prodects"
-            :key="Prodect.id"
-            class="product p-3 mb-3 d-flex g-2 flex-column flex-lg-row justify-content-between align-items-center flex-wrap"
-          >
-            <div class="img-box mb-3 mb-lg-0">
-              <img :src="Prodect.product_image" class="img-fluid" alt="" />
-            </div>
-
-            <div
-              class="product_info mx-auto d-flex flex-column align-items-center justify-content-center mx-lg-2 my-3 my-lg-0"
+  <div class="cart">
+    <div class="heaader p-3">
+      <h2 class="text-center">Your Cart</h2>
+    </div>
+    <div class="container my-5" v-if="!isLoading">
+      <div class="row" v-if="cartLength">
+        <div class="product_list col-12 col-lg-8">
+          <ul class="m-0 px-0">
+            <li
+              v-for="Prodect in Prodects"
+              :key="Prodect.id"
+              class="product p-3 mb-3 d-flex g-2 flex-column flex-lg-row justify-content-between align-items-center flex-wrap"
             >
-              <h5>
-                <span> {{ Prodect.product_name }} </span>
-              </h5>
-              <!-- <span class="my-3">كل يوم 3 ريال</span> -->
-              <span> {{ Prodect.price }}</span>
-            </div>
+              <div class="img-box mb-3 mb-lg-0">
+                <img :src="Prodect.product_image" class="img-fluid" alt="" />
+              </div>
 
-            <div class="product_amounts text-center">
-              <input
-                type="number"
-                min="1"
-                class="mx-3"
-                :value="Prodect.quantity"
-                @input="ChangeQuintity($event)"
-                @change="ChangeQuintity($event)"
-              />
-              <button
-                class="btn btn-secondary"
-                @click="updateItemQuantity(Prodect.id, quantity)"
+              <div
+                class="product_info mx-auto d-flex flex-column align-items-center justify-content-center mx-lg-2 my-3 my-lg-0"
               >
-                Edit
-              </button>
-            </div>
+                <h5>
+                  <span> {{ Prodect.product_name }} </span>
+                </h5>
+                <!-- <span class="my-3">كل يوم 3 ريال</span> -->
+                <span> {{ Prodect.price }}</span>
+              </div>
 
-            <div class="total my-3 my-lg-0">
-              <h4 class="mx-auto">{{ Prodect.quantity * Prodect.price }}</h4>
-            </div>
-            <div class="remove_producet d-flex align-items-center">
-              <button @click="DeletItem(Prodect.id)" class="btn btn-danger">
-                X
-              </button>
-            </div>
-          </li>
-        </ul>
+              <div class="product_amounts text-center">
+                <input
+                  type="number"
+                  min="1"
+                  class="mx-3"
+                  :value="Prodect.quantity"
+                  @input="ChangeQuintity($event)"
+                  @change="ChangeQuintity($event)"
+                />
+                <button
+                  class="btn btn-secondary"
+                  @click="updateItemQuantity(Prodect.id, quantity)"
+                >
+                  Edit
+                </button>
+              </div>
 
-        <div class="d-flex justify-content-end align-items-center my-3">
-          <button
-            class="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#confirmDeleteModal"
-          >
-            Remove All Products
-          </button>
-          <div
-            class="modal fade"
-            id="confirmDeleteModal"
-            tabindex="-1"
-            aria-labelledby="confirmDeleteModalLabel"
-            aria-hidden="true"
-            ref="modalRef"
-          >
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="confirmDeleteModalLabel">
-                    Confirm Deletion
-                  </h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  Are you sure you want to remove all products from the cart?
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    @click="removeAllProducts"
-                  >
-                    Sure
-                  </button>
+              <div class="total my-3 my-lg-0">
+                <h4 class="mx-auto">{{ Prodect.quantity * Prodect.price }}</h4>
+              </div>
+              <div class="remove_producet d-flex align-items-center">
+                <button @click="DeletItem(Prodect.id)" class="btn btn-danger">
+                  X
+                </button>
+              </div>
+            </li>
+          </ul>
+
+          <div class="d-flex justify-content-end align-items-center my-3">
+            <button
+              class="btn btn-danger"
+              data-bs-toggle="modal"
+              data-bs-target="#confirmDeleteModal"
+            >
+              Remove All Products
+            </button>
+            <div
+              class="modal fade"
+              id="confirmDeleteModal"
+              tabindex="-1"
+              aria-labelledby="confirmDeleteModalLabel"
+              aria-hidden="true"
+              ref="modalRef"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">
+                      Confirm Deletion
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to remove all products from the cart?
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      @click="removeAllProducts"
+                    >
+                      Sure
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="total_price col-12 col-lg-4">
-        <div class="total d-flex flex-column p-5">
-          <div class="total_product d-flex justify-content-between">
-            <h4>Total</h4>
-            <h4>{{ TM }} L.E</h4>
+        <div class="total_price col-12 col-lg-4">
+          <div class="total d-flex flex-column p-5">
+            <div class="total_product d-flex justify-content-between">
+              <h4>Total</h4>
+              <h4>{{ TM }} L.E</h4>
+            </div>
+            <hr />
+            <button class="btn btn-checkout w-50 mx-auto mt-1">
+              <router-link :to="{ path: `/${route.params.lang}/checkout` }">
+                Checkout
+              </router-link>
+            </button>
           </div>
-          <hr />
-          <button class="btn btn-checkout w-50 mx-auto mt-1">
-            <router-link :to="{ path: `/${route.params.lang}/checkout` }">
-              Checkout
-            </router-link>
-          </button>
         </div>
       </div>
-    </div>
-    <div
-      class="d-flex flex-column justify-content-center align-items-center empty-card"
-      v-else
-    >
-      <h1 class="mb-4">Your card is empty</h1>
-      <router-link
-        :to="{
-          name: 'home',
-        }"
-        class="btn"
-        >Return to Home Page</router-link
+      <div
+        class="d-flex flex-column justify-content-center align-items-center empty-card"
+        v-else
       >
+        <h1 class="mb-4">Your card is empty</h1>
+        <router-link
+          :to="{
+            name: 'home',
+          }"
+          class="btn"
+          >Return to Home Page</router-link
+        >
+      </div>
     </div>
-  </div>
-  <div v-if="isLoading" class="col-12 my-5">
-    <div class="d-flex justify-content-center">
-      <div class="loader text-primary" role="status"></div>
+    <div v-if="isLoading" class="col-12 my-5">
+      <div class="d-flex justify-content-center">
+        <div class="loader text-primary" role="status"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -304,6 +306,9 @@ onMounted(() => FetchDataCart());
 </script>
 
 <style lang="scss" scoped>
+.cart {
+  min-height: 500px;
+}
 .heaader {
   background: #e7d4e7;
   color: #784b77;

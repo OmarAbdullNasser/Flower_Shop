@@ -8,19 +8,18 @@
         </div>
         <!-- Loader -->
 
-        <div class="col-12 col-lg-9 row justify-content-evenly">
+        <div class="col-12 col-lg-9 row align-content-start">
           <SearchBar
-            class="col-12"
+            class="col-12 searchBar"
             :initialSort="sortOption"
             @sortChanged="handleSortChange"
           />
 
-          <div v-if="loading" class="col-12">
+          <div v-if="loading" v-cloak class="col-12">
             <div class="d-flex justify-content-center">
               <div class="loader text-primary" role="status"></div>
             </div>
           </div>
-
           <Card
             v-else
             v-for="flower in flowers"
@@ -87,6 +86,9 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 /* HTML: <div class="loader"></div> */
+.searchBar {
+  max-height: 41px;
+}
 .loader {
   width: 60px;
   aspect-ratio: 1;
