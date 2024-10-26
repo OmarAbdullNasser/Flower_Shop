@@ -9,11 +9,10 @@
           <div class="col-12 col-lg-6 text-center">
             <img :src="DataPage.image" class="img-fluid rounded" alt="" />
           </div>
-          <div class="col-12 col-lg-6 d-flex align-items-center text-center">
-            <p>
-              {{ DataPage.description }}
-            </p>
-          </div>
+          <div
+            class="col-12 col-lg-6 d-flex align-items-center text-center"
+            v-html="DataPage.description"
+          ></div>
         </div>
       </div>
     </div>

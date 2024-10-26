@@ -10,7 +10,6 @@
           <div class="btnn">
             <router-link
               :to="{
-                // path: `/pages/about-us`,
                 name: 'SinglePage',
                 params: { lang: route.params.lang, Pagename: `about-us` },
               }"

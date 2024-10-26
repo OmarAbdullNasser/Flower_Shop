@@ -12,9 +12,9 @@
             <div class="item features-without-image item-mb">
               <div class="item-wrapper">
                 <div class="card-box">
-                  <h5 class="card-title">Location</h5>
+                  <h5 class="card-title">{{ $t("Location") }}</h5>
                   <ul class="list">
-                    <li class="item-wrap">Paris 75001, France</li>
+                    <li class="item-wrap">{{ $t("LocationValue") }}</li>
                   </ul>
                 </div>
               </div>
@@ -23,10 +23,12 @@
             <div class="item features-without-image item-mb">
               <div class="item-wrapper">
                 <div class="card-box">
-                  <h5 class="card-title mbr-fonts-style display-5">Phone</h5>
+                  <h5 class="card-title mbr-fonts-style display-5">
+                    {{ $t("Phone") }}
+                  </h5>
                   <ul class="list mbr-fonts-style display-4">
-                    <li class="item-wrap">+098 765 432</li>
-                    <li class="item-wrap">+123 456 789</li>
+                    <li class="item-wrap">{{ $t("PhoneValue1") }}</li>
+                    <li class="item-wrap">{{ $t("PhoneValue2") }}</li>
                   </ul>
                 </div>
               </div>
@@ -35,16 +37,20 @@
             <div class="item features-without-image item-mb">
               <div class="item-wrapper">
                 <div class="card-box">
-                  <h5 class="card-title mbr-fonts-style display-5">Email</h5>
+                  <h5 class="card-title mbr-fonts-style display-5">
+                    {{ $t("Email") }}
+                  </h5>
                   <ul class="list mbr-fonts-style display-4">
-                    <li class="item-wrap">mobi@rise.com</li>
-                    <li class="item-wrap">markm5@theme.com</li>
+                    <li class="item-wrap">{{ $t("EmailValue1") }}</li>
+                    <li class="item-wrap">{{ $t("EmailValue2") }}</li>
                   </ul>
                 </div>
               </div>
             </div>
             <div class="item soical_media_icons">
-              <h5 class="card-title mbr-fonts-style display-5">Soical Media</h5>
+              <h5 class="card-title mbr-fonts-style display-5">
+                {{ $t("Soical_Media") }}
+              </h5>
               <ul class="list mbr-fonts-style display-4">
                 <font-awesome-icon icon="fa-brands fa-instagram" />
                 <font-awesome-icon icon="fa-brands fa-tiktok" class="mx-3" />

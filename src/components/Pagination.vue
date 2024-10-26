@@ -2,7 +2,8 @@
   <nav aria-label="Page navigation">
     <ul class="pagination mb-0">
       <li
-        class="page-item"
+
+        class="page-item d-none d-lg-block"
         :class="{ disabled: props.meta.current_page === 1 }"
       >
         <button class="page-link" @click="goToPage(1)" aria-label="First">
@@ -49,7 +50,7 @@
         </button>
       </li>
       <li
-        class="page-item"
+        class="page-item d-none d-lg-block"
         :class="{
           disabled: props.meta.current_page === props.meta.total_pages,
         }"

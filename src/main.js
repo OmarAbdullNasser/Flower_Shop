@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, watch } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -8,9 +8,9 @@ import { createI18n } from "vue-i18n";
 import en from "./locale/en.json";
 import ar from "./locale/ar.json";
 
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap.rtl.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap";
 
 //Font awsome
@@ -26,12 +26,25 @@ library.add(far, fab, fas);
 const head = createHead();
 
 const i18n = createI18n({
-  locale: router.currentRoute.value.params.lang,
+  locale: "en",
   messages: {
     en: en,
     ar: ar,
   },
 });
+
+console.log(router);
+watch(
+  () => router.currentRoute.value.params.lang, // Watch the "lang" route parameter
+  (newLang) => {
+    if (newLang && ["en", "ar"].includes(newLang)) {
+      i18n.global.locale = newLang; // Set the new locale dynamically
+    } else {
+      i18n.global.locale = "en"; // Fallback to "ar" if no valid param
+    }
+  },
+  { immediate: true } // Run immediately to set initial locale
+);
 
 //global css file
 import "./global.css";

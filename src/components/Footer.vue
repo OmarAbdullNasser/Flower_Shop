@@ -26,7 +26,7 @@
         </div>
 
         <div
-          class="col-12 col-md-6 col-lg-2 small my-4 my-lg-0"
+          class="col-12 col-md-6 col-lg-2 small my-4 my-lg-0 text-center"
           v-for="Data in DatatFooter"
           :key="Data.id"
         >
@@ -35,7 +35,11 @@
           </h5>
 
           <ul class="px-0">
-            <li class="" v-for="link in Data.children" :key="link.id">
+            <li
+              class="text-center"
+              v-for="link in Data.children"
+              :key="link.id"
+            >
               <h5
                 class="small-bottom lin mbr-fonts-style display-7 text-center"
               >
@@ -157,6 +161,7 @@ const DatatFooter = computed(() => store.getters.footer);
     .it {
       position: relative;
       width: fit-content;
+      margin: 0 auto;
     }
     .it::after {
       content: "";
