@@ -32,7 +32,6 @@
                   min="1"
                   class="mx-3"
                   :value="Prodect.quantity"
-                  @input="ChangeQuintity($event)"
                   @change="ChangeQuintity($event)"
                 />
                 <button
@@ -60,7 +59,7 @@
               data-bs-toggle="modal"
               data-bs-target="#confirmDeleteModal"
             >
-              Remove All Products
+              Empty
             </button>
             <div
               class="modal fade"
@@ -117,7 +116,7 @@
             <hr />
             <button class="btn btn-checkout w-50 mx-auto mt-1">
               <router-link :to="{ path: `/${route.params.lang}/checkout` }">
-                Checkout
+                Order Now
               </router-link>
             </button>
           </div>
@@ -254,10 +253,12 @@ const updateItemQuantity = async (id, q) => {
 
     // Parse the JSON response
     const UpdateResponse = await response.json();
+    console.log(UpdateResponse.data);
     TM.value = UpdateResponse.data.total;
+    quantity.value = UpdateResponse.data.quantity;
     const Prodect = Prodects.value.filter((item) => item.id == id);
-    Prodect[0].quantity = Number(q);
-    store.commit("Cart/ADD_PRODUCT_TO_CART", Prodect[0]);
+    Prodect[0].quantity = Number(UpdateResponse.data.quantity);
+    store.commit("Cart/UPDATE_PRODUCT_QUNITTY", Prodect[0]);
     if (!response.ok) {
       throw new Error(
         DeletResponse.message || "Failed to update product in cart"

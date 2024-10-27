@@ -33,7 +33,7 @@
                   <h5>
                     <a href="#"> {{ item.product_name }}</a>
                   </h5>
-                  <span class="my-3">كل يوم 3 ريال</span>
+                  <span class="my-3">{{ item.quantity }}</span>
                   <span> {{ item.price }}</span>
                 </div>
 
@@ -166,6 +166,7 @@ const FetchDataCart = async () => {
     // Parse the response as JSON
     const CartData = await response.json();
     const data = CartData.data;
+
     // Display the fetched data in the console
     Prodects.value = data.cart;
     TM.value = data.total_sum;

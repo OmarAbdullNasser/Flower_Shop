@@ -22,7 +22,7 @@
 
         <span class="mx-1" v-else> EGP {{ props.flower.price }} </span>
       </p>
-      <a class="btn w-100" @click="addToCart(props.flower)">Add To cart </a>
+      <a class="btn w-100" @click="addToCart(props.flower)">Order Now</a>
     </div>
   </div>
 </template>
@@ -39,14 +39,13 @@ const props = defineProps({
 });
 
 const addToCart = async (item) => {
-  console.log(item);
-
   await store.dispatch("Cart/addToCart", {
     product_id: item.id,
     product_name: item.title,
     quantity: 1, // Make sure quantity is a reactive property if needed
     price: item.price,
   });
+
 };
 </script>
 

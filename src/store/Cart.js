@@ -100,6 +100,16 @@ const Cart = {
         state.cart.push({ ...product, quantity: product.quantity || 1 });
       }
     },
+    UPDATE_PRODUCT_QUNITTY(state, product) {
+      const existingProduct = state.cart.find((item) => item.id === product.id);
+      console.log(product.quantity);
+      if (existingProduct) {
+        // If the product already exists, increase its quantity
+        existingProduct.quantity = product.quantity || 1;
+      } else {
+        return;
+      }
+    },
   },
 };
 export default Cart;
