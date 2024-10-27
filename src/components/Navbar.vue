@@ -30,21 +30,56 @@
         id="navbarTogglerDemo02"
       >
         <ul class="navbar-nav mx-auto text-center align-items-center">
-          <li class="nav-item mx-xl-3" v-for="nav in NavbarData" :key="nav.id">
+          <li
+            class="nav-item mx-xl-3"
+            v-for="nav in NavbarData"
+            :key="nav.id"
+            :class="{ dropdown: nav.children.length > 0 }"
+          >
             <router-link
               :to="{
                 path: `/${route.params.lang}${nav.url}`,
               }"
               class="nav-link"
+              :class="{ 'dropdown-toggle': nav.children.length > 0 }"
+              v-if="nav.children.length == 0"
             >
               <span>{{ nav.title }}</span>
             </router-link>
+
+            <a
+              v-else
+              class="nav-link dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span>{{ nav.title }}</span>
+            </a>
+
+            <ul class="dropdown-menu subMenu" v-if="nav.children.length > 0">
+              <li
+                class="nav-item"
+                v-for="child in nav.children"
+                :key="child.id"
+              >
+                <router-link
+                  :to="`/${route.params.lang}${child.url}`"
+                  class="dropdown-item"
+                >
+                  <span>{{ child.title }}</span>
+                </router-link>
+              </li>
+            </ul>
           </li>
         </ul>
 
         <ul class="navbar-nav text-center align-items-center">
           <li class="nav-item mx-3">
-            <router-link :to="{ path: `/${route.params.lang}/Cart`}" class="cart d-flex align-items-center" >
+            <router-link
+              :to="{ path: `/${route.params.lang}/Cart` }"
+              class="cart d-flex align-items-center"
+            >
               <font-awesome-icon icon="fa-solid fa-cart-plus" />
               <span class="badge text-bg-secondary ms-2">{{
                 TotalProduct
@@ -124,6 +159,7 @@ const toggleDirection = () => {
 
 const fetchNavbarData = async (lang) => {
   await store.dispatch("fetchNavbarData", lang);
+  console.log(NavbarData.value);
 };
 watchEffect(() => TotalProduct);
 onMounted(() => fetchNavbarData());
@@ -177,6 +213,11 @@ nav {
   .navbar-nav {
     font-size: 1.2rem;
     font-weight: 500;
+  }
+  .subMenu {
+    a {
+      font-size: 18px;
+    }
   }
 }
 

@@ -6,11 +6,11 @@
           <h2 class="display-3">{{ DataPage.title }}</h2>
         </div>
         <div class="content col-12 row">
-          <div class="col-12 col-lg-6 text-center">
+          <div class="Right col-12 col-lg-6 text-center">
             <img :src="DataPage.image" class="img-fluid rounded" alt="" />
           </div>
           <div
-            class="col-12 col-lg-6 d-flex align-items-center text-center"
+            class="Left col-12 col-lg-6 d-flex align-items-center text-center"
             v-html="DataPage.description"
           ></div>
         </div>
@@ -82,5 +82,6 @@ onMounted(async () => {
   P {
     line-height: 3;
   }
+  
 }
 </style>

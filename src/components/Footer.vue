@@ -26,7 +26,7 @@
         </div>
 
         <div
-          class="col-12 col-md-6 col-lg-2 small my-4 my-lg-0 text-center"
+          class="col-12 col-md-6 col-lg small my-4 my-lg-0 text-center"
           v-for="Data in DatatFooter"
           :key="Data.id"
         >
@@ -56,9 +56,7 @@
           </ul>
         </div>
 
-        <div
-          class="col-12 col-md-6 col-lg-2 top small text-center mt-4 mt-lg-0"
-        >
+        <div class="col-12 col-md-6 col-lg top small text-center mt-4 mt-lg-0">
           <h5 class="lin mbr-fonts-style display-5">
             <p class="bottom">Follow Us</p>
           </h5>

@@ -8,10 +8,7 @@ import { createI18n } from "vue-i18n";
 import en from "./locale/en.json";
 import ar from "./locale/ar.json";
 
-
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/css/bootstrap.rtl.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap";
 
 //Font awsome
