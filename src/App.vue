@@ -3,6 +3,7 @@
     <Navbar />
     <div class="content">
       <router-view :key="$route.fullPath" />
+      <WhatsAppIcon />
     </div>
     <Footer />
   </div>
@@ -11,7 +12,9 @@
 <script setup>
 import Navbar from "./components/Navbar.vue";
 import Footer from "./components/Footer.vue";
+
 import { provide } from "vue";
+import WhatsAppIcon from "./components/WhatsAppIcon.vue";
 provide("url", "https://flowerest.e1s.me/api");
 </script>
 <style lang="scss">
