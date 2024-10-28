@@ -4,6 +4,7 @@
     <Swiper :initialImages="SwiperImg" />
     <Message />
     <Services :initialData="ServiceData" />
+    <ReviewSwiper />
     <Portfolio :initialData="PortfolioData" />
     <Articale :initialData="ArticaleData" />
     <ContectForm />
@@ -20,6 +21,8 @@ import Swiper from "@/components/Swiper.vue";
 import { onMounted, ref, watchEffect, watch, computed } from "vue";
 import { useHead } from "@vueuse/head";
 import { useRoute } from "vue-router";
+import ReviewSwiper from "@/components/ReviewSwiper.vue";
+
 name: "Home";
 const url = "https://flowerest.e1s.me/api";
 
