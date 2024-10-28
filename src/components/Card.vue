@@ -12,7 +12,7 @@
       <h5 class="card-title m-3 title">
         <a href="">{{ props.flower.title }}</a>
       </h5>
-      <p class="card-text">
+      <p class="card-text mb-0">
         <span class="mx-1" v-if="props.flower.price_after_sale">
           EGP {{ props.flower.price_after_sale }}
           <small>
@@ -22,6 +22,13 @@
 
         <span class="mx-1" v-else> EGP {{ props.flower.price }} </span>
       </p>
+      <div class="rate my-1">
+        <font-awesome-icon class="star" icon="star"></font-awesome-icon>
+        <font-awesome-icon class="star" icon="star"></font-awesome-icon>
+        <font-awesome-icon class="star" icon="star"></font-awesome-icon>
+        <font-awesome-icon class="star" icon="star"></font-awesome-icon>
+        <font-awesome-icon class="star" icon="star"></font-awesome-icon>
+      </div>
       <a class="btn w-100" @click="addToCart(props.flower)">Order Now</a>
     </div>
   </div>
@@ -45,7 +52,6 @@ const addToCart = async (item) => {
     quantity: 1, // Make sure quantity is a reactive property if needed
     price: item.price,
   });
-
 };
 </script>
 
@@ -99,6 +105,25 @@ const addToCart = async (item) => {
       background-color: #784b77;
       color: #fcf5fc;
     }
+  }
+  .rate {
+    .star {
+      color: gray;
+      cursor: pointer;
+    }
+  }
+
+  .rate .star:hover,
+  .rate .star:hover ~ .star {
+    color: #784b77;
+  }
+
+  .rate .star:nth-of-type(1):hover,
+  .rate .star:nth-of-type(2):hover ~ .star:nth-of-type(-n + 2),
+  .rate .star:nth-of-type(3):hover ~ .star:nth-of-type(-n + 3),
+  .rate .star:nth-of-type(4):hover ~ .star:nth-of-type(-n + 4),
+  .rate .star:nth-of-type(5):hover ~ .star:nth-of-type(-n + 5) {
+    color: #784b77;
   }
 }
 </style>

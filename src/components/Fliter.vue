@@ -14,7 +14,7 @@
                 <input
                   type="checkbox"
                   :id="`category_` + cat.id"
-                  class="custom-control-input checkmark"
+                  class="custom-control-input checkmark ms-2"
                   :value="cat.title"
                   @click="fetchFliter(cat.id, undefined)"
                 />
@@ -41,10 +41,13 @@
                   type="checkbox"
                   :id="`occasion_` + occasion.id"
                   :value="occasion.title"
-                  class="custom-control-input checkmark"
+                  class="custom-control-input checkmark ms-2"
                   @click="fetchFliter(undefined, occasion.id)"
                 />
-                <label :for="`occasion_` + occasion.id" class="custom-control-label">
+                <label
+                  :for="`occasion_` + occasion.id"
+                  class="custom-control-label"
+                >
                   {{ occasion.title }}
                 </label>
               </div>
@@ -53,7 +56,7 @@
         </div>
       </div>
 
-      <div class="sidebar-item">
+      <div class="sidebar-item ltr">
         <h3 class="sidebar-title">Price</h3>
         <div class="sidebar-body">
           <ul>
@@ -106,122 +109,6 @@
       </div>
 
       <p class="reset-price clear my-3">Reset</p>
-
-      <!-- <div class="sidebar-item">
-        <h3 class="sidebar-title">Color</h3>
-        <div class="sidebar-body">
-          <ul>
-            <li>
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  id="White"
-                  class="custom-control-input checkmark"
-                  value="Pink"
-                  @change="HandleClick"
-                />
-                <label for="White" class="custom-control-label"> Pink </label>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div> -->
-
-      <!-- <div class="sidebar-item">
-        <h3 class="sidebar-title">Brands</h3>
-        <div class="sidebar-body">
-          <ul>
-            <li>
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  id="Dumerah"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Dumerah" class="custom-control-label">
-                  Dumerah
-                </label>
-              </div>
-
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  id="Fleur"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Fleur" class="custom-control-label"
-                  >Fleur Chocolates
-                </label>
-              </div>
-
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  id="Voila"
-                  class="custom-control-input checkmark"
-                />
-                <label for="Voila" class="custom-control-label"> Voila </label>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="sidebar-item">
-        <h3 class="sidebar-title">Extra Products</h3>
-        <div class="sidebar-body">
-          <ul>
-            <li>
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  id="isNotExtraProducts"
-                  class="custom-control-input checkmark"
-                />
-                <label for="isNotExtraProducts" class="custom-control-label">
-                  Is Not Extra Products
-                </label>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="sidebar-item">
-        <h3 class="sidebar-title">Extra Products</h3>
-        <div class="sidebar-body">
-          <ul>
-            <li>
-              <div class="custom-control custom-checkbox mb-2">
-                <input
-                  type="checkbox"
-                  id="isNotExtraProducts"
-                  class="custom-control-input checkmark"
-                />
-                <label for="isNotExtraProducts" class="custom-control-label">
-                  Is Not Extra Products
-                </label>
-              </div>
-            </li>
-
-            <li>
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  id="isNotSpecialDeals_Desktop"
-                  class="custom-control-input checkmark"
-                />
-                <label
-                  for="isNotSpecialDeals_Desktop"
-                  class="custom-control-label"
-                >
-                  Is Not Special Deal
-                </label>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div> -->
     </aside>
   </div>
 </template>
@@ -304,7 +191,9 @@ const getAllCategories = async () => {
   Categories.value = jsonResponse.data;
 };
 const getAllOccasions = async () => {
-  const OccasionsResonse = await fetch(`https://flowerest.e1s.me/api/occasions`);
+  const OccasionsResonse = await fetch(
+    `https://flowerest.e1s.me/api/occasions`
+  );
   const jsonResponse = await OccasionsResonse.json();
   Occasions.value = jsonResponse.data;
 };
@@ -323,6 +212,9 @@ watchEffect(() => {});
     font-weight: 700;
     font-size: 1.125rem;
     line-height: 1.25rem;
+  }
+  .ltr {
+    direction: ltr;
   }
   .sidebar-body {
     ul {
