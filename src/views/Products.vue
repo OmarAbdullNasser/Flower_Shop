@@ -8,7 +8,7 @@
         </div>
         <!-- Loader -->
 
-        <div class="col-12 col-lg-9 row align-content-start">
+        <div class="col-12 col-md-12 col-lg-9 row align-content-start">
           <SearchBar
             class="col-12 searchBar"
             :initialSort="sortOption"

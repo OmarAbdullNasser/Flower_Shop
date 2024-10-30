@@ -126,4 +126,9 @@ const addToCart = async (item) => {
     color: #784b77;
   }
 }
+@media screen and (max-width: 991.9px) {
+  .card {
+    width: 100%;
+  }
+}
 </style>
