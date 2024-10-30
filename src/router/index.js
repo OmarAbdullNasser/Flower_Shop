@@ -1,16 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
-import Products from "@/views/Products.vue";
-import Landscape from "@/views/Landscape.vue";
-import Events from "@/views/Events.vue";
-import Product from "@/views/Product.vue";
-import Cart from "@/views/Cart.vue";
-import ContentUs from "@/views/ContentUs.vue";
-import NotFound from "@/views/NotFound.vue";
+
 import store from "@/store";
-import Chechout from "@/views/Chechout.vue";
-import SinglePage from "@/views/SinglePage.vue";
-import Router from "vue-router";
+
 
 const routes = [
   {
@@ -20,43 +11,43 @@ const routes = [
   {
     path: "/:lang(en|ar)",
     name: "home",
-    component: Home,
+    component: () => import("@/views/Home.vue"),
   },
   {
     path: "/:lang(en|ar)/shop",
     name: "shop",
-    component: Products,
+    component: () => import("@/views/Products.vue"),
   },
   {
     path: "/:lang(en|ar)/Landscape",
     name: "Landscape",
-    component: Landscape,
+    component: () => import("@/views/Landscape.vue"),
   },
   {
     path: "/:lang(en|ar)/Events",
     name: "Events",
-    component: Events,
+    component: () => import("@/views/Events.vue"),
   },
 
   {
     path: "/:lang(en|ar)/Product/:slug",
     name: "Product",
-    component: Product,
+    component: () => import("@/views/Product.vue"),
   },
   {
     path: "/:lang(en|ar)/Cart",
     name: "Cart",
-    component: Cart,
+    component: () => import("@/views/Cart.vue"),
   },
   {
     path: "/:lang(en|ar)/contact-us",
     name: "Conenctus",
-    component: ContentUs,
+    component: () => import("@/views/ContentUs.vue"),
   },
   {
     path: "/:lang(en|ar)/checkout",
     name: "checkout",
-    component: Chechout,
+    component: () => import("@/views/Chechout.vue"),
     // beforeEnter: (to, from, next) => {
     //   // Check if the cart is empty using Vuex state
     //   const isCartEmpty = store.getters["Cart/cartItems"];
@@ -73,12 +64,12 @@ const routes = [
   {
     path: "/:lang(en|ar)/pages/:Pagename",
     name: "SinglePage",
-    component: SinglePage,
+    component: () => import("@/views/SinglePage.vue"),
   },
   {
     path: "/:lang(en|ar)?/:pathMatch(.*)*", // Catch-all route for not found pages
     name: "NotFound",
-    component: NotFound,
+    component: () => import("@/views/NotFound.vue"),
     beforeEnter: (to, from, next) => {
       // If lang is not specified, redirect to default ('en')
       if (!to.params.lang) {
