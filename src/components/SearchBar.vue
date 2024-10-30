@@ -129,6 +129,9 @@ const meta = computed(() => store.getters.Meta);
         white-space: nowrap;
         padding-right: 0.9375rem;
       }
+      select {
+        width: 100%;
+      }
     }
   }
 }
