@@ -48,6 +48,7 @@
               >
                 Buy Now
               </button>
+              <FeedBackFrom />
             </div>
 
             <div class="price-line1 d-flex">
@@ -83,6 +84,7 @@
 </template>
 
 <script setup>
+import FeedBackFrom from "@/components/FeedBackFrom.vue";
 import { inject, onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
