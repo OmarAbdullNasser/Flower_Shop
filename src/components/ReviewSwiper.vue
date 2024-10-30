@@ -229,6 +229,7 @@ const modules = [Navigation];
   background: #fff;
   padding-top: 3rem;
   padding-bottom: 5rem;
+  direction: ltr;
   .HeaderText {
     h2 {
       font-style: italic;
