@@ -3,11 +3,7 @@
     <div class="container">
       <div class="navbar-brand text-center">
         <span class="navbar-logo">
-          <router-link
-            :to="{
-              path: `/home  `,
-            }"
-          >
+          <router-link :to="{ name: 'home' }">
             <img
               src="../assets/logo_brand.png"
               alt="Mobirise"
