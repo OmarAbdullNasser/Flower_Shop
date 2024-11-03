@@ -80,7 +80,6 @@ const filteredImages = computed(() => {
     return Data.value.filter((item) => item.title === selectedCategory.value);
   }
 });
-console.log(Data.value);
 </script>
 
 <style lang="scss" scoped>

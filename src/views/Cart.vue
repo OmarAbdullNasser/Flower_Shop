@@ -136,6 +136,8 @@
         >
       </div>
     </div>
+
+    <MorePrettyVue />
     <div v-if="isLoading" class="col-12 my-5">
       <div class="d-flex justify-content-center">
         <div class="loader text-primary" role="status"></div>
@@ -150,6 +152,7 @@ import { computed, inject, onMounted, watchEffect, ref } from "vue";
 import { useRoute } from "vue-router";
 import { Modal } from "bootstrap";
 import { toast } from "vue3-toastify";
+import MorePrettyVue from "@/components/MorePretty.vue";
 
 name = "Cart";
 // Access Vuex store
