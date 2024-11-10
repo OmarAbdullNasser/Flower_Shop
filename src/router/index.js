@@ -8,12 +8,10 @@ import Cart from "@/views/Cart.vue";
 import ContentUs from "@/views/ContentUs.vue";
 import NotFound from "@/views/NotFound.vue";
 import store from "@/store";
-<<<<<<< Updated upstream
+
 import Chechout from "@/views/Chechout.vue";
 import SinglePage from "@/views/SinglePage.vue";
 import Router from "vue-router";
-=======
->>>>>>> Stashed changes
 
 const routes = [
   {
@@ -65,11 +63,10 @@ const routes = [
   {
     path: "/:lang(en|ar)/checkout",
     name: "checkout",
-<<<<<<< Updated upstream
-    component: Chechout,
-=======
+    // component: Chechout,
+
     component: () => import("@/views/CO(Phase3).vue"),
->>>>>>> Stashed changes
+
     // beforeEnter: (to, from, next) => {
     //   // Check if the cart is empty using Vuex state
     //   const isCartEmpty = store.getters["Cart/cartItems"];
