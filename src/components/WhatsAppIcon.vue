@@ -16,13 +16,24 @@
         </div>
         <div class="card-body">
           <ul class="p-0">
-            <li class="text-center">
+            <li class="text-center" v-for="name in people" :key="name.id">
+              <a
+                :href="`https://wa.me/${name.number}`"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h5 class="card-title">{{ name.title }}</h5>
+                <small>Aavaiable</small>
+              </a>
+              <hr class="m-0" />
+            </li>
+            <!-- <li class="text-center">
               <a href="#">
                 <h5 class="card-title">Oamr</h5>
                 <small>Aavaiable</small>
               </a>
+          
             </li>
-            <hr />
             <li class="text-center">
               <a href="#">
                 <h5 class="card-title">Awra</h5>
@@ -35,7 +46,7 @@
                 <h5 class="card-title">Basma</h5>
                 <small>Aavaiable</small>
               </a>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -44,14 +55,32 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { inject, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 
 name: "WhatsAppIcon";
 const isDivVisible = ref(false);
-
+const route = useRoute();
+const url = inject("url");
+const people = ref([]);
 const toggleDiv = () => {
   isDivVisible.value = !isDivVisible.value;
 };
+
+const FetchData = async (lang) => {
+  const IconResponse = await fetch(`${url}/whatsapp-contacts/list`, {
+    method: "GET", // Specify the method if needed
+    headers: {
+      "Accept-Language": `${lang}`,
+    },
+  });
+  const respons = await IconResponse.json();
+  const Content = respons.data;
+  people.value = Content;
+};
+onMounted(async () => {
+  await FetchData(route.params.lang);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -89,7 +118,7 @@ const toggleDiv = () => {
       ul {
         list-style: none;
         li {
-          padding: 10px;
+          padding: 20px;
           margin: 5px 0;
           background-color: #f9f9f9;
           border-radius: 6px;
@@ -108,16 +137,6 @@ const toggleDiv = () => {
     }
   }
 }
-
-// .fade-enter-active,
-// .fade-leave-active {
-//   transition: opacity 0.5s ease; /* Smooth transition for both entering and leaving */
-// }
-
-// .fade-enter,
-// .fade-leave-to {
-//   opacity: 0; /* Start and end state for fade effect */
-// }
 
 .fade-enter-active {
   animation: smooth-bounce-in 0.8s ease-in-out; /* Increased duration for smoother effect */

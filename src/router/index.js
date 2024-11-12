@@ -47,7 +47,13 @@ const routes = [
   {
     path: "/:lang(en|ar)/checkout",
     name: "checkout",
+<<<<<<< Updated upstream
     component: () => import("@/views/Chechout.vue"),
+=======
+    // component: Chechout,
+    component: () => import("@/views/CO(Phase3).vue"),
+
+>>>>>>> Stashed changes
     // beforeEnter: (to, from, next) => {
     //   // Check if the cart is empty using Vuex state
     //   const isCartEmpty = store.getters["Cart/cartItems"];
