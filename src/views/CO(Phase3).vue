@@ -60,62 +60,6 @@
             <button class="btn">Next</button>
           </div>
         </div>
-        <div class="col-12- col-lg-3 total"></div>
-        <div
-          class="stage first"
-          :class="{ active: phase >= 1 }"
-          @click="phase = 1"
-        >
-          1
-        </div>
-        <div class="stage secand" :class="{ active: phase >= 2 }">2</div>
-        <div class="stage thrid" :class="{ active: phase === 3 }">3</div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-lg-9 Stages">
-          <FristStage v-if="phase === 1" />
-          <SecandStage v-else-if="phase === 2" />
-
-          <button class="btn btn-next" @click="NextPhase">Next</button>
-        </div>
-
-        <div class="total col-12 col-lg-3">
-          <router-link :to="{ name: 'Cart' }">Edit Cart</router-link>
-          <div class="items my-3">
-            <ul class="p-0">
-              <li class="d-flex mb-3">
-                <span>Hedya (100 Roses)</span> <span>7,390.00 EGP</span>
-              </li>
-              <li class="d-flex mb-3">
-                <span>Shipping Fees </span> <span>Free shipping </span>
-              </li>
-            </ul>
-          </div>
-          <a
-            role="button"
-            class="PromoCode"
-            @click="PromoCode = !PromoCode"
-            v-if="!PromoCode"
-            >Enter Promocode</a
-          >
-          <div
-            class="PromoCodeFiled d-flex align-items-center"
-            v-if="PromoCode"
-          >
-            <div class="d-flex">
-              <input type="text" placeholder="Enter Promo Code " />
-              <button>APPLY</button>
-            </div>
-            <font-awesome-icon
-              icon="fa-regular fa-circle-xmark"
-              @click="PromoCode = !PromoCode"
-            />
-          </div>
-          <hr />
-          <h5 class="d-flex">
-            <span>Grand Total</span> <span>7,390.00 EGP</span>
-          </h5>
-        </div>
       </div>
     </div>
   </div>
@@ -129,7 +73,6 @@ import { ref } from "vue";
 const SenderBox = ref("ToSomeOne");
 const ToggleSender = (to) => {
   SenderBox.value = to;
-  console.log(SenderBox.value);
 };
 </script>
 
@@ -214,6 +157,15 @@ const ToggleSender = (to) => {
       background-repeat: no-repeat;
       margin: 40px 0 20px 0px;
       transition: 0.2s all ease-in-out;
+    }
+  }
+}
+@media screen and (max-width: 991.9px) {
+  .checkpout2 {
+    .NextStage {
+      button {
+        width: 100%;
+      }
     }
   }
 }
