@@ -193,7 +193,7 @@ const SetPhase = () => {
 }
 @media screen and (max-width: 991.9px) {
   .checkpout2 {
-    .NextStage {
+    .SendrInfo {
       button {
         width: 100%;
       }

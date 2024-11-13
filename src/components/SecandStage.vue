@@ -43,7 +43,7 @@
         </div>
 
         <div class="Area">
-          <label for="Area">Area <span>*</span></label>
+          <label for="Area">Area <span class="star">*</span></label>
           <select name="Area" id="">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -55,26 +55,71 @@
           </select>
         </div>
 
-        <div class="Street">
-          <div class="SName">
-            <label for="SName">Street Name <span>*</span></label>
+        <div class="Street d-flex justify-content-between flex-wrap">
+          <div class="SName d-flex flex-column">
+            <label for="SName">Street Name <span class="star">*</span></label>
             <input type="text" name="SName" id="" />
+            <span>Preferably in Arabic if possible for more accuracy </span>
           </div>
 
-          <div class="Apartment">
-            <label for="Apartment">Apartment No. <span>*</span></label>
+          <div class="Apartment d-flex flex-column">
+            <label for="Apartment"
+              >Apartment No. <span class="star">*</span></label
+            >
             <input type="text" name="Apartment" id="" />
           </div>
 
-          <div class="Floor">
-            <label for="Floor ">Floor <span>*</span></label>
+          <div class="Floor d-flex flex-column">
+            <label for="Floor ">Floor <span class="star">*</span></label>
             <input type="text" name="Floor " id="" />
           </div>
         </div>
 
-        <div class="Greeting">
+        <div class="Greeting d-flex flex-column mt-3">
           <label for="Greeting">Greeting Card Message </label>
-          <textarea name="Greeting " id="" cols="30" rows="10"></textarea>
+          <textarea name="Greeting " id="" cols="5" rows="2"></textarea>
+        </div>
+        <hr />
+      </div>
+      <div class="SenderInfo py-3">
+        <h4>Sender Information</h4>
+
+        <div class="FullName d-flex flex-wrap">
+          <div class="FristName d-flex flex-column">
+            <label for="FName">First Name <span class="star">*</span></label>
+            <input type="text" name="FName" id="" />
+          </div>
+
+          <div class="LastName d-flex flex-column">
+            <label for="LName "> Last Name <span class="star">*</span></label>
+            <input type="text" name="LName" id="" />
+          </div>
+        </div>
+
+        <div class="PhoneNmber d-flex flex-column">
+          <label for="phone"> Phone <span class="star">*</span></label>
+          <input
+            type="tel"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+            name="phone"
+            id=""
+          />
+        </div>
+
+        <div class="Email d-flex flex-column">
+          <label for="email"> Email <span class="star">*</span></label>
+          <input type="email" name="email" id="" />
+        </div>
+
+        <div class="opations">
+          <p class="mb-0">
+            <input type="radio" name="Sender" id="ShowName" />
+            <label for="ShowName">Show my name on delivery</label>
+          </p>
+          <p class="mb-0">
+            <input type="radio" name="Sender" id="HideName" />
+            <label for="HideName">Hide my name on delivery</label>
+          </p>
         </div>
       </div>
     </div>
@@ -85,6 +130,9 @@
 
 <style lang="scss" scoped>
 .SecandStage {
+  .star {
+    color: red;
+  }
   .InfoAddress {
     label {
       font-weight: 400;
@@ -93,11 +141,10 @@
       letter-spacing: 0;
       margin: 15px 0 4px 0;
     }
-    .star {
-      color: red;
-    }
+
     .name,
-    .Mobile {
+    .Mobile,
+    .Street {
       input {
         border: 1px solid #400a3f;
         line-height: 35px;
@@ -108,6 +155,7 @@
         background-color: #fefefd;
         height: auto;
         width: 80%;
+        outline: none;
       }
     }
     .Deliver {
@@ -128,6 +176,117 @@
         input {
           accent-color: #400a3f;
         }
+      }
+    }
+    .Area {
+      select {
+        display: block;
+        padding: 10px 15px;
+        border-radius: 4px;
+        transition: 0.2s all;
+        background-color: #fefefd;
+        width: 80%;
+      }
+    }
+    .Street {
+      width: 80%;
+      gap: 1.2rem;
+      .SName {
+        flex-grow: 2;
+        span {
+          font-size: 13px;
+        }
+      }
+      input {
+        width: auto;
+        outline: none;
+      }
+    }
+
+    .Greeting {
+      width: 80%;
+      textarea {
+        resize: none;
+        line-height: 1.5;
+        padding: 10px 16px;
+        height: 90px;
+        outline: none;
+        border: 1px solid #400a3f;
+        border-radius: 4px;
+        font-size: 12px;
+        transition: 0.2s all;
+        background-color: #fefefd;
+      }
+    }
+    hr {
+      width: 80%;
+    }
+  }
+  .SenderInfo {
+    h4 {
+      color: #1d1d1b;
+      font-size: 14px;
+      margin: 0 3px 15px;
+      font-weight: bold;
+    }
+    label {
+      font-weight: 400;
+      font-size: 12px;
+      color: #202020;
+      letter-spacing: 0;
+      margin: 15px 0 4px 0;
+    }
+    input {
+      border: 1px solid #400a3f;
+      line-height: 35px;
+      padding: 0 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      transition: 0.2s all;
+      background-color: #fefefd;
+      height: auto;
+      outline: none;
+    }
+    .FullName {
+      gap: 1.5rem;
+      width: 80%;
+      .FristName,
+      .LastName {
+        flex-grow: 1;
+      }
+    }
+    .PhoneNmber {
+      width: 18%;
+    }
+    .Email {
+      width: 80%;
+    }
+    .opations {
+      p {
+        label {
+          color: #927091;
+          padding: 20px 0 10px 5px;
+
+          font-size: 14px;
+          font-weight: 700;
+          cursor: pointer;
+        }
+        input[type="radio"] {
+          width: 1rem;
+          height: 1rem;
+          &:checked {
+            accent-color: var(--main-color);
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 999.9px) {
+  .SecandStage {
+    .SenderInfo {
+      .PhoneNmber {
+        width: 80%;
       }
     }
   }
