@@ -52,6 +52,7 @@ const fetchHomeData = async (lang) => {
       service,
     } = respons.data;
 
+    console.log(respons.data);
     SwiperImg.value = sliders;
     ServiceData.value = { service, mission, tabs };
     PortfolioData.value = portfolio;
