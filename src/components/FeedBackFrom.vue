@@ -2,14 +2,6 @@
   <div class="FeedBack">
     <div class="container">
       <!-- Button trigger modal -->
-      <button
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Launch demo modal
-      </button>
 
       <!-- Modal -->
       <div
@@ -18,6 +10,7 @@
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
+        ref="modal"
       >
         <div class="modal-dialog">
           <div class="modal-content">
@@ -38,18 +31,29 @@
                 Thank you for taking the time to share your thought, your
                 feedback helps us bloom!
               </p>
-              <div class="rate d-flex justify-content-evenly my-1">
-                <font-awesome-icon class="star" icon="star"></font-awesome-icon>
-                <font-awesome-icon class="star" icon="star"></font-awesome-icon>
-                <font-awesome-icon class="star" icon="star"></font-awesome-icon>
-                <font-awesome-icon class="star" icon="star"></font-awesome-icon>
-                <font-awesome-icon class="star" icon="star"></font-awesome-icon>
+              <div
+                class="d-flex align-items-center justify-content-between"
+                v-for="item in product"
+                :key="item.id"
+              >
+                <div class="item d-flex align-items-center">
+                  <img
+                    :src="item.image"
+                    alt=""
+                    style="width: 50px; height: 50px"
+                  />
+                  <p class="mb-0">{{ item.title }}</p>
+                </div>
+
+                <div class="rate d-flex justify-content-evenly my-1">
+                  <font-awesome-icon
+                    v-for="(star, index) in 5"
+                    :key="index"
+                    class="star"
+                    icon="star"
+                  ></font-awesome-icon>
+                </div>
               </div>
-              <textarea
-                name="Feedback"
-                class="Feedback mt-3"
-                placeholder="Penny for your thoughts?"
-              ></textarea>
             </div>
 
             <div class="modal-footer">
@@ -70,16 +74,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
+import { Modal } from "bootstrap";
 
-const showModal = ref(false);
+const modal = ref(null);
+const props = defineProps({
+  items: Array,
+});
+const { order_id, product } = props.items;
+console.log(product, "products");
+onMounted(() => {
+  const bootstrapModal = new Modal(modal.value, {
+    backdrop: "static",
+    keyboard: false,
+  });
 
-const openModal = () => {
-  showModal.value = true;
-};
-const closeModal = () => {
-  closeModal.value = false;
-};
+  bootstrapModal.show();
+  console.log(props.items, "items form rating tab");
+});
 </script>
 
 <style lang="scss" scoped>
@@ -102,7 +114,7 @@ const closeModal = () => {
       .star {
         color: gray;
         cursor: pointer;
-        font-size: 2.5rem;
+        font-size: 1.8rem;
         transition: all 0.3s;
       }
     }
@@ -138,20 +150,6 @@ const closeModal = () => {
       transition-delay: 0.2s;
     }
 
-    // .rate .star:hover,
-    // .rate .star:hover ~ .star {
-    //   //   color: #784b77;
-    //   color: #ecbc26;
-    // }
-
-    // .rate .star:nth-of-type(1):hover,
-    // .rate .star:nth-of-type(2):hover ~ .star:nth-of-type(-n + 2),
-    // .rate .star:nth-of-type(3):hover ~ .star:nth-of-type(-n + 3),
-    // .rate .star:nth-of-type(4):hover ~ .star:nth-of-type(-n + 4),
-    // .rate .star:nth-of-type(5):hover ~ .star:nth-of-type(-n + 5) {
-    //   color: #ecbc26;
-    // }
-
     .Feedback {
       border-radius: 12px;
       resize: none;
@@ -165,5 +163,8 @@ const closeModal = () => {
       color: #fff;
     }
   }
+}
+.item {
+  gap: 2rem;
 }
 </style>

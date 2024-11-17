@@ -152,8 +152,6 @@ const store = useStore();
 const url = inject("url");
 const selectedMethod = ref(0); // Holds the currently selected method
 const CartCookie = computed(() => store.getters["Cart/Cookies"]);
-// const CartItem = computed(() => store.getters["Cart/cartItems"]);
-// const TotalMoney = computed(() => store.getters["Cart/TotalMoney"]);
 const Prodects = ref([]);
 const TM = ref(0);
 const FullName = ref("");

@@ -1,7 +1,7 @@
 <template>
   <div class="loader mx-auto my-3" v-if="loading"></div>
   <div class="home" v-else>
-    <FeedBackFrom v-if="Rating" />
+    <FeedBackFrom v-if="Rating" :items="ItemsRating" />
     <Swiper :initialImages="SwiperImg" />
     <Message />
     <Services :initialData="ServiceData" />
@@ -19,7 +19,7 @@ import Message from "@/components/message.vue";
 import Portfolio from "@/components/Portfolio.vue";
 import Services from "@/components/Services.vue";
 import Swiper from "@/components/Swiper.vue";
-
+import { useStore } from "vuex";
 import { onMounted, ref, watchEffect, watch, computed } from "vue";
 import { useHead } from "@vueuse/head";
 import { useRoute } from "vue-router";
@@ -29,6 +29,7 @@ import FeedBackFrom from "@/components/FeedBackFrom.vue";
 name: "Home";
 const url = "https://flowerest.e1s.me/api";
 
+const store = useStore();
 const route = useRoute();
 const loading = ref(true);
 const SwiperImg = ref([]);
@@ -39,13 +40,17 @@ const metaData = ref(null);
 const OrderId = computed(() => store.getters["Cart/OrederId"]);
 const ItemsRating = ref([]);
 const fetchHomeData = async (lang) => {
+  console.log(OrderId.value);
   try {
-    const HomeResponse = await fetch(`${url}/home?order_cookie=${OrderId}`, {
-      method: "GET", // Specify the method if needed
-      headers: {
-        "Accept-Language": `${lang}`,
-      },
-    });
+    const HomeResponse = await fetch(
+      `${url}/home?order_cookie=${OrderId.value}`,
+      {
+        method: "GET", // Specify the method if needed
+        headers: {
+          "Accept-Language": `${lang}`,
+        },
+      }
+    );
 
     const respons = await HomeResponse.json();
     const {
