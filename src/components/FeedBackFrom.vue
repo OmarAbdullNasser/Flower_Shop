@@ -51,10 +51,10 @@
                     :key="index"
                     class="star"
                     icon="star"
+                    :class="{ selected: star <= item.rating }"
                     @click="setRating(item.id, star)"
                   ></font-awesome-icon>
                 </div>
-                <p>Rating: {{ item.rating }} / 5</p>
               </div>
             </div>
 
@@ -80,18 +80,22 @@ import { ref, watch, onMounted } from "vue";
 import { Modal } from "bootstrap";
 
 const modal = ref(null);
+const HoverIndex = ref(-1);
+
 const props = defineProps({
   items: Array,
 });
 const { order_id, product } = props.items;
 console.log(product, "products");
 
+// Update rating for a specific item on click
 const setRating = (itemId, rating) => {
   const item = product.find((item) => item.id === itemId);
   if (item) {
-    item.rating = rating; // Update the rating
+    item.rating = rating; // Set the permanent rating
   }
 };
+
 onMounted(() => {
   const bootstrapModal = new Modal(modal.value, {
     backdrop: "static",
@@ -119,7 +123,6 @@ onMounted(() => {
       line-height: 2;
     }
     .rate {
-      direction: rtl;
       .star {
         color: gray;
         cursor: pointer;
@@ -127,17 +130,28 @@ onMounted(() => {
         transition: all 0.3s;
       }
     }
+    // .star.active,
+    // .star:hover ~ .star.active {
+    //   color: gold;
+    // }
 
+    // .star:hover,
+    // .star.active ~ .star {
+    //   color: gold;
+    // }
     .rate .star {
       cursor: pointer;
       transition: color 0.1s;
     }
 
-    .rate .star:hover,
-    .rate .star:hover ~ .star {
-      color: #ecbc26;
+    // .rate .star:hover,
+    // .rate .star:hover ~ .star {
+    //   color: #ecbc26;
+    // }
+    .star.highlighted,
+    .star.selected {
+      color: gold;
     }
-
     /* Add transition delay for each star */
     .rate .star:nth-of-type(1) {
       transition-delay: 0s;
