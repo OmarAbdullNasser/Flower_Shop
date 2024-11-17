@@ -51,8 +51,10 @@
                     :key="index"
                     class="star"
                     icon="star"
+                    @click="setRating(item.id, star)"
                   ></font-awesome-icon>
                 </div>
+                <p>Rating: {{ item.rating }} / 5</p>
               </div>
             </div>
 
@@ -83,6 +85,13 @@ const props = defineProps({
 });
 const { order_id, product } = props.items;
 console.log(product, "products");
+
+const setRating = (itemId, rating) => {
+  const item = product.find((item) => item.id === itemId);
+  if (item) {
+    item.rating = rating; // Update the rating
+  }
+};
 onMounted(() => {
   const bootstrapModal = new Modal(modal.value, {
     backdrop: "static",
