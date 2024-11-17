@@ -62,6 +62,7 @@
               @input="validateNumberInput"
               placeholder="010XXXXXXXXX"
               v-model="phone"
+              maxlength="10"
               required
             />
             <label for="email" class="my-3"> البريد الالكتروني </label>
@@ -114,11 +115,27 @@
             <button
               class="buy-btn btn w-100"
               @click="SendOrder(FullName, phone, adders, email)"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
             >
               ادفع
             </button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+      ref="modalRef"
+    >
+      <div class="modal-dialog">
+        <div class="loader text-primary mx-auto" role="status"></div>
       </div>
     </div>
   </div>
@@ -129,6 +146,7 @@ import { ref, inject, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
+import { Modal } from "bootstrap";
 name: "checkout";
 const store = useStore();
 const url = inject("url");
@@ -139,11 +157,13 @@ const CartCookie = computed(() => store.getters["Cart/Cookies"]);
 const Prodects = ref([]);
 const TM = ref(0);
 const FullName = ref("");
-const phone = ref();
+const phone = ref("");
 const adders = ref("");
 const email = ref("");
 const router = useRouter();
 
+const modalRef = ref(null);
+const closeModal = () => Modal.getInstance(modalRef.value)?.hide();
 // Function to select a payment method
 const selectMethod = (method) => {
   selectedMethod.value = method; // Update the selected method
@@ -180,10 +200,12 @@ const validateNumberInput = (e) => {
   e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Replace any non-digit character with an empty string
 };
 const SendOrder = async (name, phone, adders, email) => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
   try {
-    const response = await fetch(`${url}/checkout`, {
+    const response = await fetch(`https://flowerest.e1s.me/api/checkout`, {
       method: "POST",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -195,22 +217,26 @@ const SendOrder = async (name, phone, adders, email) => {
         payment_method_id: 1,
       }),
     });
-
-    // Parse the JSON response
     const OrderResponse = await response.json();
-    // Prodects.value = Prodects.value.filter((item) => item.id !== id);
-    console.log(OrderResponse);
+    // Parse the JSON response
+
     if (!response.ok) {
       throw new Error(
         OrderResponse.message || "Failed to update product in cart"
       );
     } else {
-      toast.success("Product Ordered successfully!", {
-        autoClose: 4000, // Close after 2 seconds
-        position: "top-right",
-      });
+      const data = OrderResponse.data;
+      const { cookie_value2: OrderId } = data;
+      store.commit("Cart/SET_ORDERID", OrderId);
+      closeModal();
+      store.commit("Cart/CLEAR_CART");
+      store.commit("Cart/CLEAR_COOKIE");
+      router.push("/"), 5000;
     }
-    setTimeout(() => router.push("/"), 5000);
+    toast.success("Product Ordered successfully!", {
+      autoClose: 4000, // Close after 2 seconds
+      position: "top-right",
+    });
   } catch (error) {
     console.error("Error make order from cart:", error);
     // Handle error appropriately (e.g., show notification)
@@ -329,6 +355,48 @@ onMounted(() => FetchDataCart());
         border-radius: 0 15px 15px 0;
       }
     }
+  }
+}
+.modal-dialog {
+  position: absolute;
+  top: 50%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  margin: auto;
+}
+.loader {
+  width: 60px;
+  aspect-ratio: 1;
+  border: 15px solid #ddd;
+  border-radius: 50%;
+  position: relative;
+  transform: rotate(45deg);
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  border: 15px solid #514b82;
+  animation: l18 2s infinite linear;
+}
+@keyframes l18 {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
   }
 }
 </style>

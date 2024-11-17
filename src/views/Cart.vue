@@ -291,7 +291,6 @@ const removeAllProducts = async () => {
 
     // Parse the JSON response
     const RemoveAllResponse = await response.json();
-    console.log(RemoveAllResponse);
     store.commit("Cart/CLEAR_CART");
     closeModal();
     const modalBackdrops = document.querySelectorAll(".modal-backdrop");

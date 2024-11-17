@@ -1,6 +1,7 @@
 <template>
   <div class="loader mx-auto my-3" v-if="loading"></div>
   <div class="home" v-else>
+    <FeedBackFrom v-if="Rating" />
     <Swiper :initialImages="SwiperImg" />
     <Message />
     <Services :initialData="ServiceData" />
@@ -18,10 +19,12 @@ import Message from "@/components/message.vue";
 import Portfolio from "@/components/Portfolio.vue";
 import Services from "@/components/Services.vue";
 import Swiper from "@/components/Swiper.vue";
+
 import { onMounted, ref, watchEffect, watch, computed } from "vue";
 import { useHead } from "@vueuse/head";
 import { useRoute } from "vue-router";
 import ReviewSwiper from "@/components/ReviewSwiper.vue";
+import FeedBackFrom from "@/components/FeedBackFrom.vue";
 
 name: "Home";
 const url = "https://flowerest.e1s.me/api";
@@ -33,10 +36,11 @@ const ServiceData = ref({});
 const PortfolioData = ref({});
 const ArticaleData = ref({});
 const metaData = ref(null);
-
+const OrderId = computed(() => store.getters["Cart/OrederId"]);
+const ItemsRating = ref([]);
 const fetchHomeData = async (lang) => {
   try {
-    const HomeResponse = await fetch(`${url}/home`, {
+    const HomeResponse = await fetch(`${url}/home?order_cookie=${OrderId}`, {
       method: "GET", // Specify the method if needed
       headers: {
         "Accept-Language": `${lang}`,
@@ -45,6 +49,7 @@ const fetchHomeData = async (lang) => {
 
     const respons = await HomeResponse.json();
     const {
+      order_to_rate,
       sliders,
       contact_us,
       makers,
@@ -54,7 +59,7 @@ const fetchHomeData = async (lang) => {
       tabs,
       service,
     } = respons.data;
-
+    ItemsRating.value = order_to_rate;
     SwiperImg.value = sliders;
     ServiceData.value = { service, mission, tabs };
     PortfolioData.value = portfolio;
@@ -70,7 +75,13 @@ const checkLoader = () => {
     loading.value = false;
   }
 };
-
+const Rating = () => {
+  if (ItemsRating.value.length) {
+    return true;
+  } else {
+    return false;
+  }
+};
 // Watch for changes in the route's lang parameter and refetch the data
 watch(
   () => route.params.lang, // Watch the 'lang' parameter in the route
