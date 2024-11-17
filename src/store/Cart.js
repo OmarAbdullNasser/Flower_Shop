@@ -118,6 +118,9 @@ const Cart = {
     CLEAR_COOKIE(state) {
       state.cart_cookie = null;
     },
+    CLEAR_ORDERID(state) {
+      state.OrederId = null;
+    },
   },
 };
 export default Cart;

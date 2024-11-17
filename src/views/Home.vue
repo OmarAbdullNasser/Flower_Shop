@@ -1,11 +1,11 @@
 <template>
   <div class="loader mx-auto my-3" v-if="loading"></div>
   <div class="home" v-else>
-    <FeedBackFrom v-if="Rating" :items="ItemsRating" />
+    <FeedBackFrom v-if="isVisable" :items="ItemsRating" />
     <Swiper :initialImages="SwiperImg" />
     <Message />
     <Services :initialData="ServiceData" />
-    <ReviewSwiper />
+    <ReviewSwiper :initialData="Review" />
     <Portfolio :initialData="PortfolioData" />
     <Articale :initialData="ArticaleData" />
     <ContectForm />
@@ -39,8 +39,9 @@ const ArticaleData = ref({});
 const metaData = ref(null);
 const OrderId = computed(() => store.getters["Cart/OrederId"]);
 const ItemsRating = ref([]);
+const Review = ref([]);
+const isVisable = ref(false);
 const fetchHomeData = async (lang) => {
-  console.log(OrderId.value);
   try {
     const HomeResponse = await fetch(
       `${url}/home?order_cookie=${OrderId.value}`,
@@ -70,6 +71,15 @@ const fetchHomeData = async (lang) => {
     PortfolioData.value = portfolio;
     ArticaleData.value = makers;
     metaData.value = meta;
+
+    const ReviewResponse = await fetch(`${url}/reviews/list`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const ReviewRespons = await ReviewResponse.json();
+    Review.value = ReviewRespons.data;
   } catch (error) {
     console.error("Failed to fetch flowers:", error);
   }
@@ -81,10 +91,10 @@ const checkLoader = () => {
   }
 };
 const Rating = () => {
-  if (ItemsRating.value.length) {
-    return true;
+  if (ItemsRating.value.length > 0) {
+    isVisable.value = true;
   } else {
-    return false;
+    isVisable.value = false;
   }
 };
 // Watch for changes in the route's lang parameter and refetch the data

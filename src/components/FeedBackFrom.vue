@@ -66,7 +66,9 @@
               >
                 Close
               </button>
-              <button type="button" class="btn btn-send">Send Feedback</button>
+              <button type="button" class="btn btn-send" @click="SendFeedback">
+                Send Feedback
+              </button>
             </div>
           </div>
         </div>
@@ -76,12 +78,15 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { Modal } from "bootstrap";
+import { useStore } from "vuex";
 
+const store = useStore();
 const modal = ref(null);
-const HoverIndex = ref(-1);
-
+const Rates = [];
+const url = "https://flowerest.e1s.me/api";
+const OrderId = computed(() => store.getters["Cart/OrederId"]);
 const props = defineProps({
   items: Array,
 });
@@ -91,8 +96,36 @@ console.log(product, "products");
 // Update rating for a specific item on click
 const setRating = (itemId, rating) => {
   const item = product.find((item) => item.id === itemId);
+  const RatedItem = Rates.find((item) => item.id === itemId);
   if (item) {
     item.rating = rating; // Set the permanent rating
+  }
+  if (RatedItem) {
+    item.rating = rating;
+  } else {
+    Rates.push({ id: itemId, rate: item.rating });
+  }
+};
+const SendFeedback = async () => {
+  const FeddbackResponse = await fetch(`${url}/rating/add`, {
+    method: "POST", // Specify the method if needed
+    headers: {
+      Accept: "application/json",
+      "Accept-Language": `ar`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      rate: Rates,
+      order_cookie: OrderId.value,
+    }),
+  });
+  const respons = await FeddbackResponse.json();
+  if (!respons.ok) {
+    throw new Error(
+      FeddbackResponse.message || "Failed to update product in cart"
+    );
+  } else {
+    store.commit("Cart/CLEAR_ORDERID");
   }
 };
 
@@ -103,7 +136,7 @@ onMounted(() => {
   });
 
   bootstrapModal.show();
-  console.log(props.items, "items form rating tab");
+ 
 });
 </script>
 

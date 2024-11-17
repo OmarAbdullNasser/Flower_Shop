@@ -15,24 +15,23 @@
             :breakpoints="breakpoints"
             loop="true"
           >
-            <swiper-slide>
+            <swiper-slide v-for="item in props.initialData" :key="item.id">
               <div class="card mb-3">
                 <div class="row g-0">
                   <div
                     class="Img col-md-3 d-flex flex-wrap align-content-center"
                   >
                     <img
-                      src="../assets/ReviweSwiper/user.webp"
+                      :src="item.image"
                       class="img-fluid rounded-start"
                       alt="..."
                     />
                   </div>
                   <div class="col-md-9">
                     <div class="card-body">
-                      <h6 class="card-title">Tamara El-Sherbini</h6>
+                      <h6 class="card-title">{{ item.customer_name }}</h6>
                       <p class="card-text">
-                        Beautiful arrangement and prompt delivery. You never
-                        fail me!
+                        {{ item.description }}
                       </p>
                       <p class="card-text">
                         <small class="text-body-secondary"
@@ -45,7 +44,7 @@
               </div>
             </swiper-slide>
 
-            <swiper-slide>
+            <!-- <swiper-slide>
               <div class="card mb-3">
                 <div class="row g-0">
                   <div
@@ -193,7 +192,7 @@
                   </div>
                 </div>
               </div>
-            </swiper-slide>
+            </swiper-slide> -->
           </Swiper>
         </div>
       </div>
@@ -204,6 +203,9 @@
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
+const props = defineProps({
+  initialData: Array,
+});
 const breakpoints = {
   // When window width is >= 0px (small screens)
   0: {
