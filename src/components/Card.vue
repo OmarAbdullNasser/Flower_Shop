@@ -31,7 +31,9 @@
           icon="star"
         ></font-awesome-icon>
       </div>
-      <a class="btn w-100" @click="addToCart(props.flower)">Order Now</a>
+      <button class="btn w-100" @click="addToCart(props.flower)">
+        Order Now
+      </button>
     </div>
   </div>
 </template>

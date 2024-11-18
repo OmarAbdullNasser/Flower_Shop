@@ -66,7 +66,7 @@ const routes = [
     component: () => import("@/views/SinglePage.vue"),
   },
   {
-    path: "/:lang(en|ar)/Shipping",
+    path: "/:lang(en|ar)/Shipping/:id",
     name: "Shipping",
     component: () => import("@/views/ShippingPage.vue"),
   },

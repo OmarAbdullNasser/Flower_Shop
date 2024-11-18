@@ -54,15 +54,17 @@
 <script setup>
 name: "Shipping";
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const barElement = ref(null); // Reference to the .bar element
 const progressWidth = ref(0); // Variable to store the dynamic width of the progress fill
 const url = "https://flowerest.e1s.me/api";
 
-const getStatus = async () => {
+const getStatus = async (id) => {
   try {
     const StatusResponse = await fetch(
-      `${url}/show-order-shipping-status/1926470818	`,
+      `${url}/show-order-shipping-status/${id}	`,
       {
         method: "GET",
         headers: {
@@ -74,7 +76,7 @@ const getStatus = async () => {
     );
     const respon = await StatusResponse.json();
     const Data = respon.data;
-   
+
     const shippingStatuses = Data.map((item) => item.shipping_status);
     activeState(shippingStatuses);
     ColorBar();
@@ -133,7 +135,7 @@ const ColorBar = () => {
   }
 };
 onMounted(() => {
-  getStatus();
+  getStatus(route.params.id);
 });
 </script>
 
