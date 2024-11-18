@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import store from "@/store";
 
-
 const routes = [
   {
     path: "/",
@@ -65,6 +64,11 @@ const routes = [
     path: "/:lang(en|ar)/pages/:Pagename",
     name: "SinglePage",
     component: () => import("@/views/SinglePage.vue"),
+  },
+  {
+    path: "/:lang(en|ar)/Shipping",
+    name: "Shipping",
+    component: () => import("@/views/ShippingPage.vue"),
   },
   {
     path: "/:lang(en|ar)?/:pathMatch(.*)*", // Catch-all route for not found pages

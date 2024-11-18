@@ -120,7 +120,7 @@ const SendFeedback = async () => {
     }),
   });
   const respons = await FeddbackResponse.json();
-  console.log(respons);
+
   if (!respons.success) {
     throw new Error(
       FeddbackResponse.message || "Failed to update product in cart"
