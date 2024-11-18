@@ -23,11 +23,13 @@
         <span class="mx-1" v-else> EGP {{ props.flower.price }} </span>
       </p>
       <div class="rate my-1">
-        <font-awesome-icon class="star" icon="star"></font-awesome-icon>
-        <font-awesome-icon class="star" icon="star"></font-awesome-icon>
-        <font-awesome-icon class="star" icon="star"></font-awesome-icon>
-        <font-awesome-icon class="star" icon="star"></font-awesome-icon>
-        <font-awesome-icon class="star" icon="star"></font-awesome-icon>
+        <font-awesome-icon
+          v-for="(star, index) in 5"
+          :key="index"
+          class="star"
+          :class="{ rated: index <= props.flower.average_rate }"
+          icon="star"
+        ></font-awesome-icon>
       </div>
       <a class="btn w-100" @click="addToCart(props.flower)">Order Now</a>
     </div>
@@ -111,20 +113,23 @@ const addToCart = async (item) => {
       color: gray;
       cursor: pointer;
     }
+    .rated {
+      color: #784b77;
+    }
   }
 
-  .rate .star:hover,
-  .rate .star:hover ~ .star {
-    color: #784b77;
-  }
+  // .rate .star:hover,
+  // .rate .star:hover ~ .star {
+  //   color: #784b77;
+  // }
 
-  .rate .star:nth-of-type(1):hover,
-  .rate .star:nth-of-type(2):hover ~ .star:nth-of-type(-n + 2),
-  .rate .star:nth-of-type(3):hover ~ .star:nth-of-type(-n + 3),
-  .rate .star:nth-of-type(4):hover ~ .star:nth-of-type(-n + 4),
-  .rate .star:nth-of-type(5):hover ~ .star:nth-of-type(-n + 5) {
-    color: #784b77;
-  }
+  // .rate .star:nth-of-type(1):hover,
+  // .rate .star:nth-of-type(2):hover ~ .star:nth-of-type(-n + 2),
+  // .rate .star:nth-of-type(3):hover ~ .star:nth-of-type(-n + 3),
+  // .rate .star:nth-of-type(4):hover ~ .star:nth-of-type(-n + 4),
+  // .rate .star:nth-of-type(5):hover ~ .star:nth-of-type(-n + 5) {
+  //   color: #784b77;
+  // }
 }
 @media screen and (max-width: 991.9px) {
   .card {

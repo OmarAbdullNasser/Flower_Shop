@@ -53,6 +53,8 @@
               name="FullName"
               v-model="FullName"
               required
+              minlength="2"
+              maxlength="50"
             />
 
             <label class="my-3">رقم الهاتف</label>
@@ -62,7 +64,8 @@
               @input="validateNumberInput"
               placeholder="010XXXXXXXXX"
               v-model="phone"
-              maxlength="10"
+              minlength="10"
+              maxlength="15"
               required
             />
             <label for="email" class="my-3"> البريد الالكتروني </label>
@@ -73,6 +76,8 @@
               name="adders"
               id="adders"
               class="p-2"
+              minlength="5"
+              maxlength="50"
               required
               v-model="adders"
             ></textarea>
@@ -115,8 +120,6 @@
             <button
               class="buy-btn btn w-100"
               @click="SendOrder(FullName, phone, adders, email)"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
             >
               ادفع
             </button>
@@ -161,7 +164,8 @@ const email = ref("");
 const router = useRouter();
 
 const modalRef = ref(null);
-const closeModal = () => Modal.getInstance(modalRef.value)?.hide();
+let bootstrapModal = null;
+
 // Function to select a payment method
 const selectMethod = (method) => {
   selectedMethod.value = method; // Update the selected method
@@ -197,50 +201,73 @@ const FetchDataCart = async () => {
 const validateNumberInput = (e) => {
   e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Replace any non-digit character with an empty string
 };
+const CheckValues = () => {
+  const isValidFullName =
+    FullName.value.trim().length >= 2 && FullName.value.trim().length <= 50;
+  const isValidPhone =
+    phone.value.trim().length >= 10 && phone.value.trim().length <= 15;
+  const isValidAdders =
+    adders.value.trim().length >= 5 && adders.value.trim().length <= 50;
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()); // Regex for email validation
+
+  return isValidFullName && isValidPhone && isValidAdders && isValidEmail;
+};
 const SendOrder = async (name, phone, adders, email) => {
   window.scrollTo({ top: 0, behavior: "smooth" });
-  try {
-    const response = await fetch(`https://flowerest.e1s.me/api/checkout`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cart_cookie: CartCookie.value,
-        customer_name: name,
-        customer_mobile: phone,
-        customer_email: email,
-        address: adders,
-        payment_method_id: 1,
-      }),
-    });
-    const OrderResponse = await response.json();
-    // Parse the JSON response
+  if (CheckValues()) {
+    bootstrapModal.show();
+    try {
+      const response = await fetch(`https://flowerest.e1s.me/api/checkout`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cart_cookie: CartCookie.value,
+          customer_name: name,
+          customer_mobile: phone,
+          customer_email: email,
+          address: adders,
+          payment_method_id: 1,
+        }),
+      });
+      const OrderResponse = await response.json();
+      // Parse the JSON response
 
-    if (!response.ok) {
-      throw new Error(
-        OrderResponse.message || "Failed to update product in cart"
-      );
-    } else {
-      const data = OrderResponse.data;
-      const { cookie_value2: OrderId } = data;
-      store.commit("Cart/SET_ORDERID", OrderId);
-      closeModal();
-      store.commit("Cart/CLEAR_CART");
-      store.commit("Cart/CLEAR_COOKIE");
-      router.push("/"), 5000;
+      if (!response.ok) {
+        throw new Error(
+          OrderResponse.message || "Failed to update product in cart"
+        );
+      } else {
+        const data = OrderResponse.data;
+        const { cookie_value2: OrderId } = data;
+        store.commit("Cart/SET_ORDERID", OrderId);
+        bootstrapModal.hide();
+        store.commit("Cart/CLEAR_CART");
+        store.commit("Cart/CLEAR_COOKIE");
+        router.push("/"), 5000;
+      }
+      toast.success("Product Ordered successfully!", {
+        autoClose: 4000, // Close after 2 seconds
+        position: "top-right",
+      });
+    } catch (error) {
+      console.error("Error make order from cart:", error);
+      // Handle error appropriately (e.g., show notification)
     }
-    toast.success("Product Ordered successfully!", {
-      autoClose: 4000, // Close after 2 seconds
-      position: "top-right",
-    });
-  } catch (error) {
-    console.error("Error make order from cart:", error);
-    // Handle error appropriately (e.g., show notification)
+  } else {
+    alert("Please Enter Info");
   }
 };
-onMounted(() => FetchDataCart());
+onMounted(() => {
+  FetchDataCart();
+  bootstrapModal = new Modal(modalRef.value, {
+    backdrop: "static",
+    keyboard: false,
+  });
+  console.log(bootstrapModal);
+});
 </script>
 
 <style lang="scss" scoped>

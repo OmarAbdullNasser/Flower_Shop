@@ -81,7 +81,7 @@
 import { ref, computed, onMounted } from "vue";
 import { Modal } from "bootstrap";
 import { useStore } from "vuex";
-
+let bootstrapModal = null;
 const store = useStore();
 const modal = ref(null);
 const Rates = [];
@@ -120,23 +120,25 @@ const SendFeedback = async () => {
     }),
   });
   const respons = await FeddbackResponse.json();
-  if (!respons.ok) {
+  console.log(respons);
+  if (!respons.success) {
     throw new Error(
       FeddbackResponse.message || "Failed to update product in cart"
     );
   } else {
+    alert("Thank can for your feedback");
     store.commit("Cart/CLEAR_ORDERID");
+    bootstrapModal.hide();
   }
 };
 
 onMounted(() => {
-  const bootstrapModal = new Modal(modal.value, {
+  bootstrapModal = new Modal(modal.value, {
     backdrop: "static",
     keyboard: false,
   });
 
   bootstrapModal.show();
- 
 });
 </script>
 

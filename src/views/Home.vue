@@ -41,6 +41,17 @@ const OrderId = computed(() => store.getters["Cart/OrederId"]);
 const ItemsRating = ref([]);
 const Review = ref([]);
 const isVisable = ref(false);
+const Rating = () => {
+  if (
+    Array.isArray(ItemsRating.value?.product) &&
+    ItemsRating.value.product.length > 0
+  ) {
+    isVisable.value = true;
+  } else {
+    isVisable.value = false;
+  }
+  console.log(isVisable.value);
+};
 const fetchHomeData = async (lang) => {
   try {
     const HomeResponse = await fetch(
@@ -52,7 +63,6 @@ const fetchHomeData = async (lang) => {
         },
       }
     );
-
     const respons = await HomeResponse.json();
     const {
       order_to_rate,
@@ -71,7 +81,8 @@ const fetchHomeData = async (lang) => {
     PortfolioData.value = portfolio;
     ArticaleData.value = makers;
     metaData.value = meta;
-
+    console.log(ItemsRating.value, "items to rate ");
+    Rating();
     const ReviewResponse = await fetch(`${url}/reviews/list`, {
       method: "GET",
       headers: {
@@ -90,13 +101,7 @@ const checkLoader = () => {
     loading.value = false;
   }
 };
-const Rating = () => {
-  if (ItemsRating.value.length > 0) {
-    isVisable.value = true;
-  } else {
-    isVisable.value = false;
-  }
-};
+
 // Watch for changes in the route's lang parameter and refetch the data
 watch(
   () => route.params.lang, // Watch the 'lang' parameter in the route

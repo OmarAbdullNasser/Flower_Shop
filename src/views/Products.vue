@@ -61,6 +61,7 @@ const loading = ref(true);
 const checkLoader = () => {
   if (flowers.value.length > 0) {
     loading.value = false;
+    console.log(flowers.value);
   }
 };
 
@@ -79,7 +80,7 @@ watchEffect(() => {
   checkLoader();
 });
 
-onMounted(() => {
+onMounted(async () => {
   store.dispatch("fetchProducts");
 });
 </script>
