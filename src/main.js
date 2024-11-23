@@ -24,6 +24,9 @@ library.add(far, fab, fas);
 
 const head = createHead();
 
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
 const i18n = createI18n({
   locale: "en",
   messages: {
@@ -55,5 +58,6 @@ createApp(App)
   .use(Vue3Toastify, {
     autoClose: 2000,
   })
+  .use(VueSweetalert2)
   .use(i18n)
   .mount("#app");

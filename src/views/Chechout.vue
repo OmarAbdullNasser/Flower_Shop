@@ -86,8 +86,8 @@
               <ul
                 class="p-0 method d-flex flex-wrap justify-content-evenly align-items-center"
               >
-                <li class="cash" :class="{ selected: selectedMethod === 0 }">
-                  <button @click="selectMethod(0)">
+                <li class="cash" :class="{ selected: selectedMethod === 1 }">
+                  <button @click="selectMethod(1)">
                     <img
                       src="../assets/CashOnDrivley.png"
                       class="img-fluid"
@@ -97,17 +97,17 @@
                 </li>
                 <li
                   class="v-cash mx-3 p-3"
-                  :class="{ selected: selectedMethod === 1 }"
+                  :class="{ selected: selectedMethod === 2 }"
                 >
-                  <button @click="selectMethod(1)">
+                  <button @click="selectMethod(2)">
                     <img src="../assets/Asset.png" class="img-fluid" alt="" />
                   </button>
                 </li>
                 <li
                   class="instapay"
-                  :class="{ selected: selectedMethod === 2 }"
+                  :class="{ selected: selectedMethod === 3 }"
                 >
-                  <button @click="selectMethod(2)">
+                  <button @click="selectMethod(3)">
                     <img
                       src="../assets/instapay.png"
                       class="img-fluid"
@@ -116,10 +116,24 @@
                   </button>
                 </li>
               </ul>
+              <PaymentMethodVue
+                v-if="selectedMethod >= 2"
+                @imageValidated="handleImage"
+                :Data="PaymentData"
+              />
             </div>
             <button
               class="buy-btn btn w-100"
-              @click="SendOrder(FullName, phone, adders, email)"
+              @click="
+                SendOrder(
+                  FullName,
+                  phone,
+                  adders,
+                  email,
+                  selectedMethod,
+                  PaymentImg
+                )
+              "
             >
               ادفع
             </button>
@@ -150,10 +164,13 @@ import { useStore } from "vuex";
 import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
+import PaymentMethodVue from "@/components/PaymentMethod.vue";
+import Swal from "sweetalert2";
 name: "checkout";
+
 const store = useStore();
 const url = inject("url");
-const selectedMethod = ref(0); // Holds the currently selected method
+const selectedMethod = ref(1); // Holds the currently selected method
 const CartCookie = computed(() => store.getters["Cart/Cookies"]);
 const Prodects = ref([]);
 const TM = ref(0);
@@ -162,15 +179,26 @@ const phone = ref("");
 const adders = ref("");
 const email = ref("");
 const router = useRouter();
-
+const PaymentMethod = ref([]);
+const PaymentImg = ref(null);
 const modalRef = ref(null);
+
+const PaymentData = ref(null);
+
 let bootstrapModal = null;
 
-// Function to select a payment method
-const selectMethod = (method) => {
-  selectedMethod.value = method; // Update the selected method
+const handleImage = (imageFile) => {
+  PaymentImg.value = imageFile;
 };
-
+// Function to select a payment method
+const PopupMessage = (title, Text, icon, BtnText) => {
+  Swal.fire({
+    title: title,
+    text: Text,
+    icon: icon,
+    confirmButtonText: BtnText,
+  });
+};
 // Create an asynchronous function to perform the GET request
 const FetchDataCart = async () => {
   try {
@@ -198,52 +226,148 @@ const FetchDataCart = async () => {
   }
 };
 
+const FetchPaymentData = async () => {
+  try {
+    // Use the fetch API to send a GET request
+
+    const response = await fetch(`${url}/payment-methods/list`);
+
+    // Check if the response is successful (status code 200-299)
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the response as JSON
+    const PaymentData = await response.json();
+    const data = PaymentData.data;
+
+    // Display the fetched data in the console
+    PaymentMethod.value = data;
+    console.log(PaymentMethod.value, "list");
+  } catch (error) {
+    // Handle and log any errors
+    console.error("Error fetching data:", error);
+  }
+};
+
+const selectMethod = (method) => {
+  selectedMethod.value = method; // Update the selected method
+  toggleProps();
+};
+
+const toggleProps = () => {
+  if (selectedMethod.value == 2) {
+    PaymentData.value = PaymentMethod.value[2];
+  } else if (selectedMethod.value == 3) {
+    PaymentData.value = PaymentMethod.value[1];
+  } else {
+    PaymentData.value = PaymentMethod.value[0];
+  }
+};
 const validateNumberInput = (e) => {
   e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Replace any non-digit character with an empty string
 };
-const CheckValues = () => {
-  const isValidFullName =
-    FullName.value.trim().length >= 2 && FullName.value.trim().length <= 50;
-  const isValidPhone =
-    phone.value.trim().length >= 10 && phone.value.trim().length <= 15;
-  const isValidAdders =
-    adders.value.trim().length >= 5 && adders.value.trim().length <= 50;
-  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()); // Regex for email validation
 
-  return isValidFullName && isValidPhone && isValidAdders && isValidEmail;
+const CheckValues = (type, value) => {
+  value = value.trim(); // Trim whitespace once for better performance
+
+  switch (type) {
+    case "name":
+      if (value.length < 2 || value.length > 50) {
+        return "The Full Name is required and must be between 2 and 50 characters.";
+      }
+      break;
+
+    case "phone":
+      if (value.length < 10 || value.length > 15) {
+        return "The Phone Number is required and must be between 10 and 15 digits.";
+      }
+      break;
+
+    case "adders":
+      if (value.length < 5 || value.length > 50) {
+        return "The Address is required and must be between 5 and 50 characters.";
+      }
+      break;
+
+    case "email":
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        return "The Email is required and must be in a valid email format.";
+      }
+      break;
+
+    // default:
+    //   return "Invalid validation type.";
+  }
+
+  return true; // Return true if all validations pass
 };
-const SendOrder = async (name, phone, adders, email) => {
+const SendOrder = async (
+  name,
+  phone,
+  adders,
+  email,
+  paymentmethod,
+  img = null
+) => {
   window.scrollTo({ top: 0, behavior: "smooth" });
-  if (CheckValues()) {
-    bootstrapModal.show();
+  let result = "";
+  let flag = false;
+  // console.log(img);
+
+  if (typeof CheckValues("name", name) === "string") {
+    result = CheckValues("name", name);
+    PopupMessage("Flied to Checkout", result, "error", "Try Again");
+  } else if (typeof CheckValues("phone", phone) === "string") {
+    result = CheckValues("phone", phone);
+    PopupMessage("Flied to Checkout", result, "error", "Try Again");
+  } else if (typeof CheckValues("adders", adders) === "string") {
+    result = CheckValues("adders", adders);
+    PopupMessage("Flied to Checkout", result, "error", "Try Again");
+  } else if (typeof CheckValues("email", email) === "string") {
+    result = CheckValues("email", email);
+    PopupMessage("Flied to Checkout", result, "error", "Try Again");
+  } else {
+    flag = true;
+  }
+
+  if (flag) {
     try {
+      const formData = new FormData();
+      formData.append("cart_cookie", CartCookie.value);
+      formData.append("customer_name", name);
+      formData.append("customer_mobile", phone);
+      formData.append("customer_email", email);
+      formData.append("address", adders);
+      formData.append("payment_method_id", paymentmethod);
+      formData.append("image", img);
       const response = await fetch(`https://flowerest.e1s.me/api/checkout`, {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          cart_cookie: CartCookie.value,
-          customer_name: name,
-          customer_mobile: phone,
-          customer_email: email,
-          address: adders,
-          payment_method_id: 1,
-        }),
+
+        // body: JSON.stringify({
+        //   cart_cookie: CartCookie.value,
+        //   customer_name: name,
+        //   customer_mobile: phone,
+        //   customer_email: email,
+        //   address: adders,
+        //   payment_method_id: paymentmethod,
+        //   image: img,
+        // }),
+        body: formData,
       });
       const OrderResponse = await response.json();
-      // Parse the JSON response
-
+      console.log(OrderResponse);
+      // Parse the JSON response.
+      // bootstrapModal.show();
+      // Errors.push(OrderResponse.)
       if (!response.ok) {
-        throw new Error(
-          OrderResponse.message || "Failed to update product in cart"
-        );
+        throw new Error(OrderResponse.message || "Failed to Make Checkout!");
       } else {
+        // bootstrapModal.hide();
         const data = OrderResponse.data;
         const { cookie_value2: OrderId } = data;
         store.commit("Cart/SET_ORDERID", OrderId);
-        bootstrapModal.hide();
+        PopupMessage("Done Checkout", "Thank you!", "success", "Done");
         store.commit("Cart/CLEAR_CART");
         store.commit("Cart/CLEAR_COOKIE");
         router.push("/"), 5000;
@@ -256,8 +380,6 @@ const SendOrder = async (name, phone, adders, email) => {
       console.error("Error make order from cart:", error);
       // Handle error appropriately (e.g., show notification)
     }
-  } else {
-    alert("Please Enter Info");
   }
 };
 onMounted(() => {
@@ -266,7 +388,7 @@ onMounted(() => {
     backdrop: "static",
     keyboard: false,
   });
-  console.log(bootstrapModal);
+  FetchPaymentData();
 });
 </script>
 

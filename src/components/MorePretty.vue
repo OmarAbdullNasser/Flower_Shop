@@ -6,7 +6,7 @@
       <div class="Imgs">
         <div class="Img-wrapper">
           <!--Fliter-->
-          <div class="gallery-filter">
+          <!-- <div class="gallery-filter">
             <ul class="list">
               <li
                 class="me-1"
@@ -44,116 +44,23 @@
                 <span class="Btn display7">Cake</span>
               </li>
             </ul>
-          </div>
+          </div> -->
 
           <!-- Gallery -->
           <div class="gallery-row">
             <div class="row">
-              <div class="col-12 col-lg-4 p-3">
+              <div
+                class="col-12 col-lg-4 p-3"
+                v-for="item in props.Data"
+                :key="item.id"
+                @click="addToCart(item)"
+              >
                 <div class="item">
-                  <img
-                    src="../assets/MorePratty/cake.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
+                  <img :src="item.image" alt="" class="img-fluid" />
                   <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img
-                    src="../assets/MorePratty/prefume/1.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img
-                    src="../assets/MorePratty/prefume/2.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img
-                    src="../assets/MorePratty/sticks/1.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img
-                    src="../assets/MorePratty/sticks/2.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img
-                    src="../assets/MorePratty/sticks/3.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img
-                    src="../assets/MorePratty/sweet/1.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img
-                    src="../assets/MorePratty/sweet/2.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 p-3">
-                <div class="item">
-                  <img
-                    src="../assets/MorePratty/sweet/3.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
+                  <span class="title display7">
+                    {{ item.price_after_sale }}</span
+                  >
                 </div>
               </div>
             </div>
@@ -166,7 +73,20 @@
 
 <script setup>
 import { ref } from "vue";
-
+const props = defineProps({
+  Data: Array,
+});
+import { useStore } from "vuex";
+const store = useStore();
+const addToCart = async (item) => {
+  await store.dispatch("Cart/addToCart", {
+    product_id: item.id,
+    product_name: item.title,
+    quantity: 1, // Make sure quantity is a reactive property if needed
+    price: item.price,
+    product_image: item.image,
+  });
+};
 const selectedCategory = ref("all");
 const selectCategory = (category) => {
   selectedCategory.value = category;
