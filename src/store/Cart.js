@@ -3,7 +3,7 @@ import { toast } from "vue3-toastify";
 
 const Cart = {
   namespaced: true,
-  state: () => ({ cart: [], cart_cookie: null }),
+  state: () => ({ cart: [], cart_cookie: null, OrederId: null }),
   getters: {
     cartItems: (state) => {
       return state.cart;
@@ -25,6 +25,9 @@ const Cart = {
     },
     Cookies: (state) => {
       return state.cart_cookie;
+    },
+    OrederId: (state) => {
+      return state.OrederId;
     },
   },
   actions: {
@@ -77,7 +80,7 @@ const Cart = {
       state.cart = data;
     },
     CLEAR_CART(state) {
-      state.cart = null;
+      state.cart = [];
     },
     DElETE_ITEM_CART(state, id) {
       state.cart = state.cart.filter((item) => item.id !== id);
@@ -102,13 +105,21 @@ const Cart = {
     },
     UPDATE_PRODUCT_QUNITTY(state, product) {
       const existingProduct = state.cart.find((item) => item.id === product.id);
-      console.log(product.quantity);
       if (existingProduct) {
         // If the product already exists, increase its quantity
         existingProduct.quantity = product.quantity || 1;
       } else {
         return;
       }
+    },
+    SET_ORDERID(state, data) {
+      state.OrederId = data;
+    },
+    CLEAR_COOKIE(state) {
+      state.cart_cookie = null;
+    },
+    CLEAR_ORDERID(state) {
+      state.OrederId = null;
     },
   },
 };

@@ -1,17 +1,12 @@
 <template>
-  <div class="Fliter">
+  <div class="MorePretty">
     <div class="container">
-      <div class="Text">
-        <h2 class="title display2 mb-2">
-          <strong>Gallery</strong>
-          <strong> With Tabs</strong>
-        </h2>
-      </div>
+      <h4>Make Your Order Prettier</h4>
 
       <div class="Imgs">
         <div class="Img-wrapper">
           <!--Fliter-->
-          <div class="gallery-filter">
+          <!-- <div class="gallery-filter">
             <ul class="list">
               <li
                 class="me-1"
@@ -22,32 +17,50 @@
               </li>
 
               <li
-                v-for="(item, index) in Data"
-                :key="index"
-                :class="{ active: selectedCategory === item.title }"
-                @click="selectCategory(item.title)"
+                :class="{ active: selectedCategory === 'Perfume' }"
+                @click="selectCategory('Perfume')"
               >
-                <span class="Btn display7">{{ item.title }}</span>
+                <span class="Btn display7">Perfume</span>
+              </li>
+
+              <li
+                :class="{ active: selectedCategory === 'Sticks' }"
+                @click="selectCategory('Sticks')"
+              >
+                <span class="Btn display7">Sticks</span>
+              </li>
+
+              <li
+                :class="{ active: selectedCategory === 'Sweet' }"
+                @click="selectCategory('Sweet')"
+              >
+                <span class="Btn display7">Sweet</span>
+              </li>
+
+              <li
+                :class="{ active: selectedCategory === 'Cake' }"
+                @click="selectCategory('Cake')"
+              >
+                <span class="Btn display7">Cake</span>
               </li>
             </ul>
-          </div>
+          </div> -->
 
           <!-- Gallery -->
           <div class="gallery-row">
             <div class="row">
               <div
                 class="col-12 col-lg-4 p-3"
-                v-for="item in filteredImages"
-                :key="item.title"
+                v-for="item in props.Data"
+                :key="item.id"
+                @click="addToCart(item)"
               >
-                <div
-                  class="item"
-                  v-for="(img, imgIndex) in item.gallery"
-                  :key="imgIndex"
-                >
-                  <img :src="img" alt="" class="img-fluid" />
+                <div class="item">
+                  <img :src="item.image" alt="" class="img-fluid" />
                   <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
+                  <span class="title display7">
+                    {{ item.price_after_sale }}</span
+                  >
                 </div>
               </div>
             </div>
@@ -59,48 +72,33 @@
 </template>
 
 <script setup>
-import { inject, ref, computed } from "vue";
-
-const Data = inject("OccassionData");
-// Reactive state for the selected category
+import { ref } from "vue";
+const props = defineProps({
+  Data: Array,
+});
+import { useStore } from "vuex";
+const store = useStore();
+const addToCart = async (item) => {
+  await store.dispatch("Cart/addToCart", {
+    product_id: item.id,
+    product_name: item.title,
+    quantity: 1, // Make sure quantity is a reactive property if needed
+    price: item.price,
+    product_image: item.image,
+  });
+};
 const selectedCategory = ref("all");
-
-// Method to set the selected category
 const selectCategory = (category) => {
   selectedCategory.value = category;
 };
-
-// Computed property to filter images based on the selected category
-const filteredImages = computed(() => {
-  if (selectedCategory.value === "all") {
-    // Return all images if "All" is selected
-    return Data.value;
-  } else {
-    // Filter images based on the selected category
-    return Data.value.filter((item) => item.title === selectedCategory.value);
-  }
-});
 </script>
 
 <style lang="scss" scoped>
-.Fliter {
-  padding-top: 90px;
-  padding-bottom: 90px;
-  overflow: hidden;
-  box-sizing: border-box;
-  background-color: #ffffff;
-  .Text {
-    h3 {
-      color: #9e9e9e;
-      margin-bottom: 0.4375rem;
-    }
-    .title {
-      & strong:first-child {
-        color: #000;
-      }
-    }
+.MorePretty {
+  .container {
+    padding-top: 1rem;
+    border-top: 1px solid gray;
   }
-
   .Imgs {
     .gallery-filter {
       padding-top: 30px;
@@ -200,8 +198,11 @@ const filteredImages = computed(() => {
           opacity: 0;
 
           &::before {
-            content: "+";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            content: "\f217";
             border-radius: 100px;
+            padding-top: 0.5rem;
             background: rgba(0, 0, 0, 0.5);
             width: 100%;
             height: 100%;
@@ -209,6 +210,8 @@ const filteredImages = computed(() => {
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
           }
         }
         .title {

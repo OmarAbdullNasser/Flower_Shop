@@ -136,6 +136,8 @@
         >
       </div>
     </div>
+
+    <MorePrettyVue :Data="MoreItem" />
     <div v-if="isLoading" class="col-12 my-5">
       <div class="d-flex justify-content-center">
         <div class="loader text-primary" role="status"></div>
@@ -150,6 +152,7 @@ import { computed, inject, onMounted, watchEffect, ref } from "vue";
 import { useRoute } from "vue-router";
 import { Modal } from "bootstrap";
 import { toast } from "vue3-toastify";
+import MorePrettyVue from "@/components/MorePretty.vue";
 
 name = "Cart";
 // Access Vuex store
@@ -162,7 +165,7 @@ const cartLength = computed(() => store.getters["Cart/cartLength"]);
 const TM = ref(0);
 const quantity = ref(0);
 const isLoading = ref(true);
-
+const MoreItem = ref([]);
 const modalRef = ref(null);
 const closeModal = () => Modal.getInstance(modalRef.value)?.hide();
 
@@ -195,7 +198,8 @@ const FetchDataCart = async () => {
     // Display the fetched data in the console
     Prodects.value = data.cart;
     TM.value = data.total_sum;
-
+    MoreItem.value = data.show_in_cart_products;
+    
     store.commit("Cart/SET_CART", Prodects.value);
   } catch (error) {
     // Handle and log any errors
@@ -288,7 +292,6 @@ const removeAllProducts = async () => {
 
     // Parse the JSON response
     const RemoveAllResponse = await response.json();
-    console.log(RemoveAllResponse);
     store.commit("Cart/CLEAR_CART");
     closeModal();
     const modalBackdrops = document.querySelectorAll(".modal-backdrop");

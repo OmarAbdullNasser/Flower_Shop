@@ -54,9 +54,7 @@ onMounted(() => {});
   .swiper {
     position: relative;
   }
-  // .swiper-slide-active[dir="rtl"] {
-  //   margin-right: 0px;
-  // }
+
   .swiper-slide img {
     object-fit: cover;
     width: 100%;

@@ -3,13 +3,13 @@
     <div class="container">
       <div class="navbar-brand text-center">
         <span class="navbar-logo">
-          <a href="#">
+          <router-link :to="{ name: 'home' }">
             <img
               src="../assets/logo_brand.png"
               alt="Mobirise"
               style="height: 5rem"
             />
-          </a>
+          </router-link>
         </span>
       </div>
 
