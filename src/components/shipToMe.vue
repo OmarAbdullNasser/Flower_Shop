@@ -30,7 +30,7 @@
       <div class="paymentMethods">
         <p class="mb-0">
           <input type="radio" name="Payment" id="CreditCard" />
-          <label for="CreditCard">Credit Card</label>
+          <label for="CreditCard">Instapay</label>
         </p>
 
         <p class="mb-0">
@@ -40,7 +40,7 @@
 
         <p class="mb-0">
           <input type="radio" name="Payment" id="CreditCardHome" />
-          <label for="CreditCardHome">Credit Card On Delivery</label>
+          <label for="CreditCardHome">Vodfone Cash</label>
         </p>
       </div>
     </div>

@@ -6,8 +6,20 @@
         <p>We deliver same day or on the date you choose</p>
       </div>
       <div class="stages d-flex justify-content-between text-center">
-        <div class="stage first" :class="{ active: phase >= 1 }">1</div>
-        <div class="stage secand" :class="{ active: phase >= 2 }">2</div>
+        <div
+          class="stage first"
+          :class="{ active: phase >= 1 }"
+          @click="ShiftBetweenPhases($event, 1)"
+        >
+          1
+        </div>
+        <div
+          class="stage secand"
+          :class="{ active: phase >= 2 }"
+          @click="ShiftBetweenPhases($event, 2)"
+        >
+          2
+        </div>
         <div class="stage thrid" :class="{ active: phase === 3 }">3</div>
       </div>
       <div class="row">
@@ -60,6 +72,7 @@ import SecandStage from "@/components/SecandStage.vue";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 const phase = ref(1);
 const promocode = ref(false);
+const phases = new Set();
 // const SenderBox = ref("ToSomeOne");
 // const ToggleSender = (to) => {
 //   SenderBox.value = to;
@@ -69,6 +82,11 @@ const SetPhase = () => {
     phase.value += 1;
   } else {
     phase.value = 3;
+  }
+};
+const ShiftBetweenPhases = (e, num) => {
+  if (e.target.classList.contains("active")) {
+    phase.value = num;;
   }
 };
 </script>

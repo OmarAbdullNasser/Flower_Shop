@@ -12,7 +12,6 @@ const vuexLocalStorage = new VuexPersist({
 
 export default createStore({
   state: {
-    // cart: [],
     flowers: [],
     Meta: {},
     ids: [],
@@ -24,6 +23,8 @@ export default createStore({
     footer: [],
     CartNum: 0,
     locale: "",
+    AddressState: "HasAdress",
+    PaymentMethod: "",
   },
 
   mutations: {
@@ -95,6 +96,12 @@ export default createStore({
     },
     SET_LOCALE(state, data) {
       state.locale = data;
+    },
+    SET_ADDRESS(state, data) {
+      state.AddressState = data;
+    },
+    SET_PAYMENT(state, data) {
+      state.PaymentMethod = data;
     },
   },
 
@@ -270,6 +277,12 @@ export default createStore({
     },
     locale: (state) => {
       return state.locale;
+    },
+    address: (state) => {
+      return state.AddressState;
+    },
+    payment: (state) => {
+      return state.PaymentMethod;
     },
   },
 

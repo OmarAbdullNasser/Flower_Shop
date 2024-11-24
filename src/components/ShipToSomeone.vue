@@ -4,11 +4,17 @@
       <label>Recipient’s address</label>
       <div class="opations">
         <p class="mb-0">
-          <input type="radio" name="Know" id="Know" />
+          <input
+            type="radio"
+            name="Know"
+            id="Know"
+            @click="HasAdress"
+            checked
+          />
           <label for="Know">I know the recipient address</label>
         </p>
         <p class="mb-0">
-          <input type="radio" name="Know" id="NotKnow" />
+          <input type="radio" name="Know" id="NotKnow" @click="NoAdress" />
           <label for="NotKnow"
             >I don't know the recipient address(Shipping fees will be
             applied)</label
@@ -19,7 +25,18 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+const addresState = computed(() => store.getters.address);
+const NoAdress = () => {
+  store.commit("SET_ADDRESS", "NoAddress");
+};
+const HasAdress = () => {
+  store.commit("SET_ADDRESS", "HasAdress");
+};
+</script>
 
 <style lang="scss" scoped>
 .ShipToSomeOne {

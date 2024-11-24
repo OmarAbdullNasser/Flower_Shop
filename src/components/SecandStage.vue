@@ -13,7 +13,7 @@
           <input type="tel" name="Mobile" id="" />
         </div>
 
-        <div class="Deliver">
+        <div class="Deliver" v-if="addresState == 'HasAdress'">
           <label for="Deliver" class="d-block"
             >Deliver To <span class="star">*</span></label
           >
@@ -42,7 +42,7 @@
           </divc>
         </div>
 
-        <div class="Area">
+        <div class="Area" v-if="addresState == 'HasAdress'">
           <label for="Area">Area <span class="star">*</span></label>
           <select name="Area" id="">
             <option value="1">1</option>
@@ -55,7 +55,10 @@
           </select>
         </div>
 
-        <div class="Street d-flex justify-content-between flex-wrap">
+        <div
+          class="Street d-flex justify-content-between flex-wrap"
+          v-if="addresState == 'HasAdress'"
+        >
           <div class="SName d-flex flex-column">
             <label for="SName">Street Name <span class="star">*</span></label>
             <input type="text" name="SName" id="" />
@@ -75,6 +78,35 @@
           </div>
         </div>
 
+        <div
+          class="NoAddreess d-flex flex-column my-3"
+          v-if="addresState == 'NoAddress'"
+        >
+          <span>Attention: This is only available in Cairo and Giza. </span>
+          <div class="satges">
+            <div class="StageOne">
+              <span class="number me-2">1</span>
+              <span
+                >Upon checkout, we will send an SMS to your recipient to collect
+                their address and preferred delivery date.</span
+              >
+            </div>
+            <div class="StageTwo my-3">
+              <span class="number me-2">2</span>
+              <span
+                >Your recipient must accept the gift delivery before we prepare
+                your bouquet.</span
+              >
+            </div>
+            <div class="StageThree">
+              <span class="number me-2">3</span>
+              <span
+                >You will get notified once we deliver your gift to your
+                recipient.</span
+              >
+            </div>
+          </div>
+        </div>
         <div class="Greeting d-flex flex-column mt-3">
           <label for="Greeting">Greeting Card Message </label>
           <textarea name="Greeting " id="" cols="5" rows="2"></textarea>
@@ -126,7 +158,14 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { computed, onMounted } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+const addresState = computed(() => store.getters.address);
+onMounted(() => console.log(addresState.value));
+</script>
 
 <style lang="scss" scoped>
 .SecandStage {
@@ -220,6 +259,19 @@
     }
     hr {
       width: 80%;
+    }
+    .NoAddreess {
+      gap: 1rem;
+      width: 80%;
+      .number {
+        border-radius: 4px;
+        background: #400a3f;
+        font-size: 14px;
+        font-weight: 900;
+        color: #ffffff;
+        padding: 0px 7px 0px 6px;
+        line-height: 20px;
+      }
     }
   }
   .SenderInfo {
