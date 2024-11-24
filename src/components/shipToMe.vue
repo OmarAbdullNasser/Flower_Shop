@@ -8,6 +8,7 @@
             type="radio"
             name="Date"
             id="SameDay"
+            checked
             @click="isDateVisible = false"
           />
           <label for="SameDay">Same day delivery ( Last order at 6 PM)</label>
@@ -28,19 +29,19 @@
 
       <label for="">Payment Method </label>
       <div class="paymentMethods">
-        <p class="mb-0">
-          <input type="radio" name="Payment" id="CreditCard" />
-          <label for="CreditCard">Instapay</label>
+        <p class="mb-0" @click="SetPaymentMethod('Instapay')">
+          <input type="radio" name="Payment" id="Instapay" />
+          <label for="Instapay">Instapay</label>
         </p>
 
-        <p class="mb-0">
-          <input type="radio" name="Payment" id="CashHome" />
+        <p class="mb-0" @click="SetPaymentMethod('CashHome')">
+          <input type="radio" name="Payment" id="CashHome" checked />
           <label for="CashHome">Cash Collect From Home</label>
         </p>
 
-        <p class="mb-0">
-          <input type="radio" name="Payment" id="CreditCardHome" />
-          <label for="CreditCardHome">Vodfone Cash</label>
+        <p class="mb-0" @click="SetPaymentMethod('vodafoneCash')">
+          <input type="radio" name="Payment" id="vodafoneCash" />
+          <label for="vodafoneCash">vodafoneCash</label>
         </p>
       </div>
     </div>
@@ -49,12 +50,17 @@
 
 <script setup>
 import { onMounted, ref, watchEffect } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
 
 const dateInput = ref(null);
 const date = ref(null);
 const isDateVisible = ref(false);
 
-// watchEffect(() => console.log(specificDate?.value.checked));
+const SetPaymentMethod = (method) => {
+  store.commit("SET_PAYMENT", method);
+};
+
 onMounted(() => {
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0];

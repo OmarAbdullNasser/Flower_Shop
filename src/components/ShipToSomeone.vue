@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 const addresState = computed(() => store.getters.address);
@@ -36,6 +36,10 @@ const NoAdress = () => {
 const HasAdress = () => {
   store.commit("SET_ADDRESS", "HasAdress");
 };
+const SetPaymentMethod = () => {
+  store.commit("SET_PAYMENT", "All");
+};
+onMounted(() => SetPaymentMethod());
 </script>
 
 <style lang="scss" scoped>

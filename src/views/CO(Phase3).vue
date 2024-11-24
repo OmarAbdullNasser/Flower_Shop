@@ -26,6 +26,7 @@
         <div class="col-12- col-lg-9 SendrInfo">
           <FristStage v-if="phase === 1" />
           <SecandStage v-else-if="phase === 2" />
+          <ThirdStage v-else-if="phase === 3" />
           <button class="btn" @click="SetPhase">Next</button>
         </div>
         <div class="total col-12- col-lg-3 p-3">
@@ -69,6 +70,8 @@
 import { ref } from "vue";
 import FristStage from "@/components/FristStage.vue";
 import SecandStage from "@/components/SecandStage.vue";
+import ThirdStage from "@/components/ThirdStage.vue";
+
 import { faL } from "@fortawesome/free-solid-svg-icons";
 const phase = ref(1);
 const promocode = ref(false);
@@ -86,7 +89,7 @@ const SetPhase = () => {
 };
 const ShiftBetweenPhases = (e, num) => {
   if (e.target.classList.contains("active")) {
-    phase.value = num;;
+    phase.value = num;
   }
 };
 </script>

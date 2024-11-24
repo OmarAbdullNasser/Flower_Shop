@@ -24,7 +24,7 @@ export default createStore({
     CartNum: 0,
     locale: "",
     AddressState: "HasAdress",
-    PaymentMethod: "",
+    PaymentMethod: "CashHome",
   },
 
   mutations: {
