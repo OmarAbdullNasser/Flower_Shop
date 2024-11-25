@@ -25,6 +25,7 @@ export default createStore({
     locale: "",
     AddressState: "HasAdress",
     PaymentMethod: "CashHome",
+    SenderObj: {},
   },
 
   mutations: {
@@ -102,6 +103,9 @@ export default createStore({
     },
     SET_PAYMENT(state, data) {
       state.PaymentMethod = data;
+    },
+    SET_SENDER(state, data) {
+      state.SenderObj = { ...state.SenderObj, ...data };
     },
   },
 
@@ -283,6 +287,9 @@ export default createStore({
     },
     payment: (state) => {
       return state.PaymentMethod;
+    },
+    senderObj: (state) => {
+      return state.SenderObj;
     },
   },
 

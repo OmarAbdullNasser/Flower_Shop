@@ -33,15 +33,20 @@
           <router-link :to="{ name: 'Cart' }"> Edit Cart </router-link>
           <div class="items my-3">
             <ul>
-              <li class="d-flex justify-content-between mt-3">
-                <span>Hedya (100 Roses) </span> <span>7,390.00 EGP</span>
+              <li
+                v-for="item in Prodects"
+                :key="item.id"
+                class="d-flex justify-content-between mt-3"
+              >
+                <span>{{ item.product_name }} </span>
+                <span>{{ item.total }} EGP</span>
               </li>
               <li class="d-flex justify-content-between my-3">
                 <span>Shipping Fees</span> <span>Free shipping</span>
               </li>
             </ul>
           </div>
-          <div class="promocode">
+          <div class="promocode" v-if="false">
             <p role="button" v-if="!promocode" @click="promocode = !promocode">
               Enter Promocode
             </p>
@@ -58,7 +63,7 @@
           <hr />
           <div class="TotalMoney d-flex justify-content-between">
             <h5>Grand Total</h5>
-            <h5>7,390.00 EGP</h5>
+            <h5>{{ TM }} EGP</h5>
           </div>
         </div>
       </div>
@@ -67,19 +72,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import FristStage from "@/components/FristStage.vue";
 import SecandStage from "@/components/SecandStage.vue";
 import ThirdStage from "@/components/ThirdStage.vue";
+import { ref, inject, computed, onMounted, provide } from "vue";
+import { useStore } from "vuex";
+import { toast } from "vue3-toastify";
+import { useRouter } from "vue-router";
+name: "checkout";
+const store = useStore();
+const router = useRouter();
+const url = inject("url");
 
-import { faL } from "@fortawesome/free-solid-svg-icons";
 const phase = ref(1);
 const promocode = ref(false);
-const phases = new Set();
-// const SenderBox = ref("ToSomeOne");
-// const ToggleSender = (to) => {
-//   SenderBox.value = to;
-// };
+const Prodects = ref([]);
+const TM = ref(0);
+const CartCookie = computed(() => store.getters["Cart/Cookies"]);
+
 const SetPhase = () => {
   if (phase.value < 3) {
     phase.value += 1;
@@ -92,6 +102,32 @@ const ShiftBetweenPhases = (e, num) => {
     phase.value = num;
   }
 };
+// Create an asynchronous function to perform the GET request
+const FetchDataCart = async () => {
+  try {
+    // Use the fetch API to send a GET request
+
+    const response = await fetch(
+      `${url}/show-cart?cart_cookie=${CartCookie.value}`
+    );
+
+    // Check if the response is successful (status code 200-299)
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the response as JSON
+    const CartData = await response.json();
+    const data = CartData.data;
+    // Display the fetched data in the console
+    Prodects.value = data.cart;
+    TM.value = data.total_sum;
+  } catch (error) {
+    // Handle and log any errors
+    console.error("Error fetching data:", error);
+  }
+};
+onMounted(() => FetchDataCart());
 </script>
 
 <style lang="scss" scoped>

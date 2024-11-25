@@ -36,6 +36,7 @@
         cols="30"
         rows="5"
         placeholder="Add your needs.."
+        v-model="notes"
       ></textarea>
     </div>
   </div>
@@ -44,12 +45,42 @@
 <script setup>
 import ShipToMe from "@/components/shipToMe.vue";
 import ShipToSomeone from "@/components/ShipToSomeone.vue";
-import { ref } from "vue";
+import { useStore } from "vuex";
+import { onMounted, ref, computed, onUpdated, watchEffect, watch } from "vue";
+let Resiver = ref("");
+const store = useStore();
 const SenderBox = ref("ToSomeOne");
+const notes = ref("");
+let debounceTimeout;
+
 const ToggleSender = (to) => {
   SenderBox.value = to;
-  console.log(SenderBox.value);
+  Resiver.value = to === "ToMe" ? 1 : 0;
 };
+const senderObj = computed(() => store.getters.senderObj);
+
+watch(
+  () => Resiver.value,
+  (newValue) => {
+    store.commit("SET_SENDER", { ship_to_me: newValue });
+  }
+);
+watch(
+  () => notes.value,
+  (newValue) => {
+    clearTimeout(debounceTimeout); // Clear the timeout on every change
+    debounceTimeout = setTimeout(() => {
+      console.log("Debounced commit:", newValue); // Debugging log
+      store.commit("SET_SENDER", { extra_instructions: newValue }); // Commit after debounce
+    }, 1500); // Adjust the delay as needed (500ms in this case)
+  }
+);
+//watchEffect(() => console.log(senderObj.value));
+
+onMounted(() => {
+  store.commit("SET_SENDER", { ship_to_me: 0 });
+  console.log(senderObj.value);
+});
 </script>
 
 <style lang="scss" scoped>

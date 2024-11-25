@@ -166,7 +166,6 @@ const FetchDataCart = async () => {
     // Parse the response as JSON
     const CartData = await response.json();
     const data = CartData.data;
-    console.log(data);
     // Display the fetched data in the console
     Prodects.value = data.cart;
     TM.value = data.total_sum;

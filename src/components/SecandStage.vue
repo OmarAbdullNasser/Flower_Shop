@@ -5,12 +5,18 @@
         <label> Recipient Details</label>
         <div class="name d-flex flex-column">
           <label for="Name">Name <span class="star">*</span></label>
-          <input type="text" name="Name" id="" />
+          <input type="text" name="Name" id="" v-model="formFields.Name" />
         </div>
 
         <div class="Mobile d-flex flex-column">
           <label for="Mobile">Mobile <span class="star">*</span></label>
-          <input type="tel" name="Mobile" id="" />
+          <input
+            type="tel"
+            name="Mobile"
+            id=""
+            oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+            v-model="formFields.phone"
+          />
         </div>
 
         <div class="Deliver" v-if="addresState == 'HasAdress'">
@@ -18,7 +24,7 @@
             >Deliver To <span class="star">*</span></label
           >
 
-          <divc class="options mt-2 d-flex align-items-center">
+          <div class="options mt-2 d-flex align-items-center">
             <div class="office d-flex align-content-center">
               <input
                 type="radio"
@@ -26,6 +32,7 @@
                 name="Deliver"
                 value="Office"
                 id=""
+                v-model="formFields.Deliver"
               />
               <label for="Office">Office</label>
             </div>
@@ -36,15 +43,16 @@
                 name="Deliver"
                 value="Home"
                 id=""
+                v-model="formFields.Deliver"
               />
               <label for="Home">Home</label>
             </div>
-          </divc>
+          </div>
         </div>
 
         <div class="Area" v-if="addresState == 'HasAdress'">
           <label for="Area">Area <span class="star">*</span></label>
-          <select name="Area" id="">
+          <select name="Area" v-model="formFields.Area" id="">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -61,7 +69,7 @@
         >
           <div class="SName d-flex flex-column">
             <label for="SName">Street Name <span class="star">*</span></label>
-            <input type="text" name="SName" id="" />
+            <input type="text" name="SName" id="" v-model="formFields.SName" />
             <span>Preferably in Arabic if possible for more accuracy </span>
           </div>
 
@@ -69,12 +77,17 @@
             <label for="Apartment"
               >Apartment No. <span class="star">*</span></label
             >
-            <input type="text" name="Apartment" id="" />
+            <input
+              type="text"
+              name="Apartment"
+              id=""
+              v-model="formFields.ApartName"
+            />
           </div>
 
           <div class="Floor d-flex flex-column">
             <label for="Floor ">Floor <span class="star">*</span></label>
-            <input type="text" name="Floor " id="" />
+            <input type="text" name="Floor" id="" v-model="formFields.Floor" />
           </div>
         </div>
 
@@ -109,7 +122,13 @@
         </div>
         <div class="Greeting d-flex flex-column mt-3">
           <label for="Greeting">Greeting Card Message </label>
-          <textarea name="Greeting " id="" cols="5" rows="2"></textarea>
+          <textarea
+            name="Greeting "
+            id=""
+            cols="5"
+            rows="2"
+            v-model="formFields.Greeting"
+          ></textarea>
         </div>
         <hr />
       </div>
@@ -119,12 +138,22 @@
         <div class="FullName d-flex flex-wrap">
           <div class="FristName d-flex flex-column">
             <label for="FName">First Name <span class="star">*</span></label>
-            <input type="text" name="FName" id="" />
+            <input
+              type="text"
+              name="FName"
+              id=""
+              v-model="formFields.SenderFName"
+            />
           </div>
 
           <div class="LastName d-flex flex-column">
             <label for="LName "> Last Name <span class="star">*</span></label>
-            <input type="text" name="LName" id="" />
+            <input
+              type="text"
+              name="LName"
+              id=""
+              v-model="formFields.SenderLName"
+            />
           </div>
         </div>
 
@@ -135,21 +164,39 @@
             oninput="this.value = this.value.replace(/[^0-9]/g, '');"
             name="phone"
             id=""
+            v-model="formFields.SenderPhone"
           />
         </div>
 
         <div class="Email d-flex flex-column">
           <label for="email"> Email <span class="star">*</span></label>
-          <input type="email" name="email" id="" />
+          <input
+            type="email"
+            name="email"
+            id=""
+            v-model="formFields.SenderEmail"
+          />
         </div>
 
         <div class="opations">
           <p class="mb-0">
-            <input type="radio" name="Sender" id="ShowName" />
+            <input
+              type="radio"
+              name="Sender"
+              id="ShowName"
+              value="0"
+              v-model="formFields.SenderNameState"
+            />
             <label for="ShowName">Show my name on delivery</label>
           </p>
           <p class="mb-0">
-            <input type="radio" name="Sender" id="HideName" />
+            <input
+              type="radio"
+              name="Sender"
+              id="HideName"
+              value="1"
+              v-model="formFields.SenderNameState"
+            />
             <label for="HideName">Hide my name on delivery</label>
           </p>
         </div>
@@ -159,12 +206,46 @@
 </template>
 
 <script setup>
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 const addresState = computed(() => store.getters.address);
-onMounted(() => console.log(addresState.value));
+const senderObj = computed(() => store.getters.senderObj);
+const debounceTimeouts = {};
+const formFields = ref({
+  Name: "",
+  phone: "",
+  address: "",
+  Deliver: "",
+  Area: "",
+  SName: "",
+  ApartName: "",
+  Floor: "",
+  Greeting: "",
+  SenderFName: "",
+  SenderLName: "",
+  SenderPhone: "",
+  SenderEmail: "",
+  SenderNameState: "",
+});
+watch(
+  formFields,
+  (newValues) => {
+    for (const field in newValues) {
+      if (debounceTimeouts[field]) {
+        clearTimeout(debounceTimeouts[field]); // Clear previous timeout
+      }
+      debounceTimeouts[field] = setTimeout(() => {
+        store.commit("SET_SENDER", { [field]: newValues[field] });
+      }, 1500); // Adjust debounce delay as needed
+    }
+  },
+  { deep: true }
+);
+const test = () => {
+  console.log(senderObj.value);
+};
+onMounted(() => console.log(senderObj.value));
 </script>
 
 <style lang="scss" scoped>

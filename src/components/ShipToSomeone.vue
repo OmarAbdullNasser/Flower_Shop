@@ -9,12 +9,18 @@
             name="Know"
             id="Know"
             @click="HasAdress"
-            checked
+            :checked="Know === 1"
           />
           <label for="Know">I know the recipient address</label>
         </p>
         <p class="mb-0">
-          <input type="radio" name="Know" id="NotKnow" @click="NoAdress" />
+          <input
+            type="radio"
+            name="Know"
+            id="NotKnow"
+            @click="NoAdress"
+            :checked="Know === 0"
+          />
           <label for="NotKnow"
             >I don't know the recipient address(Shipping fees will be
             applied)</label
@@ -26,20 +32,39 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref, onUpdated, watchEffect, watch } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
-const addresState = computed(() => store.getters.address);
+const Know = ref(1);
+
 const NoAdress = () => {
   store.commit("SET_ADDRESS", "NoAddress");
+  store.commit("SET_SENDER", { know_receipent_address: 0 });
 };
 const HasAdress = () => {
   store.commit("SET_ADDRESS", "HasAdress");
+  store.commit("SET_SENDER", { know_receipent_address: 1 });
 };
 const SetPaymentMethod = () => {
-  store.commit("SET_PAYMENT", "All");
+  store.commit("SET_PAYMENT", "Shiptosome");
 };
-onMounted(() => SetPaymentMethod());
+const senderObj = computed(() => store.getters.senderObj);
+// watch(
+//   () => Know.value,
+//   (newValue) => {
+//     store.commit("SET_SENDER", { know_receipent_address: newValue });
+//     console.log("changed", newValue);
+//   }
+// );
+// watchEffect(() => {
+//   store.commit("SET_SENDER", { know_receipent_address: Know.value });
+// });
+watchEffect(() => console.log(senderObj.value));
+
+onMounted(() => {
+  SetPaymentMethod();
+  store.commit("SET_SENDER", { know_receipent_address: Know.value });
+});
 </script>
 
 <style lang="scss" scoped>
