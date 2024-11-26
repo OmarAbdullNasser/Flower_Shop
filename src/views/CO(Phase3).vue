@@ -113,8 +113,8 @@ import SecandStage from "@/components/SecandStage.vue";
 import ThirdStage from "@/components/ThirdStage.vue";
 import { ref, inject, computed, onMounted, provide } from "vue";
 import { useStore } from "vuex";
+import Swal from "sweetalert2";
 
-import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
 name: "checkout";
 const store = useStore();
@@ -185,40 +185,17 @@ const FetchDataCart = async () => {
     console.error("Error fetching data:", error);
   }
 };
-const SendOrder = async (obj) => {
-  // console.log(senderObj.value);
+const PopupMessage = (title, Text, icon, BtnText) => {
+  Swal.fire({
+    title: title,
+    text: Text,
+    icon: icon,
+    confirmButtonText: BtnText,
+  });
+};
 
+const SendOrder = async (obj) => {
   try {
-    // const response = await fetch(`${url}/order-checkout`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     cart_cookie: CartCookie.value,
-    //     image: "",
-    //     ship_to_me: obj.ship_to_me,
-    //     know_receipent_address: obj.know_receipent_address,
-    //     same_day: "",
-    //     delivery_date: "",
-    //     recepient_name: obj.Name,
-    //     recepient_mobile: obj.phone,
-    //     delivery_place: true,
-    //     area: obj.Area,
-    //     st_name: obj.SName,
-    //     apartment: obj.ApartName,
-    //     floor: obj.Floor,
-    //     greeting_card: obj.Greeting,
-    //     extra_instructions: obj.extra_instructions,
-    //     customer_first_name: obj.SenderFName,
-    //     customer_second_name: obj.SenderLName,
-    //     customer_mobile: obj.SenderPhone,
-    //     customer_email: obj.SenderEmail,
-    //     hide_my_name_status: obj.SenderNameState,
-    //     payment_method_id: 1,
-    //   }),
-    // });
     const formData = new FormData();
     formData.append("cart_cookie", CartCookie.value);
     formData.append("image", obj.image); // Assuming an empty string for now
@@ -259,10 +236,13 @@ const SendOrder = async (obj) => {
         OrderResponse.message || "Failed to update product in cart"
       );
     } else {
-      toast.success("Product Ordered successfully!", {
-        autoClose: 4000, // Close after 2 seconds
-        position: "top-right",
-      });
+      const data = OrderResponse.data;
+      const { cookie_value2: OrderId } = data;
+      store.commit("Cart/SET_ORDERID", OrderId);
+      PopupMessage("Done Checkout", "Thank you!", "success", "Done");
+      store.commit("Cart/CLEAR_CART");
+      store.commit("Cart/CLEAR_COOKIE");
+      router.push("/"), 5000;
     }
     setTimeout(() => router.push("/"), 5000);
   } catch (error) {
