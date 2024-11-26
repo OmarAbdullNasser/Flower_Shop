@@ -107,6 +107,9 @@ export default createStore({
     SET_SENDER(state, data) {
       state.SenderObj = { ...state.SenderObj, ...data };
     },
+    CLEAR_SENDER(state) {
+      state.SenderObj = {};
+    },
   },
 
   actions: {

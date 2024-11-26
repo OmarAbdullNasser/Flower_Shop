@@ -72,7 +72,6 @@ watch(
   (newValue) => {
     clearTimeout(debounceTimeout); // Clear the timeout on every change
     debounceTimeout = setTimeout(() => {
-      console.log("Debounced commit:", newValue); // Debugging log
       store.commit("SET_SENDER", { extra_instructions: newValue }); // Commit after debounce
     }, 1500); // Adjust the delay as needed (500ms in this case)
   }

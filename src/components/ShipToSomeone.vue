@@ -63,7 +63,10 @@ watchEffect(() => console.log(senderObj.value));
 
 onMounted(() => {
   SetPaymentMethod();
+  store.commit("CLEAR_SENDER");
+  store.commit("SET_SENDER", { ship_to_me: 0 });
   store.commit("SET_SENDER", { know_receipent_address: Know.value });
+  console.log(senderObj.value);
 });
 </script>
 

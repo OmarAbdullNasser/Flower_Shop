@@ -9,7 +9,7 @@
             name="Date"
             id="SameDay"
             checked
-            @click="isDateVisible = false"
+            @click="SetTime(1, false)"
           />
           <label for="SameDay">Same day delivery ( Last order at 6 PM)</label>
         </p>
@@ -18,29 +18,49 @@
             type="radio"
             name="Date"
             id="specificDate"
-            @click="isDateVisible = true"
+            @click="SetTime(0, true)"
           />
           <label for="specificDate">Choose specific date</label>
         </p>
         <div class="date mb-3" ref="date" v-if="isDateVisible">
-          <input type="date" ref="dateInput" />
+          <input
+            type="date"
+            ref="dateInput"
+            v-model="SDate"
+            @change="SetDate"
+          />
         </div>
       </div>
 
       <label for="">Payment Method </label>
       <div class="paymentMethods">
-        <p class="mb-0" @click="SetPaymentMethod('Instapay')">
-          <input type="radio" name="Payment" id="Instapay" />
+        <p class="mb-0" @click="SetPaymentMethod('Instapay', 0)">
+          <input
+            type="radio"
+            name="Payment"
+            :checked="paymentMethod == 0"
+            id="Instapay"
+          />
           <label for="Instapay">Instapay</label>
         </p>
 
-        <p class="mb-0" @click="SetPaymentMethod('CashHome')">
-          <input type="radio" name="Payment" id="CashHome" checked />
+        <p class="mb-0" @click="SetPaymentMethod('CashHome', 1)">
+          <input
+            type="radio"
+            name="Payment"
+            id="CashHome"
+            :checked="paymentMethod == 1"
+          />
           <label for="CashHome">Cash Collect From Home</label>
         </p>
 
-        <p class="mb-0" @click="SetPaymentMethod('vodafoneCash')">
-          <input type="radio" name="Payment" id="vodafoneCash" />
+        <p class="mb-0" @click="SetPaymentMethod('vodafoneCash', 2)">
+          <input
+            type="radio"
+            name="Payment"
+            id="vodafoneCash"
+            :checked="paymentMethod == 2"
+          />
           <label for="vodafoneCash">vodafoneCash</label>
         </p>
       </div>
@@ -49,16 +69,30 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watchEffect } from "vue";
+import { onMounted, ref, watchEffect, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 
 const dateInput = ref(null);
 const date = ref(null);
 const isDateVisible = ref(false);
-
-const SetPaymentMethod = (method) => {
+const senderObj = computed(() => store.getters.senderObj);
+const SDate = ref(null);
+const paymentMethod = ref(0);
+const SetPaymentMethod = (method, code) => {
+  paymentMethod.value = code;
   store.commit("SET_PAYMENT", method);
+  store.commit("SET_SENDER", { payment_method_id: paymentMethod.value });
+  console.log(senderObj.value);
+};
+const SetTime = (val, datavisiable) => {
+  isDateVisible.value = datavisiable;
+  store.commit("SET_SENDER", { same_day: val });
+  console.log(senderObj.value);
+};
+const SetDate = () => {
+  store.commit("SET_SENDER", { delivery_date: SDate.value });
+  console.log(senderObj.value);
 };
 
 onMounted(() => {
@@ -67,7 +101,14 @@ onMounted(() => {
   if (dateInput.value) {
     dateInput.value.value = formattedDate;
   }
+  store.commit("CLEAR_SENDER");
+  store.commit("SET_SENDER", { ship_to_me: 1 });
+  store.commit("SET_SENDER", { same_day: 1 });
+  store.commit("SET_SENDER", { payment_method_id: 0 });
+  console.log(senderObj.value);
+
 });
+// watchEffect(() => console.log(SDate.value));
 </script>
 
 <style lang="scss" scoped>

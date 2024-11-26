@@ -236,12 +236,19 @@ const emit = defineEmits(["vaild"]);
 
 const addresState = computed(() => store.getters.address);
 const senderObj = computed(() => store.getters.senderObj);
+const HassAddress = computed(() => store.getters.address);
 const areFieldsValid = computed(() => {
   // Exclude fields from validation
   const fieldsToValidate = { ...formFields.value };
+  if ((senderObj.value.ship_to_me == 0) & (HassAddress.value == "NoAddress")) {
+    delete fieldsToValidate.SName;
+    delete fieldsToValidate.ApartName;
+    delete fieldsToValidate.Floor;
+    delete fieldsToValidate.Area;
+  }
   delete fieldsToValidate.Greeting;
   delete fieldsToValidate.SenderNameState;
-
+  console.log(fieldsToValidate);
   // Validate remaining fields
   return Object.values(fieldsToValidate).every(
     (field) =>

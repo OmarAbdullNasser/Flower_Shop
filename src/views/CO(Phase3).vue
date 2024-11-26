@@ -228,7 +228,7 @@ const SendOrder = async (obj) => {
     formData.append("delivery_date", ""); // Assuming an empty string for now
     formData.append("recepient_name", obj.Name);
     formData.append("recepient_mobile", obj.phone);
-    formData.append("delivery_place", true);
+    formData.append("delivery_place", 1);
     formData.append("area", obj.Area);
     formData.append("st_name", obj.SName);
     formData.append("apartment", obj.ApartName);
@@ -245,7 +245,6 @@ const SendOrder = async (obj) => {
     const response = await fetch(`${url}/order-checkout`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Accept: "application/json",
       },
       body: formData, // Use FormData instead of JSON
