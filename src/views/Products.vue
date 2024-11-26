@@ -8,7 +8,7 @@
         </div>
         <!-- Loader -->
 
-        <div class="col-12 col-lg-9 row align-content-start">
+        <div class="col-12 col-md-12 col-lg-9 row align-content-start">
           <SearchBar
             class="col-12 searchBar"
             :initialSort="sortOption"
@@ -61,6 +61,7 @@ const loading = ref(true);
 const checkLoader = () => {
   if (flowers.value.length > 0) {
     loading.value = false;
+    console.log(flowers.value);
   }
 };
 
@@ -79,7 +80,7 @@ watchEffect(() => {
   checkLoader();
 });
 
-onMounted(() => {
+onMounted(async () => {
   store.dispatch("fetchProducts");
 });
 </script>

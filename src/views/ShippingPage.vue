@@ -15,10 +15,10 @@
           :style="{ width: progressWidth + '%' }"
         ></div>
 
-        <div class="checkPoint frist"></div>
-        <div class="checkPoint second"></div>
-        <div class="checkPoint thrid active"></div>
-        <div class="checkPoint fourth"></div>
+        <div class="checkPoint frist" id="Recived"></div>
+        <div class="checkPoint second" id="Preparing"></div>
+        <div class="checkPoint thrid" id="InWay"></div>
+        <div class="checkPoint fourth" id="Arrived"></div>
       </div>
 
       <div
@@ -26,13 +26,15 @@
       >
         <div class="OrderProcessed">
           <font-awesome-icon icon="fa-solid fa-dolly" />
-          <span> Order <br />Processed </span>
+
+          <span> Recived <br />Processed </span>
         </div>
         <div class="OrderShipped">
           <font-awesome-icon icon="fa-solid fa-truck-fast" />
           <span class="ms-1"
             >Order<br />
-            Shipped</span
+
+            Preparing</span
           >
         </div>
         <div class="OrderInWay">
@@ -55,11 +57,60 @@
 name: "Shipping";
 import { ref, onMounted } from "vue";
 
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 const barElement = ref(null); // Reference to the .bar element
 const progressWidth = ref(0); // Variable to store the dynamic width of the progress fill
+const url = "https://flowerest.e1s.me/api";
 
-onMounted(() => {
-  // Calculate width based on the last active checkpoint
+const getStatus = async (id) => {
+  try {
+    const StatusResponse = await fetch(
+      `${url}/show-order-shipping-status/${id}	`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Accept-Language": `en`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const respon = await StatusResponse.json();
+    const Data = respon.data;
+
+    const shippingStatuses = Data.map((item) => item.shipping_status);
+    activeState(shippingStatuses);
+    ColorBar();
+  } catch (error) {
+    console.error("Error fetching shipping status:", error);
+  }
+};
+const activeState = (statuses) => {
+  // Map statuses to their corresponding DOM elements
+  const statusMap = {
+    Recived: document.getElementById("Recived"),
+    Preparing: document.getElementById("Preparing"),
+    delivering: document.getElementById("InWay"),
+    delivered: document.getElementById("Arrived"),
+  };
+
+  // Reset all states first
+  Object.values(statusMap).forEach((element) =>
+    element.classList.remove("active")
+  );
+
+  // Add the "active" class to all statuses up to the current one
+  statuses.forEach((status) => {
+    const element = statusMap[status];
+    if (element) {
+      element.classList.add("active");
+    }
+  });
+};
+const ColorBar = () => {
+
   const checkpoints = barElement.value.querySelectorAll(".checkPoint");
   const activeCheckpoints = Array.from(checkpoints).filter((checkpoint) =>
     checkpoint.classList.contains("active")
@@ -86,6 +137,10 @@ onMounted(() => {
 
     progressWidth.value = (activeIndex / (checkpoints.length - 1)) * 100;
   }
+
+};
+onMounted(() => {
+  getStatus(route.params.id);
 });
 </script>
 

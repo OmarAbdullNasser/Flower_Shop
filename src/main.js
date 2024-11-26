@@ -18,10 +18,14 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "vue3-toastify/dist/index.css";
 library.add(far, fab, fas);
 
 const head = createHead();
+
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 const i18n = createI18n({
   locale: "en",
@@ -54,5 +58,6 @@ createApp(App)
   .use(Vue3Toastify, {
     autoClose: 2000,
   })
+  .use(VueSweetalert2)
   .use(i18n)
   .mount("#app");

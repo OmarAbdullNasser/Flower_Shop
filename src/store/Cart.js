@@ -80,7 +80,7 @@ const Cart = {
       state.cart = data;
     },
     CLEAR_CART(state) {
-      state.cart = null;
+      state.cart = [];
     },
     DElETE_ITEM_CART(state, id) {
       state.cart = state.cart.filter((item) => item.id !== id);
@@ -105,7 +105,6 @@ const Cart = {
     },
     UPDATE_PRODUCT_QUNITTY(state, product) {
       const existingProduct = state.cart.find((item) => item.id === product.id);
-      console.log(product.quantity);
       if (existingProduct) {
         // If the product already exists, increase its quantity
         existingProduct.quantity = product.quantity || 1;

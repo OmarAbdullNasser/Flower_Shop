@@ -1,9 +1,11 @@
 <template>
   <div class="loader mx-auto my-3" v-if="loading"></div>
   <div class="home" v-else>
+    <FeedBackFrom v-if="isVisable" :items="ItemsRating" />
     <Swiper :initialImages="SwiperImg" />
     <Message />
     <Services :initialData="ServiceData" />
+    <ReviewSwiper :initialData="Review" />
     <Portfolio :initialData="PortfolioData" />
     <Articale :initialData="ArticaleData" />
     <ContectForm />
@@ -17,12 +19,17 @@ import Message from "@/components/message.vue";
 import Portfolio from "@/components/Portfolio.vue";
 import Services from "@/components/Services.vue";
 import Swiper from "@/components/Swiper.vue";
+import { useStore } from "vuex";
 import { onMounted, ref, watchEffect, watch, computed } from "vue";
 import { useHead } from "@vueuse/head";
 import { useRoute } from "vue-router";
+import ReviewSwiper from "@/components/ReviewSwiper.vue";
+import FeedBackFrom from "@/components/FeedBackFrom.vue";
+
 name: "Home";
 const url = "https://flowerest.e1s.me/api";
 
+const store = useStore();
 const route = useRoute();
 const loading = ref(true);
 const SwiperImg = ref([]);
@@ -30,18 +37,35 @@ const ServiceData = ref({});
 const PortfolioData = ref({});
 const ArticaleData = ref({});
 const metaData = ref(null);
-
+const OrderId = computed(() => store.getters["Cart/OrederId"]);
+const ItemsRating = ref([]);
+const Review = ref([]);
+const isVisable = ref(false);
+const Rating = () => {
+  if (
+    Array.isArray(ItemsRating.value?.product) &&
+    ItemsRating.value.product.length > 0
+  ) {
+    isVisable.value = true;
+  } else {
+    isVisable.value = false;
+  }
+  console.log(isVisable.value);
+};
 const fetchHomeData = async (lang) => {
   try {
-    const HomeResponse = await fetch(`${url}/home`, {
-      method: "GET", // Specify the method if needed
-      headers: {
-        "Accept-Language": `${lang}`,
-      },
-    });
-
+    const HomeResponse = await fetch(
+      `${url}/home?order_cookie=${OrderId.value}`,
+      {
+        method: "GET", // Specify the method if needed
+        headers: {
+          "Accept-Language": `${lang}`,
+        },
+      }
+    );
     const respons = await HomeResponse.json();
     const {
+      order_to_rate,
       sliders,
       contact_us,
       makers,
@@ -52,12 +76,22 @@ const fetchHomeData = async (lang) => {
       service,
     } = respons.data;
 
-    console.log(respons.data);
+    ItemsRating.value = order_to_rate;
     SwiperImg.value = sliders;
     ServiceData.value = { service, mission, tabs };
     PortfolioData.value = portfolio;
     ArticaleData.value = makers;
     metaData.value = meta;
+    console.log(ItemsRating.value, "items to rate ");
+    Rating();
+    const ReviewResponse = await fetch(`${url}/reviews/list`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const ReviewRespons = await ReviewResponse.json();
+    Review.value = ReviewRespons.data;
   } catch (error) {
     console.error("Failed to fetch flowers:", error);
   }
