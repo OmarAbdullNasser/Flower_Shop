@@ -5,7 +5,13 @@
         <label> Recipient Details</label>
         <div class="name d-flex flex-column">
           <label for="Name">Name <span class="star">*</span></label>
-          <input type="text" name="Name" id="" v-model="formFields.Name" />
+          <input
+            type="text"
+            name="Name"
+            id=""
+            v-model="formFields.Name"
+            required
+          />
         </div>
 
         <div class="Mobile d-flex flex-column">
@@ -16,6 +22,7 @@
             id=""
             oninput="this.value = this.value.replace(/[^0-9]/g, '');"
             v-model="formFields.phone"
+            required
           />
         </div>
 
@@ -69,7 +76,13 @@
         >
           <div class="SName d-flex flex-column">
             <label for="SName">Street Name <span class="star">*</span></label>
-            <input type="text" name="SName" id="" v-model="formFields.SName" />
+            <input
+              type="text"
+              name="SName"
+              id=""
+              v-model="formFields.SName"
+              required
+            />
             <span>Preferably in Arabic if possible for more accuracy </span>
           </div>
 
@@ -87,7 +100,13 @@
 
           <div class="Floor d-flex flex-column">
             <label for="Floor ">Floor <span class="star">*</span></label>
-            <input type="text" name="Floor" id="" v-model="formFields.Floor" />
+            <input
+              type="text"
+              name="Floor"
+              id=""
+              v-model="formFields.Floor"
+              required
+            />
           </div>
         </div>
 
@@ -143,6 +162,7 @@
               name="FName"
               id=""
               v-model="formFields.SenderFName"
+              required
             />
           </div>
 
@@ -153,6 +173,7 @@
               name="LName"
               id=""
               v-model="formFields.SenderLName"
+              required
             />
           </div>
         </div>
@@ -165,6 +186,7 @@
             name="phone"
             id=""
             v-model="formFields.SenderPhone"
+            required
           />
         </div>
 
@@ -175,6 +197,7 @@
             name="email"
             id=""
             v-model="formFields.SenderEmail"
+            required
           />
         </div>
 
@@ -198,6 +221,7 @@
               v-model="formFields.SenderNameState"
             />
             <label for="HideName">Hide my name on delivery</label>
+            <button @click="handleSubmit">Test</button>
           </p>
         </div>
       </div>
@@ -206,16 +230,18 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch, defineEmits } from "vue";
 import { useStore } from "vuex";
+import Swal from "sweetalert2";
 const store = useStore();
+const emits = defineEmits(["checkvalues"]);
+const flag = ref(false);
 const addresState = computed(() => store.getters.address);
 const senderObj = computed(() => store.getters.senderObj);
 const debounceTimeouts = {};
 const formFields = ref({
   Name: "",
   phone: "",
-  address: "",
   Deliver: "",
   Area: "",
   SName: "",
@@ -228,23 +254,68 @@ const formFields = ref({
   SenderEmail: "",
   SenderNameState: "",
 });
+const PopupMessage = (title, Text, icon, BtnText) => {
+  Swal.fire({
+    title: title,
+    text: Text,
+    icon: icon,
+    confirmButtonText: BtnText,
+  });
+};
+function validateFields(fields) {
+  const emptyFields = [];
+
+  // Loop through each key-value pair in the object
+  for (const [key, value] of Object.entries(fields)) {
+    if (!value.trim()) {
+      // Collect the names of the fields that are empty
+      emptyFields.push(key);
+    }
+  }
+
+  if (emptyFields.length > 0) {
+    console.log("The following fields are empty:", emptyFields);
+    return false;
+  }
+
+  return true;
+}
+const handleSubmit = () => {
+  if (validateFields(formFields.value)) {
+    PopupMessage("Check Fields", "All feilds are Filled", "success", "Done");
+  } else {
+    PopupMessage(
+      "Check Fields",
+      "Not All feilds are Filled",
+      "error",
+      "Try Agin"
+    );
+  }
+};
 watch(
   formFields,
   (newValues) => {
+    let allFieldsValid = false;
+
     for (const field in newValues) {
-      if (debounceTimeouts[field]) {
-        clearTimeout(debounceTimeouts[field]); // Clear previous timeout
+      const value = newValues[field];
+
+      // Check if the value is valid (non-empty, non-null, non-undefined)
+      if (value === null || value === undefined || value === "") {
+        allFieldsValid = false;
+        break;
       }
-      debounceTimeouts[field] = setTimeout(() => {
-        store.commit("SET_SENDER", { [field]: newValues[field] });
-      }, 1500); // Adjust debounce delay as needed
+
+      // Commit each field to the store
+      store.commit("SET_SENDER", { [field]: value });
     }
+
+    // Emit only if all fields are valid
+    emits("checkvalues", allFieldsValid);
   },
   { deep: true }
 );
-const test = () => {
-  console.log(senderObj.value);
-};
+
 onMounted(() => console.log(senderObj.value));
 </script>
 

@@ -77,6 +77,7 @@ import SecandStage from "@/components/SecandStage.vue";
 import ThirdStage from "@/components/ThirdStage.vue";
 import { ref, inject, computed, onMounted, provide } from "vue";
 import { useStore } from "vuex";
+
 import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
 name: "checkout";
@@ -90,13 +91,14 @@ const Prodects = ref([]);
 const TM = ref(0);
 const CartCookie = computed(() => store.getters["Cart/Cookies"]);
 
-const SetPhase = () => {
+  const SetPhase = (س) => {
   if (phase.value < 3) {
     phase.value += 1;
   } else {
     phase.value = 3;
   }
 };
+
 const ShiftBetweenPhases = (e, num) => {
   if (e.target.classList.contains("active")) {
     phase.value = num;
