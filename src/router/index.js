@@ -1,7 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import store from "@/store";
+
+import Chechout from "@/views/Chechout.vue";
+import SinglePage from "@/views/SinglePage.vue";
+import Router from "vue-router";
 import Home from "@/views/Home.vue";
+
 
 const routes = [
   {
@@ -34,6 +39,12 @@ const routes = [
     name: "Product",
     component: () => import("@/views/Product.vue"),
   },
+
+  {
+    path: "/:lang(en|ar)/Shipping",
+    name: "Shipping",
+    component: () => import("@/views/ShippingPage.vue"),
+  },
   {
     path: "/:lang(en|ar)/Cart",
     name: "Cart",
@@ -47,7 +58,11 @@ const routes = [
   {
     path: "/:lang(en|ar)/checkout",
     name: "checkout",
-    component: () => import("@/views/Chechout.vue"),
+    // component: Chechout,
+
+    component: () => import("@/views/CO(Phase3).vue"),
+
+
     // beforeEnter: (to, from, next) => {
     //   // Check if the cart is empty using Vuex state
     //   const isCartEmpty = store.getters["Cart/cartItems"];

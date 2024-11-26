@@ -1,0 +1,15 @@
+ApartName: "rtyer"
+Area: "3"
+Deliver: "Office"
+Floor: "rtyer"
+Greeting: "yrtyert"
+Name: "omar"
+SName: "tyy"
+SenderEmail: "tyertyr@yttyw.com"
+SenderFName: "tryerty"
+SenderLName: "rtyrty"
+SenderNameState: "0"
+SenderPhone: "0123456795"
+know_receipent_address: 1
+phone: "0123456785"
+ship_to_me: 0

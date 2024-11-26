@@ -35,7 +35,7 @@ const i18n = createI18n({
   },
 });
 
-console.log(router);
+
 watch(
   () => router.currentRoute.value.params.lang, // Watch the "lang" route parameter
   (newLang) => {

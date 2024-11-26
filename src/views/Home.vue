@@ -75,6 +75,7 @@ const fetchHomeData = async (lang) => {
       tabs,
       service,
     } = respons.data;
+
     ItemsRating.value = order_to_rate;
     SwiperImg.value = sliders;
     ServiceData.value = { service, mission, tabs };

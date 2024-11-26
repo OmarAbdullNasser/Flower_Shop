@@ -26,12 +26,14 @@
       >
         <div class="OrderProcessed">
           <font-awesome-icon icon="fa-solid fa-dolly" />
+
           <span> Recived <br />Processed </span>
         </div>
         <div class="OrderShipped">
           <font-awesome-icon icon="fa-solid fa-truck-fast" />
           <span class="ms-1"
             >Order<br />
+
             Preparing</span
           >
         </div>
@@ -54,6 +56,7 @@
 <script setup>
 name: "Shipping";
 import { ref, onMounted } from "vue";
+
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -107,6 +110,7 @@ const activeState = (statuses) => {
   });
 };
 const ColorBar = () => {
+
   const checkpoints = barElement.value.querySelectorAll(".checkPoint");
   const activeCheckpoints = Array.from(checkpoints).filter((checkpoint) =>
     checkpoint.classList.contains("active")
@@ -133,6 +137,7 @@ const ColorBar = () => {
 
     progressWidth.value = (activeIndex / (checkpoints.length - 1)) * 100;
   }
+
 };
 onMounted(() => {
   getStatus(route.params.id);
