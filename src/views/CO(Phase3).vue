@@ -23,11 +23,47 @@
         <div class="stage thrid" :class="{ active: phase === 3 }">3</div>
       </div>
       <div class="row">
-        <div class="col-12- col-lg-9 SendrInfo">
+        <!-- <div class="col-12- col-lg-9 SendrInfo">
           <FristStage v-if="phase === 1" />
-          <SecandStage v-else-if="phase === 2" />
+          <SecandStage v-else-if="phase === 2" @vaild="test" />
           <ThirdStage v-else-if="phase === 3" />
-          <button class="btn" @click="SetPhase">Next</button>
+          <button
+            class="btn"
+            @click="SetPhase"
+            v-if="phase < 3"
+            :disabled="isButtonDisabled"
+          >
+            <span>Next</span>
+          </button>
+          <button class="btn" @click="SendOrder(senderObj)" v-else>
+            <span>Send</span>
+          </button>
+        </div> -->
+        <div class="col-12 col-lg-9 SendrInfo">
+          <!-- Dynamic Component -->
+          <component
+            :is="currentComponent"
+            @validation-result="handleValidationResult"
+            @SendImg="handlSend"
+          />
+
+          <!-- Next/Send Buttons -->
+          <button
+            class="btn"
+            @click="SetPhase"
+            v-if="phase < 3"
+            :disabled="isButtonDisabled"
+          >
+            <span>Next</span>
+          </button>
+          <button
+            class="btn"
+            @click="SendOrder(senderObj)"
+            :disabled="isSendBtnDisabled"
+            v-else
+          >
+            <span>Send</span>
+          </button>
         </div>
         <div class="total col-12- col-lg-3 p-3">
           <router-link :to="{ name: 'Cart' }"> Edit Cart </router-link>
@@ -84,19 +120,39 @@ name: "checkout";
 const store = useStore();
 const router = useRouter();
 const url = inject("url");
-
 const phase = ref(1);
+const isButtonDisabled = ref(true);
+const isSendBtnDisabled = ref(true);
+const currentComponent = computed(() => {
+  switch (phase.value) {
+    case 1:
+      return FristStage;
+    case 2:
+      return SecandStage;
+    case 3:
+      return ThirdStage;
+    default:
+      return null;
+  }
+});
+
 const promocode = ref(false);
 const Prodects = ref([]);
 const TM = ref(0);
 const CartCookie = computed(() => store.getters["Cart/Cookies"]);
-
-  const SetPhase = (س) => {
+const senderObj = computed(() => store.getters.senderObj);
+const SetPhase = () => {
   if (phase.value < 3) {
     phase.value += 1;
-  } else {
-    phase.value = 3;
+    isButtonDisabled.value = true; // Disable button until validated
   }
+};
+
+const handleValidationResult = (isValid) => {
+  isButtonDisabled.value = !isValid; // Enable button if validation is successful
+};
+const handlSend = (isValid) => {
+  isSendBtnDisabled.value = !isValid; // Enable button if validation is successful
 };
 
 const ShiftBetweenPhases = (e, num) => {
@@ -129,6 +185,93 @@ const FetchDataCart = async () => {
     console.error("Error fetching data:", error);
   }
 };
+const SendOrder = async (obj) => {
+  // console.log(senderObj.value);
+
+  try {
+    // const response = await fetch(`${url}/order-checkout`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     cart_cookie: CartCookie.value,
+    //     image: "",
+    //     ship_to_me: obj.ship_to_me,
+    //     know_receipent_address: obj.know_receipent_address,
+    //     same_day: "",
+    //     delivery_date: "",
+    //     recepient_name: obj.Name,
+    //     recepient_mobile: obj.phone,
+    //     delivery_place: true,
+    //     area: obj.Area,
+    //     st_name: obj.SName,
+    //     apartment: obj.ApartName,
+    //     floor: obj.Floor,
+    //     greeting_card: obj.Greeting,
+    //     extra_instructions: obj.extra_instructions,
+    //     customer_first_name: obj.SenderFName,
+    //     customer_second_name: obj.SenderLName,
+    //     customer_mobile: obj.SenderPhone,
+    //     customer_email: obj.SenderEmail,
+    //     hide_my_name_status: obj.SenderNameState,
+    //     payment_method_id: 1,
+    //   }),
+    // });
+    const formData = new FormData();
+    formData.append("cart_cookie", CartCookie.value);
+    formData.append("image", obj.image); // Assuming an empty string for now
+    formData.append("ship_to_me", obj.ship_to_me);
+    formData.append("know_receipent_address", obj.know_receipent_address);
+    formData.append("same_day", ""); // Assuming an empty string for now
+    formData.append("delivery_date", ""); // Assuming an empty string for now
+    formData.append("recepient_name", obj.Name);
+    formData.append("recepient_mobile", obj.phone);
+    formData.append("delivery_place", true);
+    formData.append("area", obj.Area);
+    formData.append("st_name", obj.SName);
+    formData.append("apartment", obj.ApartName);
+    formData.append("floor", obj.Floor);
+    formData.append("greeting_card", obj.Greeting);
+    formData.append("extra_instructions", obj.extra_instructions);
+    formData.append("customer_first_name", obj.SenderFName);
+    formData.append("customer_second_name", obj.SenderLName);
+    formData.append("customer_mobile", obj.SenderPhone);
+    formData.append("customer_email", obj.SenderEmail);
+    formData.append("hide_my_name_status", obj.SenderNameState);
+    formData.append("payment_method_id", 1);
+
+    const response = await fetch(`${url}/order-checkout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: formData, // Use FormData instead of JSON
+    });
+    console.log(response);
+    // Parse the JSON response
+    const OrderResponse = await response.json();
+    // Prodects.value = Prodects.value.filter((item) => item.id !== id);
+    console.log(OrderResponse);
+    if (!response.ok) {
+      throw new Error(
+        OrderResponse.message || "Failed to update product in cart"
+      );
+    } else {
+      toast.success("Product Ordered successfully!", {
+        autoClose: 4000, // Close after 2 seconds
+        position: "top-right",
+      });
+    }
+    setTimeout(() => router.push("/"), 5000);
+  } catch (error) {
+    console.error("Error make order from cart:", error);
+    // Handle error appropriately (e.g., show notification)
+  }
+};
+
 onMounted(() => FetchDataCart());
 </script>
 

@@ -51,6 +51,8 @@ let Resiver = ref("");
 const store = useStore();
 const SenderBox = ref("ToSomeOne");
 const notes = ref("");
+
+const emit = defineEmits(["validation-result"]);
 let debounceTimeout;
 
 const ToggleSender = (to) => {
@@ -79,7 +81,7 @@ watch(
 
 onMounted(() => {
   store.commit("SET_SENDER", { ship_to_me: 0 });
-  console.log(senderObj.value);
+  emit("validation-result", true);
 });
 </script>
 

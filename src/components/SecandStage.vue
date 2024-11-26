@@ -23,6 +23,8 @@
             oninput="this.value = this.value.replace(/[^0-9]/g, '');"
             v-model="formFields.phone"
             required
+            minlength="11"
+            maxlength="13"
           />
         </div>
 
@@ -60,13 +62,8 @@
         <div class="Area" v-if="addresState == 'HasAdress'">
           <label for="Area">Area <span class="star">*</span></label>
           <select name="Area" v-model="formFields.Area" id="">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
+            <option value="Cairo">Cairo</option>
+            <option value="Giza">Giza</option>
           </select>
         </div>
 
@@ -187,6 +184,7 @@
             id=""
             v-model="formFields.SenderPhone"
             required
+            minlength="11"
           />
         </div>
 
@@ -221,7 +219,6 @@
               v-model="formFields.SenderNameState"
             />
             <label for="HideName">Hide my name on delivery</label>
-            <button @click="handleSubmit">Test</button>
           </p>
         </div>
       </div>
@@ -233,12 +230,24 @@
 import { computed, onMounted, ref, watch, defineEmits } from "vue";
 import { useStore } from "vuex";
 import Swal from "sweetalert2";
+
 const store = useStore();
-const emits = defineEmits(["checkvalues"]);
-const flag = ref(false);
+const emit = defineEmits(["vaild"]);
+
 const addresState = computed(() => store.getters.address);
 const senderObj = computed(() => store.getters.senderObj);
-const debounceTimeouts = {};
+const areFieldsValid = computed(() => {
+  // Exclude fields from validation
+  const fieldsToValidate = { ...formFields.value };
+  delete fieldsToValidate.Greeting;
+  delete fieldsToValidate.SenderNameState;
+
+  // Validate remaining fields
+  return Object.values(fieldsToValidate).every(
+    (field) =>
+      field !== null && field !== undefined && field.toString().trim() !== ""
+  );
+});
 const formFields = ref({
   Name: "",
   phone: "",
@@ -262,61 +271,25 @@ const PopupMessage = (title, Text, icon, BtnText) => {
     confirmButtonText: BtnText,
   });
 };
-function validateFields(fields) {
-  const emptyFields = [];
 
-  // Loop through each key-value pair in the object
-  for (const [key, value] of Object.entries(fields)) {
-    if (!value.trim()) {
-      // Collect the names of the fields that are empty
-      emptyFields.push(key);
-    }
-  }
-
-  if (emptyFields.length > 0) {
-    console.log("The following fields are empty:", emptyFields);
-    return false;
-  }
-
-  return true;
-}
-const handleSubmit = () => {
-  if (validateFields(formFields.value)) {
-    PopupMessage("Check Fields", "All feilds are Filled", "success", "Done");
-  } else {
-    PopupMessage(
-      "Check Fields",
-      "Not All feilds are Filled",
-      "error",
-      "Try Agin"
-    );
-  }
-};
 watch(
   formFields,
   (newValues) => {
-    let allFieldsValid = false;
-
+    // Commit each field to the store
     for (const field in newValues) {
       const value = newValues[field];
-
-      // Check if the value is valid (non-empty, non-null, non-undefined)
-      if (value === null || value === undefined || value === "") {
-        allFieldsValid = false;
-        break;
-      }
-
-      // Commit each field to the store
       store.commit("SET_SENDER", { [field]: value });
     }
 
-    // Emit only if all fields are valid
-    emits("checkvalues", allFieldsValid);
+    // Emit true or false based on validity
+    emit("validation-result", areFieldsValid.value);
+    console.log(areFieldsValid.value);
   },
   { deep: true }
 );
-
-onMounted(() => console.log(senderObj.value));
+onMounted(() => {
+  emit("valid", areFieldsValid.value);
+});
 </script>
 
 <style lang="scss" scoped>

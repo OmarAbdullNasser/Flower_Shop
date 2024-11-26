@@ -57,7 +57,13 @@
 
       <div class="PaymentBill myt-3 d-flex flex-column mt-3 text-start">
         <label for="Bill" class="my-2">Payment Bill</label>
-        <input type="file" name="" id="" />
+        <input
+          type="file"
+          @change="handleFileChange"
+          accept="image/*"
+          name=""
+          id=""
+        />
       </div>
     </div>
   </div>
@@ -69,6 +75,8 @@ import { useStore } from "vuex";
 const store = useStore();
 const PaymentState = computed(() => store.getters.payment);
 const props = defineProps(["state"]);
+const senderObj = computed(() => store.getters.senderObj);
+const emit = defineEmits(["Send"]);
 let flag = ref("");
 const SetState = () => {
   switch (PaymentState.value) {
@@ -89,7 +97,40 @@ const SetState = () => {
       break;
     }
   }
-  console.log(PaymentState.value, flag);
+};
+const validImageTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+
+const handleFileChange = (event) => {
+  const selectedFile = event.target.files[0];
+
+  // Validate file content
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const arrayBuffer = e.target.result;
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    // Check headers for valid image content
+    if (
+      (selectedFile.type === "image/jpeg" &&
+        uint8Array[0] === 0xff &&
+        uint8Array[1] === 0xd8) ||
+      (selectedFile.type === "image/png" &&
+        uint8Array[0] === 0x89 &&
+        uint8Array[1] === 0x50) ||
+      (selectedFile.type === "image/gif" &&
+        uint8Array[0] === 0x47 &&
+        uint8Array[1] === 0x49) ||
+      (selectedFile.type === "image/webp" &&
+        uint8Array[8] === 0x57 &&
+        uint8Array[9] === 0x45)
+    ) {
+      store.commit("SET_SENDER", { image: selectedFile });
+      emit("Send", true);
+      console.log(senderObj.value);
+    }
+  };
+
+  reader.readAsArrayBuffer(selectedFile);
 };
 onMounted(() => SetState());
 </script>
