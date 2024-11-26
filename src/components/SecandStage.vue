@@ -233,6 +233,14 @@ import Swal from "sweetalert2";
 
 const store = useStore();
 const emit = defineEmits(["vaild"]);
+const PopupMessage = (title, Text, icon, BtnText) => {
+  Swal.fire({
+    title: title,
+    text: Text,
+    icon: icon,
+    confirmButtonText: BtnText,
+  });
+};
 
 const addresState = computed(() => store.getters.address);
 const senderObj = computed(() => store.getters.senderObj);
@@ -248,12 +256,24 @@ const areFieldsValid = computed(() => {
   }
   delete fieldsToValidate.Greeting;
   delete fieldsToValidate.SenderNameState;
-  console.log(fieldsToValidate);
-  // Validate remaining fields
-  return Object.values(fieldsToValidate).every(
+
+  const allFieldsFilled = Object.values(fieldsToValidate).every(
     (field) =>
       field !== null && field !== undefined && field.toString().trim() !== ""
   );
+
+  // Additional validation for phone number and email
+  const isSenderPhoneValid =
+    formFields.value.SenderPhone.length >= 11 &&
+    formFields.value.SenderPhone.length < 13;
+  const isPhoneValid =
+    formFields.value.phone.length >= 11 && formFields.value.phone.length < 13;
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+    formFields.value.SenderEmail
+  );
+
+  // Validate remaining fields
+  return allFieldsFilled && isPhoneValid && isEmailValid && isSenderPhoneValid;
 });
 const formFields = ref({
   Name: "",
@@ -270,14 +290,6 @@ const formFields = ref({
   SenderEmail: "",
   SenderNameState: "",
 });
-const PopupMessage = (title, Text, icon, BtnText) => {
-  Swal.fire({
-    title: title,
-    text: Text,
-    icon: icon,
-    confirmButtonText: BtnText,
-  });
-};
 
 watch(
   formFields,

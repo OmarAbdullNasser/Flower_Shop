@@ -196,6 +196,12 @@ const PopupMessage = (title, Text, icon, BtnText) => {
 
 const SendOrder = async (obj) => {
   try {
+    Swal.fire({
+      title: "Making your Order",
+      icon: "info",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+    });
     const formData = new FormData();
     formData.append("cart_cookie", CartCookie.value);
     formData.append("image", obj.image); // Assuming an empty string for now
@@ -236,6 +242,7 @@ const SendOrder = async (obj) => {
         OrderResponse.message || "Failed to update product in cart"
       );
     } else {
+      Swal.close();
       const data = OrderResponse.data;
       const { cookie_value2: OrderId } = data;
       store.commit("Cart/SET_ORDERID", OrderId);
@@ -246,6 +253,8 @@ const SendOrder = async (obj) => {
     }
     setTimeout(() => router.push("/"), 5000);
   } catch (error) {
+    Swal.close();
+    Swal.fire("Error", "Something went wrong!", "error");
     console.error("Error make order from cart:", error);
     // Handle error appropriately (e.g., show notification)
   }
