@@ -1,17 +1,6 @@
 <template>
   <div class="FeedBack">
     <div class="container">
-      <!-- Button trigger modal -->
-      <button
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Launch demo modal
-      </button>
-
-
       <!-- Modal -->
       <div
         class="modal fade"
@@ -19,7 +8,8 @@
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
-        ref="modal">
+        ref="modal"
+      >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -34,31 +24,6 @@
               ></button>
             </div>
             <div class="modal-body">
-              <h3>Give Your Feedback</h3>
-              <p>
-                Thank you for taking the time to share your thought, your
-                feedback helps us bloom!
-              </p>
-              <div class="rate d-flex justify-content-evenly my-1">
-                <font-awesome-icon
-                  v-for="(star, index) in 5"
-                  :key="index"
-                  class="star"
-                  :class="{
-                    Rated: index < rating,
-                    HoverRated: index < HoverIndex,
-                  }"
-                  icon="star"
-                  @click="SetRate(index + 1)"
-                  @mouseenter="handleMouseEnter(index + 1)"
-                  @mouseleave="handleMouseLeave"
-                ></font-awesome-icon>
-              </div>
-              <textarea
-                name="Feedback"
-                class="Feedback mt-3"
-                placeholder="Penny for your thoughts?"
-              ></textarea>
               <div
                 class="d-flex align-items-center justify-content-between"
                 v-for="item in product"
@@ -72,14 +37,13 @@
                   />
                   <p class="mb-0">{{ item.title }}</p>
                 </div>
-
                 <div class="rate d-flex justify-content-evenly my-1">
                   <font-awesome-icon
                     v-for="(star, index) in 5"
                     :key="index"
                     class="star"
                     icon="star"
-                    :class="{ selected: star <= item.rating }"
+                    :class="{ Rated: star <= item.rating }"
                     @click="setRating(item.id, star)"
                   ></font-awesome-icon>
                 </div>
@@ -107,20 +71,19 @@
 </template>
 
 <script setup>
-
-import { ref } from "vue";
-const rating = ref(0);
-const HoverIndex = ref(-1);
-const SetRate = (index) => {
-  rating.value = index;
-  console.log(index);
-};
-const handleMouseEnter = (index) => {
-  HoverIndex.value = index;
-};
-const handleMouseLeave = () => {
-  HoverIndex.value = -1;
-};
+// import { ref } from "vue";
+// const rating = ref(0);
+// const HoverIndex = ref(-1);
+// const SetRate = (index) => {
+//   rating.value = index;
+//   console.log(index);
+// };
+// const handleMouseEnter = (index) => {
+//   HoverIndex.value = index;
+// };
+// const handleMouseLeave = () => {
+//   HoverIndex.value = -1;
+// };
 
 import { ref, computed, onMounted } from "vue";
 import { Modal } from "bootstrap";
@@ -134,6 +97,7 @@ const OrderId = computed(() => store.getters["Cart/OrederId"]);
 const props = defineProps({
   items: Array,
 });
+import Swal from "sweetalert2";
 const { order_id, product } = props.items;
 console.log(product, "products");
 
@@ -164,13 +128,18 @@ const SendFeedback = async () => {
     }),
   });
   const respons = await FeddbackResponse.json();
-
+  console.log(respons);
   if (!respons.success) {
     throw new Error(
       FeddbackResponse.message || "Failed to update product in cart"
     );
   } else {
-    alert("Thank can for your feedback");
+    Swal.fire({
+      title: "Feedback",
+      text: "Thanks for yout Time",
+      icon: "success",
+      confirmButtonText: "ok",
+    });
     store.commit("Cart/CLEAR_ORDERID");
     bootstrapModal.hide();
   }
@@ -184,7 +153,6 @@ onMounted(() => {
 
   bootstrapModal.show();
 });
-
 </script>
 
 <style lang="scss" scoped>
@@ -213,73 +181,50 @@ onMounted(() => {
       .Rated {
         color: #ecbc26;
       }
-      .HoverRated {
-        color: #ecbc26;
-      }
     }
 
-
-        font-size: 1.8rem;
-        transition: all 0.3s;
-      }
-    }
-    // .star.active,
-    // .star:hover ~ .star.active {
-    //   color: gold;
-    // }
-
-    // .star:hover,
-    // .star.active ~ .star {
-    //   color: gold;
-    // }
-    .rate .star {
-      cursor: pointer;
-      transition: color 0.1s;
-    }
-
-
-    // .rate .star:hover,
-    // .rate .star:hover ~ .star {
-    //   color: #ecbc26;
-    // }
-    .star.highlighted,
-    .star.selected {
-      color: gold;
-    }
-
-    /* Add transition delay for each star */
-    .rate .star:nth-of-type(1) {
-      transition-delay: 0s;
-    }
-
-    .rate .star:nth-of-type(2) {
-      transition-delay: 0.05s;
-    }
-
-    .rate .star:nth-of-type(3) {
-      transition-delay: 0.1s;
-    }
-
-    .rate .star:nth-of-type(4) {
-      transition-delay: 0.15s;
-    }
-
-    .rate .star:nth-of-type(5) {
-      transition-delay: 0.2s;
-    }
-
-    .Feedback {
-      border-radius: 12px;
-      resize: none;
-      width: 100%;
-      padding: 1rem;
-    }
+    font-size: 1.8rem;
+    transition: all 0.3s;
   }
-  .modal-footer {
-    .btn-send {
-      background-color: #400a3f;
-      color: #fff;
-    }
+}
+
+.rate .star {
+  cursor: pointer;
+  transition: color 0.1s;
+}
+
+/* Add transition delay for each star */
+.rate .star:nth-of-type(1) {
+  transition-delay: 0s;
+}
+
+.rate .star:nth-of-type(2) {
+  transition-delay: 0.05s;
+}
+
+.rate .star:nth-of-type(3) {
+  transition-delay: 0.1s;
+}
+
+.rate .star:nth-of-type(4) {
+  transition-delay: 0.15s;
+}
+
+.rate .star:nth-of-type(5) {
+  transition-delay: 0.2s;
+}
+
+.Feedback {
+  border-radius: 12px;
+  resize: none;
+  width: 100%;
+  padding: 1rem;
+}
+
+.modal-footer {
+  .btn-send {
+    background-color: #400a3f;
+    color: #fff;
   }
 }
 
