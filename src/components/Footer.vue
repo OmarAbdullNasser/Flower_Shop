@@ -82,12 +82,13 @@
 </template>
 
 <script setup>
-import { computed, watchEffect, onBeforeUnmount } from "vue";
+import { computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 const store = useStore();
 const route = useRoute();
 const DatatFooter = computed(() => store.getters.footer);
+watchEffect(() => console.log(DatatFooter.value, "footer "));
 </script>
 
 <style scoped lang="scss">

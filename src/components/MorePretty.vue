@@ -6,45 +6,6 @@
       <div class="Imgs">
         <div class="Img-wrapper">
           <!--Fliter-->
-          <!-- <div class="gallery-filter">
-            <ul class="list">
-              <li
-                class="me-1"
-                :class="{ active: selectedCategory === 'all' }"
-                @click="selectCategory('all')"
-              >
-                <span href="#" class="Btn display7"> All </span>
-              </li>
-
-              <li
-                :class="{ active: selectedCategory === 'Perfume' }"
-                @click="selectCategory('Perfume')"
-              >
-                <span class="Btn display7">Perfume</span>
-              </li>
-
-              <li
-                :class="{ active: selectedCategory === 'Sticks' }"
-                @click="selectCategory('Sticks')"
-              >
-                <span class="Btn display7">Sticks</span>
-              </li>
-
-              <li
-                :class="{ active: selectedCategory === 'Sweet' }"
-                @click="selectCategory('Sweet')"
-              >
-                <span class="Btn display7">Sweet</span>
-              </li>
-
-              <li
-                :class="{ active: selectedCategory === 'Cake' }"
-                @click="selectCategory('Cake')"
-              >
-                <span class="Btn display7">Cake</span>
-              </li>
-            </ul>
-          </div> -->
 
           <!-- Gallery -->
           <div class="gallery-row">
@@ -59,7 +20,7 @@
                   <img :src="item.image" alt="" class="img-fluid" />
                   <span class="icon-focus"></span>
                   <span class="title display7">
-                    {{ item.price_after_sale }}</span
+                    {{ item.price_after_sale }} EG</span
                   >
                 </div>
               </div>

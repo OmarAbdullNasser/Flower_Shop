@@ -254,7 +254,7 @@ const SendOrder = async (obj) => {
     setTimeout(() => router.push("/"), 5000);
   } catch (error) {
     Swal.close();
-    Swal.fire("Error", "Something went wrong!", "error");
+    Swal.fire("Error", error.message, "error");
     console.error("Error make order from cart:", error);
     // Handle error appropriately (e.g., show notification)
   }

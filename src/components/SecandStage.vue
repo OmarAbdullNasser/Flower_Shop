@@ -233,14 +233,14 @@ import Swal from "sweetalert2";
 
 const store = useStore();
 const emit = defineEmits(["vaild"]);
-const PopupMessage = (title, Text, icon, BtnText) => {
-  Swal.fire({
-    title: title,
-    text: Text,
-    icon: icon,
-    confirmButtonText: BtnText,
-  });
-};
+// const PopupMessage = (title, Text, icon, BtnText) => {
+//   Swal.fire({
+//     title: title,
+//     text: Text,
+//     icon: icon,
+//     confirmButtonText: BtnText,
+//   });
+// };
 
 const addresState = computed(() => store.getters.address);
 const senderObj = computed(() => store.getters.senderObj);
@@ -290,7 +290,17 @@ const formFields = ref({
   SenderEmail: "",
   SenderNameState: "",
 });
-
+function syncFormWithVuex() {
+  const senderObj = store.getters.senderObj;
+  for (const key in formFields.value) {
+    // Check if key exists in Vuex object and set the value
+    if (key in senderObj) {
+      formFields.value[key] = senderObj[key];
+    } else {
+      formFields.value[key] = ""; // Set to empty string if not present in Vuex
+    }
+  }
+}
 watch(
   formFields,
   (newValues) => {
@@ -308,6 +318,8 @@ watch(
 );
 onMounted(() => {
   emit("valid", areFieldsValid.value);
+  syncFormWithVuex();
+  console.log(senderObj.value);
 });
 </script>
 

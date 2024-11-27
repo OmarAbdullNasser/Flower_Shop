@@ -81,6 +81,7 @@ watch(
 onMounted(() => {
   store.commit("SET_SENDER", { ship_to_me: 0 });
   emit("validation-result", true);
+  console.log(senderObj.value);
 });
 </script>
 
