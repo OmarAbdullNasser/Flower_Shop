@@ -62,7 +62,7 @@
             :disabled="isSendBtnDisabled"
             v-else
           >
-            <span>Send</span>
+            <span>Checkout</span>
           </button>
         </div>
         <div class="total col-12- col-lg-3 p-3">

@@ -20,12 +20,16 @@
             type="tel"
             name="Mobile"
             id=""
-            oninput="this.value = this.value.replace(/[^0-9]/g, '');"
             v-model="formFields.phone"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+            @input="validatePhone"
             required
             minlength="11"
             maxlength="13"
           />
+          <span class="mt-2" v-if="flag" :class="{ red: flag == 'Phone' }"
+            >the Phoe must be 11 nummber to 13 number</span
+          >
         </div>
 
         <div class="Deliver" v-if="addresState == 'HasAdress'">
@@ -101,9 +105,13 @@
               type="text"
               name="Floor"
               id=""
+              @input="validateFloor"
               v-model="formFields.Floor"
               required
             />
+            <span class="mt-2 red small" v-if="Flooer_flag"
+              >at lest one number
+            </span>
           </div>
         </div>
 
@@ -179,13 +187,24 @@
           <label for="phone"> Phone <span class="star">*</span></label>
           <input
             type="tel"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '');"
             name="phone"
             id=""
             v-model="formFields.SenderPhone"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+            @input="validateSenderPhone"
             required
             minlength="11"
+            maxlength="13"
           />
+          <span
+            class="mt-2"
+            v-if="Sender_flag"
+            :class="{
+              red: Sender_flag == 'SenderPhone',
+              small: Sender_flag == 'SenderPhone',
+            }"
+            >the Phoe must be 11 nummber to 13 number</span
+          >
         </div>
 
         <div class="Email d-flex flex-column">
@@ -197,6 +216,12 @@
             v-model="formFields.SenderEmail"
             required
           />
+          <!-- <span
+            class="mt-2"
+            v-if="flag"
+            :class="{ red: flag == 'Phone', small: flag == 'Phone' }"
+            >the email must be vaild</span
+          > -->
         </div>
 
         <div class="opations">
@@ -230,21 +255,24 @@
 import { computed, onMounted, ref, watch, defineEmits } from "vue";
 import { useStore } from "vuex";
 import Swal from "sweetalert2";
-
+let flag = null;
+let Sender_flag = null;
+let Flooer_flag = ref(null);
 const store = useStore();
 const emit = defineEmits(["vaild"]);
-// const PopupMessage = (title, Text, icon, BtnText) => {
-//   Swal.fire({
-//     title: title,
-//     text: Text,
-//     icon: icon,
-//     confirmButtonText: BtnText,
-//   });
-// };
+const PopupMessage = (title, Text, icon, BtnText) => {
+  Swal.fire({
+    title: title,
+    text: Text,
+    icon: icon,
+    confirmButtonText: BtnText,
+  });
+};
 
 const addresState = computed(() => store.getters.address);
 const senderObj = computed(() => store.getters.senderObj);
 const HassAddress = computed(() => store.getters.address);
+
 const areFieldsValid = computed(() => {
   // Exclude fields from validation
   const fieldsToValidate = { ...formFields.value };
@@ -272,9 +300,31 @@ const areFieldsValid = computed(() => {
     formFields.value.SenderEmail
   );
 
-  // Validate remaining fields
   return allFieldsFilled && isPhoneValid && isEmailValid && isSenderPhoneValid;
 });
+
+const AlertValue = (errortype = null) => {
+  console.log(errortype);
+  if (errortype && areFieldsValid) {
+    emit("validation-result", areFieldsValid.value);
+  } else if (errortype) {
+    if (errortype == "Phone") {
+      PopupMessage(
+        "Info",
+        "The Phone must be 11 to 13 number",
+        "error",
+        "Try gain"
+      );
+    } else if (errortype == "email") {
+      PopupMessage(
+        "Info",
+        "The email must be valid format",
+        "error",
+        "Try gain"
+      );
+    }
+  }
+};
 const formFields = ref({
   Name: "",
   phone: "",
@@ -301,6 +351,36 @@ function syncFormWithVuex() {
     }
   }
 }
+
+const validatePhone = () => {
+  const phoneLength = formFields.value.phone.length;
+  console.log(phoneLength);
+  if (phoneLength < 11 || phoneLength > 13) {
+    flag = "Phone";
+  } else {
+    flag = null; // Reset the flag if validation passes
+  }
+};
+const validateSenderPhone = () => {
+  const phoneLength = formFields.value.SenderPhone.length;
+
+  if (phoneLength < 11 || phoneLength > 13) {
+    Sender_flag = "SenderPhone";
+  } else {
+    Sender_flag = null; // Reset the flag if validation passes
+  }
+};
+const validateFloor = () => {
+  const phoneLength = formFields.value.Floor.length;
+  console.log(phoneLength);
+  if (phoneLength >= 2) {
+    Flooer_flag.value = null; // Hide span
+  } else {
+    Flooer_flag.value = "1"; // Show span
+  }
+  console.log(Flooer_flag.value);
+};
+
 watch(
   formFields,
   (newValues) => {
@@ -311,8 +391,8 @@ watch(
     }
 
     // Emit true or false based on validity
+
     emit("validation-result", areFieldsValid.value);
-    console.log(areFieldsValid.value);
   },
   { deep: true }
 );
@@ -464,7 +544,7 @@ onMounted(() => {
       }
     }
     .PhoneNmber {
-      width: 18%;
+      width: 25%;
     }
     .Email {
       width: 80%;
@@ -497,6 +577,12 @@ onMounted(() => {
         width: 80%;
       }
     }
+  }
+}
+.red {
+  color: red;
+  &.small {
+    font-size: 15px;
   }
 }
 </style>

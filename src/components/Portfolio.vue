@@ -12,9 +12,7 @@
                 <font-awesome-icon icon="fa-regular fa-heart" />
               </div>
               <h3 class="subtitle display5">Shop Flowers</h3>
-              <h5 class="title display7">
-                <em> summer sale under 50% </em>
-              </h5>
+
               <div class="btns">
                 <router-link
                   :to="{

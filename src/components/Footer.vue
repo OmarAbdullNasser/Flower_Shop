@@ -63,15 +63,15 @@
           <div
             class="social-block d-flex flex-lg-column justify-content-between"
           >
-            <a href="#">
+            <a @click="goToUrl('instagram')">
               <font-awesome-icon icon="fa-brands fa-instagram" />
             </a>
 
-            <a href="#" class="my-lg-4">
+            <a @click="goToUrl('tiktok')" class="my-lg-4">
               <font-awesome-icon icon="fa-brands fa-tiktok" />
             </a>
 
-            <a href="#">
+            <a @click="goToUrl('facebook')">
               <font-awesome-icon icon="fa-brands fa-facebook" />
             </a>
           </div>
@@ -82,13 +82,35 @@
 </template>
 
 <script setup>
-import { computed, watchEffect } from "vue";
+import { computed, onMounted, watchEffect, ref } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 const store = useStore();
 const route = useRoute();
 const DatatFooter = computed(() => store.getters.footer);
-watchEffect(() => console.log(DatatFooter.value, "footer "));
+
+const soicallink = ref([]);
+const Links = computed(() => store.getters.Links);
+
+const SocialLinks = () => {
+  console.log(Links.value, "TEEE");
+  const link = Links.value.filter((item) =>
+    ["instagram", "facebook", "tiktok"].includes(item.key)
+  );
+  soicallink.value = link;
+};
+function goToUrl(url) {
+  console.log(soicallink.value);
+  const mapping = soicallink.value.find((item) => item.key === url);
+  // Validate that the parameter is a non-empty string
+  console.log(mapping);
+  // window.location.href = mapping.value; // Navigate to the specified URL
+  // if (typeof url === "string" && url.trim() !== "") {
+  // } else {
+  //   console.error("Invalid URL");
+  // }
+}
+onMounted(() => SocialLinks());
 </script>
 
 <style scoped lang="scss">

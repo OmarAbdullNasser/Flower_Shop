@@ -26,6 +26,7 @@ export default createStore({
     AddressState: "HasAdress",
     PaymentMethod: "CashHome",
     SenderObj: {},
+    Links: [],
   },
 
   mutations: {
@@ -106,6 +107,9 @@ export default createStore({
     },
     SET_SENDER(state, data) {
       state.SenderObj = { ...state.SenderObj, ...data };
+    },
+    SET_LINKS(state, data) {
+      state.Links = data;
     },
     CLEAR_SENDER(state) {
       state.SenderObj = {};
@@ -229,6 +233,7 @@ export default createStore({
         commit("SET_MENU", main);
         commit("SET_FOOTER", footer);
         commit("SET_CART", cart_num);
+        commit("SET_LINKS", site_setting);
       } catch (error) {
         console.error("Failed to fetch flowers:", error);
       }
@@ -293,6 +298,9 @@ export default createStore({
     },
     senderObj: (state) => {
       return state.SenderObj;
+    },
+    Links: (state) => {
+      return state.Links;
     },
   },
 

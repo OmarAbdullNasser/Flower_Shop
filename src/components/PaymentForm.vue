@@ -78,6 +78,7 @@ const props = defineProps(["state"]);
 const senderObj = computed(() => store.getters.senderObj);
 const emit = defineEmits(["Send"]);
 let flag = ref("");
+let UserFlag = ref("");
 const SetState = () => {
   switch (PaymentState.value) {
     case "Shiptosome": {
