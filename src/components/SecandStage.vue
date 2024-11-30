@@ -254,7 +254,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch, defineEmits } from "vue";
+import { computed, onMounted, ref, watch, defineEmits, watchEffect } from "vue";
 import { useStore } from "vuex";
 import Swal from "sweetalert2";
 let flag = null;
@@ -397,10 +397,10 @@ watch(
   },
   { deep: true }
 );
+watchEffect(() => console.log(senderObj.value));
 onMounted(() => {
   emit("valid", areFieldsValid.value);
   syncFormWithVuex();
-  console.log(senderObj.value);
 });
 </script>
 
