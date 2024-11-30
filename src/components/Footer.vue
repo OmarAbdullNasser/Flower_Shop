@@ -93,24 +93,37 @@ const soicallink = ref([]);
 const Links = computed(() => store.getters.Links);
 
 const SocialLinks = () => {
-  console.log(Links.value, "TEEE");
   const link = Links.value.filter((item) =>
     ["instagram", "facebook", "tiktok"].includes(item.key)
   );
   soicallink.value = link;
 };
 function goToUrl(url) {
-  console.log(soicallink.value);
+  // Ensure soicallink has valid data before proceeding
+  if (!soicallink.value || soicallink.value.length === 0) {
+    console.error("Social links are not yet loaded.");
+    return;
+  }
+
   const mapping = soicallink.value.find((item) => item.key === url);
-  // Validate that the parameter is a non-empty string
-  console.log(mapping);
-  // window.location.href = mapping.value; // Navigate to the specified URL
-  // if (typeof url === "string" && url.trim() !== "") {
-  // } else {
-  //   console.error("Invalid URL");
-  // }
+  if (mapping && mapping.value) {
+    window.location.href = mapping.value; // Navigate to the specified URL
+  } else {
+    console.error("Invalid URL or mapping not found.");
+  }
 }
-onMounted(() => SocialLinks());
+onMounted(() => {
+  if (Links.value && Links.value.length > 0) {
+    SocialLinks();
+  } else {
+    // Watch for changes in Links and populate social links when data arrives
+    watchEffect(() => {
+      if (Links.value && Links.value.length > 0) {
+        SocialLinks();
+      }
+    });
+  }
+});
 </script>
 
 <style scoped lang="scss">

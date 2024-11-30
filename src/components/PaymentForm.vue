@@ -17,7 +17,12 @@
               v-if="flag === 'Shiptosome' || flag == 'Instapay'"
             >
               <p class="mb-0">
-                <!-- <input type="radio" name="Payment" id="Instapay" /> -->
+                <input
+                  type="radio"
+                  name="Payment"
+                  id="Instapay"
+                  @click="paymentMethod = 0"
+                />
                 <label for="Instapay">Instapay</label>
               </p>
             </div>
@@ -27,7 +32,12 @@
               v-if="flag == 'vodafoneCash' || flag == 'Shiptosome'"
             >
               <p class="mb-0">
-                <!-- <input type="radio" name="Payment" id="vodafoneCash" /> -->
+                <input
+                  type="radio"
+                  name="Payment"
+                  id="vodafoneCash"
+                  @click="paymentMethod = 2"
+                />
                 <label for="vodafoneCash">vodafoneCash</label>
               </p>
             </div>
@@ -70,15 +80,18 @@
 </template>
 
 <script setup>
-import { onMounted, computed, ref } from "vue";
+import { onMounted, computed, ref, watchEffect } from "vue";
 import { useStore } from "vuex";
+import Swal from "sweetalert2";
+
 const store = useStore();
 const PaymentState = computed(() => store.getters.payment);
 const props = defineProps(["state"]);
 const senderObj = computed(() => store.getters.senderObj);
 const emit = defineEmits(["Send"]);
+const paymentMethod = ref(0);
 let flag = ref("");
-let UserFlag = ref("");
+
 const SetState = () => {
   switch (PaymentState.value) {
     case "Shiptosome": {
@@ -100,7 +113,9 @@ const SetState = () => {
   }
 };
 const validImageTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-
+const setpaymentMethod = () => {
+ 
+};
 const handleFileChange = (event) => {
   const selectedFile = event.target.files[0];
 
@@ -126,13 +141,24 @@ const handleFileChange = (event) => {
         uint8Array[9] === 0x45)
     ) {
       store.commit("SET_SENDER", { image: selectedFile });
-      emit("Send", true);
-      console.log(senderObj.value);
+      store.commit("SET_SENDER", { payment_method_id: paymentMethod.value });
+      if (paymentMethod.value) {
+
+        emit("Send", true);
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "Selcet Method",
+          icon: "error",
+          confirmButtonText: "Try Again!",
+        });
+      }
     }
   };
 
   reader.readAsArrayBuffer(selectedFile);
 };
+watchEffect(() => console.log(paymentMethod.value));
 onMounted(() => SetState());
 </script>
 

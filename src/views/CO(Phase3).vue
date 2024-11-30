@@ -236,6 +236,7 @@ const SendOrder = async (obj) => {
     // Parse the JSON response
     const OrderResponse = await response.json();
     // Prodects.value = Prodects.value.filter((item) => item.id !== id);
+    console.log(OrderResponse)
     console.log(OrderResponse);
     if (!response.ok) {
       throw new Error(

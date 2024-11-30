@@ -16,37 +16,18 @@
         </div>
         <div class="card-body">
           <ul class="p-0">
-            <li class="text-center" v-for="name in people" :key="name.id">
-              <a
-                :href="`https://wa.me/${name.number}`"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+            <li
+              class="text-center"
+              v-for="name in people"
+              :key="name.id"
+              @click="goToUrl(name.number)"
+            >
+              <a target="_blank" rel="noopener noreferrer">
                 <h5 class="card-title">{{ name.title }}</h5>
                 <small>Aavaiable</small>
               </a>
               <hr class="m-0" />
             </li>
-            <!-- <li class="text-center">
-              <a href="#">
-                <h5 class="card-title">Oamr</h5>
-                <small>Aavaiable</small>
-              </a>
-          
-            </li>
-            <li class="text-center">
-              <a href="#">
-                <h5 class="card-title">Awra</h5>
-                <small>Aavaiable</small>
-              </a>
-            </li>
-            <hr />
-            <li class="text-center">
-              <a href="#">
-                <h5 class="card-title">Basma</h5>
-                <small>Aavaiable</small>
-              </a>
-            </li> -->
           </ul>
         </div>
       </div>
@@ -81,6 +62,9 @@ const FetchData = async (lang) => {
 onMounted(async () => {
   await FetchData(route.params.lang);
 });
+function goToUrl(num) {
+  window.location.href = `https://wa.me/${num}`;
+}
 </script>
 
 <style lang="scss" scoped>

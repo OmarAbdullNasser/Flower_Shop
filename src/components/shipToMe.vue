@@ -81,14 +81,13 @@ const SDate = ref(null);
 const paymentMethod = ref(0);
 const SetPaymentMethod = (method, code) => {
   paymentMethod.value = code;
+
   store.commit("SET_PAYMENT", method);
   store.commit("SET_SENDER", { payment_method_id: paymentMethod.value });
-  console.log(senderObj.value);
 };
 const SetTime = (val, datavisiable) => {
   isDateVisible.value = datavisiable;
   store.commit("SET_SENDER", { same_day: val });
-  console.log(senderObj.value);
 };
 const SetDate = () => {
   store.commit("SET_SENDER", { delivery_date: SDate.value });
