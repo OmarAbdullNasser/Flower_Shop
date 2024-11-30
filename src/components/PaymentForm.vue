@@ -113,9 +113,7 @@ const SetState = () => {
   }
 };
 const validImageTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-const setpaymentMethod = () => {
- 
-};
+const setpaymentMethod = () => {};
 const handleFileChange = (event) => {
   const selectedFile = event.target.files[0];
 
@@ -142,8 +140,7 @@ const handleFileChange = (event) => {
     ) {
       store.commit("SET_SENDER", { image: selectedFile });
       store.commit("SET_SENDER", { payment_method_id: paymentMethod.value });
-      if (paymentMethod.value) {
-
+      if (paymentMethod.value >= 0) {
         emit("Send", true);
       } else {
         Swal.fire({
