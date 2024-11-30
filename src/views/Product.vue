@@ -48,7 +48,7 @@
               >
                 Buy Now
               </button>
-              <Feedback />
+            
             </div>
 
             <div class="price-line1 d-flex">

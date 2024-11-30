@@ -14,7 +14,7 @@
 import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import PaymentFormVue from "./PaymentForm.vue";
-const emit = defineEmits(['SendImg']);
+const emit = defineEmits(["SendImg"]);
 const store = useStore();
 const PaymentState = computed(() => store.getters.payment);
 const toggleMethod = (method) => {
@@ -25,7 +25,6 @@ const handleImg = (val) => {
     emit("SendImg", true);
   }
 };
-onMounted(() => console.log(PaymentState.value));
 </script>
 
 <style lang="scss" scoped>

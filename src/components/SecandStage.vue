@@ -38,27 +38,29 @@
           >
 
           <div class="options mt-2 d-flex align-items-center">
-            <div class="office d-flex align-content-center">
+            <label class="office d-flex align-content-center">
               <input
                 type="radio"
                 class="me-2"
                 name="Deliver"
                 value="Office"
-                id=""
+                id="Office"
                 v-model="formFields.Deliver"
               />
-              <label for="Office">Office</label>
-            </div>
-            <div class="Home d-flex align-content-center">
-              <input
-                type="radio"
-                class="mx-2"
-                name="Deliver"
-                value="Home"
-                id=""
-                v-model="formFields.Deliver"
-              />
-              <label for="Home">Home</label>
+              <span>Office</span>
+            </label>
+            <div class="Home d-flex align-content-center ms-2">
+              <label class="Home d-flex align-content-center">
+                <input
+                  type="radio"
+                  class="me-2"
+                  name="Deliver"
+                  value="Home"
+                  id="Home"
+                  v-model="formFields.Deliver"
+                />
+                <span>Home</span>
+              </label>
             </div>
           </div>
         </div>
@@ -350,11 +352,11 @@ function syncFormWithVuex() {
       formFields.value[key] = ""; // Set to empty string if not present in Vuex
     }
   }
+  console.log(senderObj);
 }
 
 const validatePhone = () => {
   const phoneLength = formFields.value.phone.length;
-  console.log(phoneLength);
   if (phoneLength < 11 || phoneLength > 13) {
     flag = "Phone";
   } else {
@@ -373,12 +375,11 @@ const validateSenderPhone = () => {
 const validateFloor = () => {
   const phoneLength = formFields.value.Floor.length;
   console.log(phoneLength);
-  if (phoneLength >= 2) {
+  if (phoneLength >= 1) {
     Flooer_flag.value = null; // Hide span
   } else {
     Flooer_flag.value = "1"; // Show span
   }
-  console.log(Flooer_flag.value);
 };
 
 watch(

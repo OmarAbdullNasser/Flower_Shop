@@ -36,7 +36,12 @@
           <div class="gallery-row">
             <div class="row">
               <div
-                class="col-12 col-lg-4 p-3"
+                :class="[
+                  'p-3',
+                  filteredImages.length > 1 ? 'col-lg-4' : 'col-12',
+                  'd-flex',
+                  'flex-wrap',
+                ]"
                 v-for="item in filteredImages"
                 :key="item.title"
               >

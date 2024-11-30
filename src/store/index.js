@@ -6,7 +6,7 @@ const url = "https://flowerest.e1s.me/api";
 
 const vuexLocalStorage = new VuexPersist({
   key: "Cart", // Name of the key in storage
-  storage: window.Cookies, // Use localStorage to store state
+  storage: window.localStorage, // Use localStorage to store state
   modules: ["Cart"], // Specify which modules to persist
 });
 
@@ -107,6 +107,7 @@ export default createStore({
     },
     SET_SENDER(state, data) {
       state.SenderObj = { ...state.SenderObj, ...data };
+      localStorage.setItem("SenderObj", JSON.stringify(state.SenderObj));
     },
     SET_LINKS(state, data) {
       state.Links = data;
