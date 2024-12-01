@@ -13,7 +13,7 @@
           />
           <label for="Know">I know the recipient address</label>
         </p>
-        <p class="mb-0">
+        <p class="mb-0 d-flex align-items-center">
           <input
             type="radio"
             name="Know"
@@ -59,14 +59,12 @@ const senderObj = computed(() => store.getters.senderObj);
 // watchEffect(() => {
 //   store.commit("SET_SENDER", { know_receipent_address: Know.value });
 // });
-watchEffect(() => console.log(senderObj.value));
 
 onMounted(() => {
   SetPaymentMethod();
-  store.commit("CLEAR_SENDER");
+  // store.commit("CLEAR_SENDER");
   store.commit("SET_SENDER", { ship_to_me: 0 });
   store.commit("SET_SENDER", { know_receipent_address: Know.value });
-  console.log(senderObj.value);
 });
 </script>
 

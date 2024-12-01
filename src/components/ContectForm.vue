@@ -47,7 +47,7 @@
                 </div>
               </div>
             </div>
-            <div class="item soical_media_icons">
+            <div class="item soical_media_icons" v-if="false">
               <h5 class="card-title mbr-fonts-style display-5">
                 {{ $t("Soical_Media") }}
               </h5>

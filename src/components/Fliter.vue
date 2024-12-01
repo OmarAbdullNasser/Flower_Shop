@@ -108,7 +108,7 @@
         </div>
       </div>
 
-      <p class="reset-price clear my-3">Reset</p>
+      <p class="reset-price clear my-3" v-if="false">Reset</p>
     </aside>
   </div>
 </template>

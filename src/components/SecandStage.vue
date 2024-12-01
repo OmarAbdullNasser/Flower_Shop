@@ -1,7 +1,7 @@
 <template>
   <div class="SecandStage">
     <div class="container">
-      <div class="InfoAddress">
+      <div class="InfoAddress text-center text-lg-start">
         <label> Recipient Details</label>
         <div class="name d-flex flex-column">
           <label for="Name">Name <span class="star">*</span></label>
@@ -37,7 +37,9 @@
             >Deliver To <span class="star">*</span></label
           >
 
-          <div class="options mt-2 d-flex align-items-center">
+          <div
+            class="options mt-2 d-flex align-items-center justify-content-center justify-content-lg-start"
+          >
             <label class="office d-flex align-content-center">
               <input
                 type="radio"
@@ -283,6 +285,7 @@ const areFieldsValid = computed(() => {
     delete fieldsToValidate.ApartName;
     delete fieldsToValidate.Floor;
     delete fieldsToValidate.Area;
+    delete fieldsToValidate.Deliver;
   }
   delete fieldsToValidate.Greeting;
   delete fieldsToValidate.SenderNameState;
@@ -352,7 +355,6 @@ function syncFormWithVuex() {
       formFields.value[key] = ""; // Set to empty string if not present in Vuex
     }
   }
-  console.log(senderObj);
 }
 
 const validatePhone = () => {
@@ -573,9 +575,41 @@ onMounted(() => {
 }
 @media screen and (max-width: 999.9px) {
   .SecandStage {
+    .InfoAddress {
+      .name,
+      .Mobile,
+      .Street {
+        input {
+          width: 100%;
+        }
+      }
+      .Area {
+        select {
+          width: 100%;
+        }
+      }
+      .Street {
+        width: 100%;
+      }
+      .Apartment {
+        width: 100%;
+      }
+      .Floor {
+        width: 100%;
+      }
+      .Greeting {
+        width: 100%;
+      }
+    }
     .SenderInfo {
+      .FullName {
+        width: 100%;
+      }
       .PhoneNmber {
-        width: 80%;
+        width: 100%;
+      }
+      .Email {
+        width: 100%;
       }
     }
   }

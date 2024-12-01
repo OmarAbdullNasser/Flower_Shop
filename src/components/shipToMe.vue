@@ -3,7 +3,7 @@
     <div class="container">
       <label>Choose delivery date <span class="freelogo">Free</span></label>
       <div class="opations">
-        <p class="mb-0">
+        <p class="mb-0 d-flex align-items-center">
           <input
             type="radio"
             name="Date"
@@ -81,7 +81,6 @@ const SDate = ref(null);
 const paymentMethod = ref(0);
 const SetPaymentMethod = (method, code) => {
   paymentMethod.value = code;
-
   store.commit("SET_PAYMENT", method);
   store.commit("SET_SENDER", { payment_method_id: paymentMethod.value });
 };
@@ -93,19 +92,21 @@ const SetDate = () => {
   store.commit("SET_SENDER", { delivery_date: SDate.value });
   console.log(senderObj.value);
 };
-
+function syncFormWithVuex({ key: newValue }) {
+  // Directly update the specified key in the Vuex state
+  store.commit("updateSenderObj", { key: newValue });
+}
 onMounted(() => {
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0];
   if (dateInput.value) {
     dateInput.value.value = formattedDate;
   }
-  store.commit("CLEAR_SENDER");
+  // store.commit("CLEAR_SENDER");
   store.commit("SET_SENDER", { ship_to_me: 1 });
   store.commit("SET_SENDER", { same_day: 1 });
   store.commit("SET_SENDER", { payment_method_id: 0 });
-  console.log(senderObj.value);
-
+  store.commit("SET_SENDER", { payment_method_id: 0 });
 });
 // watchEffect(() => console.log(SDate.value));
 </script>

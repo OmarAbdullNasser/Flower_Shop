@@ -73,13 +73,14 @@ watch(
     clearTimeout(debounceTimeout); // Clear the timeout on every change
     debounceTimeout = setTimeout(() => {
       store.commit("SET_SENDER", { extra_instructions: newValue }); // Commit after debounce
-    }, 1500); // Adjust the delay as needed (500ms in this case)
+    }, 300); // Adjust the delay as needed (500ms in this case)
   }
 );
-//watchEffect(() => console.log(senderObj.value));
 
 onMounted(() => {
   store.commit("SET_SENDER", { ship_to_me: 0 });
+
+  console.log(senderObj.value);
   emit("validation-result", true);
 });
 </script>

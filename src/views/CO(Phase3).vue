@@ -65,7 +65,7 @@
             <span>Checkout</span>
           </button>
         </div>
-        <div class="total col-12- col-lg-3 p-3">
+        <div class="total col-11 col-lg-3 p-3 mx-auto mx-lg-0">
           <router-link :to="{ name: 'Cart' }"> Edit Cart </router-link>
           <div class="items my-3">
             <ul>
@@ -236,7 +236,7 @@ const SendOrder = async (obj) => {
     // Parse the JSON response
     const OrderResponse = await response.json();
     // Prodects.value = Prodects.value.filter((item) => item.id !== id);
-    console.log(OrderResponse)
+    console.log(OrderResponse);
     console.log(OrderResponse);
     if (!response.ok) {
       throw new Error(
