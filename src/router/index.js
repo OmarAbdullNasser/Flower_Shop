@@ -2,12 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import store from "@/store";
 
-import Chechout from "@/views/Chechout.vue";
-import SinglePage from "@/views/SinglePage.vue";
-import Router from "vue-router";
-import Home from "@/views/Home.vue";
-
-
 const routes = [
   {
     path: "/",
@@ -62,7 +56,6 @@ const routes = [
 
     component: () => import("@/views/CO(Phase3).vue"),
 
-
     // beforeEnter: (to, from, next) => {
     //   // Check if the cart is empty using Vuex state
     //   const isCartEmpty = store.getters["Cart/cartItems"];
@@ -104,6 +97,7 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  base: process.env.BASE_URL || "/",
 });
 
 const fetchNavbarData = async (lang) => {
