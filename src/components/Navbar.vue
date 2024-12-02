@@ -4,11 +4,7 @@
       <div class="navbar-brand text-center">
         <span class="navbar-logo">
           <router-link :to="{ name: 'home' }">
-            <img
-              src="../assets/logo_brand.png"
-              alt="Mobirise"
-              style="height: 5rem"
-            />
+            <img :src="Logo" alt="Mobirise" style="height: 5rem" />
           </router-link>
         </span>
       </div>
@@ -130,17 +126,24 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watchEffect } from "vue";
+import { computed, inject, onMounted, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-
+const url = inject("url");
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const { locale } = useI18n();
-
+const Links = computed(() => store.getters.SiteLinks);
+const Logo = ref(null);
+// Logo.value = Links.value[16].setting_value;
+// const Logo = ref("");
+// const getLogo = () => {
+//   Logo.value = Links.value[16];
+// };
+const getLogo = () => {};
 const NavbarData = computed(() => store.getters.menu);
 const TotalProduct = computed(() => store.getters["Cart/cartLength"]);
 const toggleDirection = () => {
@@ -159,10 +162,17 @@ const toggleDirection = () => {
 
 const fetchNavbarData = async (lang) => {
   await store.dispatch("fetchNavbarData", lang);
-  console.log(NavbarData.value);
+  // getLogo();
 };
-watchEffect(() => TotalProduct);
-onMounted(() => fetchNavbarData());
+
+onMounted(() => {
+  fetchNavbarData();
+  watchEffect(() => {
+    if (Links.value && Links.value[16]) {
+      Logo.value = Links.value[16].setting_value;
+    }
+  });
+});
 </script>
 
 <style lang="scss" scoped>

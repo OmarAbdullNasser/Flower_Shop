@@ -303,7 +303,7 @@ export default createStore({
     senderObj: (state) => {
       return state.SenderObj;
     },
-    Links: (state) => {
+    SiteLinks: (state) => {
       return state.Links;
     },
   },

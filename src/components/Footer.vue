@@ -90,7 +90,7 @@ const route = useRoute();
 const DatatFooter = computed(() => store.getters.footer);
 
 const soicallink = ref([]);
-const Links = computed(() => store.getters.Links);
+const Links = computed(() => store.getters.SiteLinks);
 
 const SocialLinks = () => {
   const link = Links.value.filter((item) =>
