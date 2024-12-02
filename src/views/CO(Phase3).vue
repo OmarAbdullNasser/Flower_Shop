@@ -198,9 +198,11 @@ const SendOrder = async (obj) => {
   try {
     Swal.fire({
       title: "Making your Order",
-      icon: "info",
       showConfirmButton: false,
       allowOutsideClick: false,
+      html: `<div class="spinner-border text-primary mt-5" role="status">
+  <span class="sr-only">Loading...</span>
+</div> `,
     });
     const formData = new FormData();
     formData.append("cart_cookie", CartCookie.value);

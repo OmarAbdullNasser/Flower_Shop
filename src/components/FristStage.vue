@@ -70,18 +70,20 @@ watch(
 watch(
   () => notes.value,
   (newValue) => {
-    clearTimeout(debounceTimeout); // Clear the timeout on every change
-    debounceTimeout = setTimeout(() => {
-      store.commit("SET_SENDER", { extra_instructions: newValue }); // Commit after debounce
-    }, 300); // Adjust the delay as needed (500ms in this case)
+    store.commit("SET_SENDER", { extra_instructions: newValue });
+    console.log(newValue);
   }
 );
+function syncFormWithVuex() {
+  const senderObj = store.getters.senderObj;
+
+  notes.value = senderObj.extra_instructions;
+}
 
 onMounted(() => {
   store.commit("SET_SENDER", { ship_to_me: 0 });
-
-  console.log(senderObj.value);
   emit("validation-result", true);
+  syncFormWithVuex();
 });
 </script>
 
