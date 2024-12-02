@@ -45,7 +45,7 @@
                 type="radio"
                 class="me-2"
                 name="Deliver"
-                value="Office"
+                value="0"
                 id="Office"
                 v-model="formFields.Deliver"
               />
@@ -57,7 +57,7 @@
                   type="radio"
                   class="me-2"
                   name="Deliver"
-                  value="Home"
+                  value="1"
                   id="Home"
                   v-model="formFields.Deliver"
                 />
@@ -236,6 +236,7 @@
               id="ShowName"
               value="0"
               v-model="formFields.SenderNameState"
+              checked
             />
             <label for="ShowName">Show my name on delivery</label>
           </p>

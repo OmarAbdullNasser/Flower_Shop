@@ -204,14 +204,14 @@ const SendOrder = async (obj) => {
     });
     const formData = new FormData();
     formData.append("cart_cookie", CartCookie.value);
-    formData.append("image", obj.image); // Assuming an empty string for now
+    formData.append("image", obj.image || ""); // Assuming an empty string for now
     formData.append("ship_to_me", obj.ship_to_me);
     formData.append("know_receipent_address", obj.know_receipent_address);
-    formData.append("same_day", ""); // Assuming an empty string for now
-    formData.append("delivery_date", ""); // Assuming an empty string for now
+    formData.append("same_day", obj.same_day || ""); // Assuming an empty string for now
+    formData.append("delivery_date", obj.delivery_date || ""); // Assuming an empty string for now
     formData.append("recepient_name", obj.Name);
     formData.append("recepient_mobile", obj.phone);
-    formData.append("delivery_place", 1);
+    formData.append("delivery_place", obj.Deliver);
     formData.append("area", obj.Area);
     formData.append("st_name", obj.SName);
     formData.append("apartment", obj.ApartName);
@@ -223,7 +223,7 @@ const SendOrder = async (obj) => {
     formData.append("customer_mobile", obj.SenderPhone);
     formData.append("customer_email", obj.SenderEmail);
     formData.append("hide_my_name_status", obj.SenderNameState);
-    formData.append("payment_method_id", 1);
+    formData.append("payment_method_id", obj.payment_method_id);
 
     const response = await fetch(`${url}/order-checkout`, {
       method: "POST",
@@ -250,6 +250,7 @@ const SendOrder = async (obj) => {
       PopupMessage("Done Checkout", "Thank you!", "success", "Done");
       store.commit("Cart/CLEAR_CART");
       store.commit("Cart/CLEAR_COOKIE");
+      store.commit("CLEAR_SENDER");
       router.push("/"), 5000;
     }
     setTimeout(() => router.push("/"), 5000);
