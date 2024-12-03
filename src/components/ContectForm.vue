@@ -141,9 +141,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import { toast } from "vue3-toastify";
-const url = "https://flowerest.e1s.me/api";
+const url = inject("url");
+
 
 const validateNumberInput = (e) => {
   e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Replace any non-digit character with an empty string

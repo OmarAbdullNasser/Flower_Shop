@@ -20,14 +20,15 @@ import Portfolio from "@/components/Portfolio.vue";
 import Services from "@/components/Services.vue";
 import Swiper from "@/components/Swiper.vue";
 import { useStore } from "vuex";
-import { onMounted, ref, watchEffect, watch, computed } from "vue";
+import { onMounted, ref, watchEffect, watch, computed, inject } from "vue";
 import { useHead } from "@vueuse/head";
 import { useRoute } from "vue-router";
 import ReviewSwiper from "@/components/ReviewSwiper.vue";
 import FeedBackFrom from "@/components/FeedBackFrom.vue";
 
 name: "Home";
-const url = "https://flowerest.e1s.me/api";
+
+const url = inject("url");
 
 const store = useStore();
 const route = useRoute();

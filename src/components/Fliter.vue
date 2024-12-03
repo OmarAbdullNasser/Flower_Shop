@@ -114,13 +114,21 @@
 </template>
 
 <script setup>
-import { watch, onMounted, ref, defineEmits, computed, watchEffect } from "vue";
+import {
+  watch,
+  onMounted,
+  ref,
+  defineEmits,
+  computed,
+  watchEffect,
+  inject,
+} from "vue";
 import { useStore } from "vuex";
 import debounce from "lodash.debounce";
 debounce;
 const store = useStore();
 const emit = defineEmits(["value"]);
-
+const url = inject("url");
 //Fliter paramter
 const Categories = ref([]);
 const Occasions = ref([]);
@@ -184,16 +192,12 @@ const fetchFliterPrice = async (pf = 0, pt = 0) => {
 };
 
 const getAllCategories = async () => {
-  const CategoriesResonse = await fetch(
-    `https://flowerest.e1s.me/api/categories`
-  );
+  const CategoriesResonse = await fetch(`${url}/categories`);
   const jsonResponse = await CategoriesResonse.json();
   Categories.value = jsonResponse.data;
 };
 const getAllOccasions = async () => {
-  const OccasionsResonse = await fetch(
-    `https://flowerest.e1s.me/api/occasions`
-  );
+  const OccasionsResonse = await fetch(`${url}/occasions`);
   const jsonResponse = await OccasionsResonse.json();
   Occasions.value = jsonResponse.data;
 };

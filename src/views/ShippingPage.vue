@@ -55,14 +55,15 @@
 
 <script setup>
 name: "Shipping";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject } from "vue";
 
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 const barElement = ref(null); // Reference to the .bar element
 const progressWidth = ref(0); // Variable to store the dynamic width of the progress fill
-const url = "https://flowerest.e1s.me/api";
+
+const url = inject("url");
 
 const getStatus = async (id) => {
   try {
@@ -110,7 +111,6 @@ const activeState = (statuses) => {
   });
 };
 const ColorBar = () => {
-
   const checkpoints = barElement.value.querySelectorAll(".checkPoint");
   const activeCheckpoints = Array.from(checkpoints).filter((checkpoint) =>
     checkpoint.classList.contains("active")
@@ -137,7 +137,6 @@ const ColorBar = () => {
 
     progressWidth.value = (activeIndex / (checkpoints.length - 1)) * 100;
   }
-
 };
 onMounted(() => {
   getStatus(route.params.id);

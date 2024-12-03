@@ -340,7 +340,7 @@ const SendOrder = async (
       formData.append("address", adders);
       formData.append("payment_method_id", paymentmethod);
       formData.append("image", img);
-      const response = await fetch(`https://flowerest.e1s.me/api/checkout`, {
+      const response = await fetch(`${url}/checkout`, {
         method: "POST",
 
         // body: JSON.stringify({

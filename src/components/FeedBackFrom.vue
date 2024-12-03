@@ -85,14 +85,15 @@
 //   HoverIndex.value = -1;
 // };
 
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, inject } from "vue";
 import { Modal } from "bootstrap";
 import { useStore } from "vuex";
 let bootstrapModal = null;
 const store = useStore();
 const modal = ref(null);
 const Rates = [];
-const url = "https://flowerest.e1s.me/api";
+const url = inject("url");
+
 const OrderId = computed(() => store.getters["Cart/OrederId"]);
 const props = defineProps({
   items: Array,

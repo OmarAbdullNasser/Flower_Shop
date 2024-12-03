@@ -1,8 +1,8 @@
 import { createStore } from "vuex";
 import Cart from "./Cart";
 import VuexPersist from "vuex-persist";
-
-const url = "https://flowerest.e1s.me/api";
+import { inject } from "vue";
+const url = inject("url");
 
 const vuexLocalStorage = new VuexPersist({
   key: "Cart", // Name of the key in storage
@@ -124,9 +124,7 @@ export default createStore({
     //Get all Producsts
     async fetchProducts({ commit }, key = 1) {
       try {
-        const FlowerResponse = await fetch(
-          `https://flowerest.e1s.me/api/products?page=${key}`
-        );
+        const FlowerResponse = await fetch(`${url}/products?page=${key}`);
         const respons = await FlowerResponse.json();
 
         const { items, pagination } = respons.data;
@@ -185,9 +183,7 @@ export default createStore({
 
       if (query) {
         try {
-          const FlowerResponse = await fetch(
-            `https://flowerest.e1s.me/api/products?${query}`
-          );
+          const FlowerResponse = await fetch(`${url}/products?${query}`);
           const respons = await FlowerResponse.json();
           console.log(respons);
           const { items, pagination } = respons.data;
@@ -199,9 +195,7 @@ export default createStore({
         }
       } else {
         try {
-          const FlowerResponse = await fetch(
-            `https://flowerest.e1s.me/api/products`
-          );
+          const FlowerResponse = await fetch(`${url}/products`);
           const respons = await FlowerResponse.json();
 
           const { items, pagination } = respons.data;

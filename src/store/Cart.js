@@ -1,5 +1,7 @@
 import Cookies from "js-cookie";
+import { inject } from "vue";
 import { toast } from "vue3-toastify";
+const url = inject("url");
 
 const Cart = {
   namespaced: true,
@@ -39,16 +41,13 @@ const Cart = {
       }
 
       try {
-        const response = await fetch(
-          "https://flowerest.e1s.me/api/add-to-cart",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(product),
-          }
-        );
+        const response = await fetch(`${url}/add-to-cart`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(product),
+        });
 
         // Parse the JSON response
         const CartResponse = await response.json();
