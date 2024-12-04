@@ -1,8 +1,9 @@
 import { createStore } from "vuex";
 import Cart from "./Cart";
 import VuexPersist from "vuex-persist";
-import { inject } from "vue";
-const url = inject("url");
+
+// const url = inject("url");
+const url = "https://flowerest.e1s.me/api";
 
 const vuexLocalStorage = new VuexPersist({
   key: "Cart", // Name of the key in storage

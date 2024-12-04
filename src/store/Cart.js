@@ -1,8 +1,8 @@
 import Cookies from "js-cookie";
-import { inject } from "vue";
-import { toast } from "vue3-toastify";
-const url = inject("url");
 
+import { toast } from "vue3-toastify";
+
+const url = "https://flowerest.e1s.me/api";
 const Cart = {
   namespaced: true,
   state: () => ({ cart: [], cart_cookie: null, OrederId: null }),
