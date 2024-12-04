@@ -35,7 +35,7 @@
           <!-- Gallery -->
           <div class="gallery-row">
             <div class="row">
-              <div
+              <!-- <div
                 :class="[
                   'p-3',
                   filteredImages.length > 1 ? 'col-lg-4' : 'col-12',
@@ -51,6 +51,21 @@
                   :key="imgIndex"
                 >
                   <img :src="img" alt="" class="img-fluid" />
+                  <span class="icon-focus"></span>
+                  <span class="title display7"> Type caption here </span>
+                </div>
+              </div> -->
+              <div
+                class="d-flex flex-wrap"
+                v-for="item in filteredImages"
+                :key="item.title"
+              >
+                <div
+                  class="item"
+                  v-for="(img, imgIndex) in item.gallery"
+                  :key="imgIndex"
+                >
+                  <img :src="img" alt="" class="img-fluid m-1" />
                   <span class="icon-focus"></span>
                   <span class="title display7"> Type caption here </span>
                 </div>
