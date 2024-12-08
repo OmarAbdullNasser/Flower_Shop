@@ -5,12 +5,9 @@
   "descont": "summer sale under 50%",
   "Shop_Now": "Shop now",
   "Location": "Location",
-  "LocationValue": "Paris 75001, France",
   "Phone": "Phone",
-  "PhoneValue1": "+098 765 432",
-  "PhoneValue2": "+123 456 789",
   "Email": "Email",
-  "EmailValue1": "mobi@rise.com",
-  "EmailValue2": "markm5@theme.com",
-  "Soical_Media": "Soical Media"
+  "Soical_Media": "Soical Media",
+  "SendEmail": "Send your messages",
+  "Send":"Send"
 }

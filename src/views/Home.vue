@@ -8,7 +8,7 @@
     <ReviewSwiper :initialData="Review" />
     <Portfolio :initialData="PortfolioData" />
     <Articale :initialData="ArticaleData" />
-    <ContectForm />
+    <ContectForm :initialData="ContectData" />
   </div>
 </template>
 
@@ -25,7 +25,7 @@ import { useHead } from "@vueuse/head";
 import { useRoute } from "vue-router";
 import ReviewSwiper from "@/components/ReviewSwiper.vue";
 import FeedBackFrom from "@/components/FeedBackFrom.vue";
-
+import ContentUs from "./ContentUs.vue";
 name: "Home";
 
 const url = inject("url");
@@ -42,6 +42,7 @@ const OrderId = computed(() => store.getters["Cart/OrederId"]);
 const ItemsRating = ref([]);
 const Review = ref([]);
 const isVisable = ref(false);
+const ContectData = ref({});
 const Rating = () => {
   if (
     Array.isArray(ItemsRating.value?.product) &&
@@ -67,7 +68,7 @@ const fetchHomeData = async (lang) => {
     const {
       order_to_rate,
       sliders,
-      contact_us,
+      contact_info,
       makers,
       meta,
       mission,
@@ -82,7 +83,7 @@ const fetchHomeData = async (lang) => {
     PortfolioData.value = portfolio;
     ArticaleData.value = makers;
     metaData.value = meta;
-
+    ContectData.value = contact_info;
     Rating();
     const ReviewResponse = await fetch(`${url}/reviews/list`, {
       method: "GET",

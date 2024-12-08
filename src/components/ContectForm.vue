@@ -14,7 +14,9 @@
                 <div class="card-box">
                   <h5 class="card-title">{{ $t("Location") }}</h5>
                   <ul class="list">
-                    <li class="item-wrap">{{ $t("LocationValue") }}</li>
+                    <li class="item-wrap">
+                      {{ props.initialData?.address || props.Data?.address }}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -27,8 +29,9 @@
                     {{ $t("Phone") }}
                   </h5>
                   <ul class="list mbr-fonts-style display-4">
-                    <li class="item-wrap">{{ $t("PhoneValue1") }}</li>
-                    <li class="item-wrap">{{ $t("PhoneValue2") }}</li>
+                    <li class="item-wrap">
+                      {{ props.Data?.mobile || props.Data?.mobile }}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -41,8 +44,9 @@
                     {{ $t("Email") }}
                   </h5>
                   <ul class="list mbr-fonts-style display-4">
-                    <li class="item-wrap">{{ $t("EmailValue1") }}</li>
-                    <li class="item-wrap">{{ $t("EmailValue2") }}</li>
+                    <li class="item-wrap">
+                      {{ props.initialData?.email || props.Data?.email }}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -64,7 +68,7 @@
           <form @submit.prevent="submitForm">
             <div class="dragArea row p-3">
               <div class="col-12">
-                <h2 class="mbr-section-title">Send your messages</h2>
+                <h2 class="mbr-section-title">{{ $t("SendEmail") }}</h2>
               </div>
 
               <div class="col-12 form-group" data-for="name">
@@ -130,7 +134,7 @@
               </div>
 
               <div class="col-md-auto col mbr-section-btn">
-                <button type="submit" class="btn">SEND</button>
+                <button type="submit" class="btn">{{ $t("Send") }}</button>
               </div>
             </div>
           </form>
@@ -145,7 +149,8 @@ import { inject, ref, computed, watchEffect } from "vue";
 import { toast } from "vue3-toastify";
 import { useHead } from "@vueuse/head";
 const url = inject("url");
-
+const props = defineProps(["initialData", "Data"]);
+console.log(props.initialData);
 const validateNumberInput = (e) => {
   e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Replace any non-digit character with an empty string
 };
@@ -156,9 +161,7 @@ const formData = ref({
   phone: "",
   message: "",
 });
-const pageTitle = computed(() =>
-  route.params.lang === "en" ? "Contact Us" : "تواصل معنا"
-);
+
 const showSuccessPopup = ref(false);
 const submitForm = async () => {
   try {
@@ -190,6 +193,7 @@ const submitForm = async () => {
     console.error("Error:", error);
   }
 };
+watchEffect(() => console.log(props.Data));
 </script>
 
 <style lang="scss" scoped>
