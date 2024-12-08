@@ -145,7 +145,6 @@ import { inject, ref } from "vue";
 import { toast } from "vue3-toastify";
 const url = inject("url");
 
-
 const validateNumberInput = (e) => {
   e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Replace any non-digit character with an empty string
 };

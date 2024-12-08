@@ -15,7 +15,7 @@ import Footer from "./components/Footer.vue";
 
 import { provide } from "vue";
 import WhatsAppIcon from "./components/WhatsAppIcon.vue";
-provide("url", "http://dashboard.daliaelhaggar.com/api");
+provide("url", "https://dashboard.daliaelhaggar.com/api");
 </script>
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap");

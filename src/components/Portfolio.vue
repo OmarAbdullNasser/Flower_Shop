@@ -11,7 +11,7 @@
               <div class="icon d-flex justify-content-center">
                 <font-awesome-icon icon="fa-regular fa-heart" />
               </div>
-              <h3 class="subtitle display5">Shop Flowers</h3>
+              <h3 class="subtitle display5">{{ $t("Shop_Now") }}</h3>
 
               <div class="btns">
                 <router-link
@@ -21,7 +21,7 @@
                     params: { lang: route.params.lang },
                   }"
                   class="Btn Btn-primary display4"
-                  >Shop now</router-link
+                  >{{ $t("Shop_Now") }}</router-link
                 >
               </div>
             </div>

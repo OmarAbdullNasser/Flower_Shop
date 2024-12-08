@@ -51,7 +51,6 @@ const Rating = () => {
   } else {
     isVisable.value = false;
   }
-  
 };
 const fetchHomeData = async (lang) => {
   try {
@@ -83,7 +82,7 @@ const fetchHomeData = async (lang) => {
     PortfolioData.value = portfolio;
     ArticaleData.value = makers;
     metaData.value = meta;
-
+    console.log(contact_us);
     Rating();
     const ReviewResponse = await fetch(`${url}/reviews/list`, {
       method: "GET",
