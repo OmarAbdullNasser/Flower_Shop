@@ -242,7 +242,7 @@ const FetchPaymentData = async () => {
 
     // Display the fetched data in the console
     PaymentMethod.value = data;
-    console.log(PaymentMethod.value, "list");
+
   } catch (error) {
     // Handle and log any errors
     console.error("Error fetching data:", error);
@@ -312,7 +312,7 @@ const SendOrder = async (
   window.scrollTo({ top: 0, behavior: "smooth" });
   let result = "";
   let flag = false;
-  // console.log(img);
+
 
   if (typeof CheckValues("name", name) === "string") {
     result = CheckValues("name", name);
@@ -355,7 +355,6 @@ const SendOrder = async (
         body: formData,
       });
       const OrderResponse = await response.json();
-      console.log(OrderResponse);
       // Parse the JSON response.
       // bootstrapModal.show();
       // Errors.push(OrderResponse.)

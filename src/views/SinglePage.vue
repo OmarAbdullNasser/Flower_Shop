@@ -45,7 +45,7 @@ const fetchHomeData = async (lang, pagename) => {
 
     const PageRespons = await HomeResponse.json();
     const Data = PageRespons.data;
-    console.log(Data);
+
     const { title, description, image, meta } = Data;
     DataPage.value.title = title;
     DataPage.value.description = description;
@@ -82,6 +82,5 @@ onMounted(async () => {
   P {
     line-height: 3;
   }
-  
 }
 </style>

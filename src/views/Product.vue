@@ -124,49 +124,6 @@ const getSingleProductByFliter = async (lang) => {
   }
 };
 
-// const addToCart = async (item) => {
-//   try {
-//     ProductData.value = {
-//       product_id: item.id,
-//       product_name: item.title,
-//       quantity: quantity.value, // Make sure quantity is a reactive property if needed
-//       price: item.price,
-//     };
-//     const response = await fetch(`${url}/add-to-cart`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(ProductData.value),
-//     });
-//     console.log(await response.json());
-//     if (!response.ok) {
-//       throw new Error("Failed to send message");
-//     }
-
-//     toaster.success("Prodect Added to Cart successfully!", {
-//       duration: 3000,
-//       position: "top",
-//     });
-
-//     // Optionally, reset the form after success
-//     ProductData.value = {
-//       product_id: 0,
-//       product_name: "",
-//       quantity: 0,
-//       price: 0,
-//     };
-//   } catch (error) {
-//     console.error("Error:", error);
-//     toaster.error(
-//       "There was an issue sending your message. Please try again.",
-//       {
-//         duration: 3000, // Optional duration for the toast
-//         position: "top",
-//       }
-//     );
-//   }
-// };
 
 const addToCart2 = async (item) => {
   ProductData.value = {

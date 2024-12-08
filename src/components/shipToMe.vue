@@ -90,7 +90,6 @@ const SetTime = (val, datavisiable) => {
 };
 const SetDate = () => {
   store.commit("SET_SENDER", { delivery_date: SDate.value });
-  console.log(senderObj.value);
 };
 function syncFormWithVuex({ key: newValue }) {
   // Directly update the specified key in the Vuex state
@@ -108,7 +107,7 @@ onMounted(() => {
   store.commit("SET_SENDER", { payment_method_id: 0 });
   store.commit("SET_SENDER", { payment_method_id: 0 });
 });
-// watchEffect(() => console.log(SDate.value));
+
 </script>
 
 <style lang="scss" scoped>

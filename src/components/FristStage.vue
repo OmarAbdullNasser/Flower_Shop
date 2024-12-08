@@ -71,7 +71,7 @@ watch(
   () => notes.value,
   (newValue) => {
     store.commit("SET_SENDER", { extra_instructions: newValue });
-    console.log(newValue);
+
   }
 );
 function syncFormWithVuex() {

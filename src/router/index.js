@@ -56,18 +56,7 @@ const routes = [
 
     component: () => import("@/views/CO(Phase3).vue"),
 
-    // beforeEnter: (to, from, next) => {
-    //   // Check if the cart is empty using Vuex state
-    //   const isCartEmpty = store.getters["Cart/cartItems"];
-    //   console.log(isCartEmpty);
-    //   // if (isCartEmpty) {
-    //   //   // Allow access if the cart has items
-    //   //   next();
-    //   // } else {
-    //   //   // Redirect to the cart page if empty
-    //   //   next({ path: "/" });
-    //   // }
-    // },
+ 
   },
   {
     path: "/:lang(en|ar)/pages/:Pagename",

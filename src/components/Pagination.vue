@@ -89,7 +89,7 @@ const goToPage = (page) => {
     emit("pageChanged", page);
   }
   currentPage.value = page;
-  // console.log("you cliked with page number " + currentPage.value);
+  
 };
 
 // Computed property to calculate pages to show

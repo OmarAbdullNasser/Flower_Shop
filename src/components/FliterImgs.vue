@@ -46,8 +46,6 @@
                   :key="imgIndex"
                 >
                   <img :src="img" alt="" class="img-fluid m-1" />
-                  <span class="icon-focus"></span>
-                  <span class="title display7"> Type caption here </span>
                 </div>
               </div>
             </div>
@@ -173,55 +171,6 @@ const filteredImages = computed(() => {
           .title {
             display: block; // Display title on hover
           }
-        }
-
-        &::before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          opacity: 0;
-          -webkit-transition: 0.2s opacity ease-in-out;
-          transition: 0.2s opacity ease-in-out;
-          background: linear-gradient(180deg, #0c5b47, #338873);
-        }
-        .icon-focus {
-          position: absolute;
-          font-size: 2rem !important;
-          width: 50px;
-          height: 50px;
-          top: calc(50% - 25px);
-          left: calc(50% - 25px);
-          transition: 0.2s opacity ease-in-out;
-          z-index: 5;
-          color: #fff;
-          opacity: 0;
-
-          &::before {
-            content: "+";
-            border-radius: 100px;
-            background: rgba(0, 0, 0, 0.5);
-            width: 100%;
-            height: 100%;
-            padding-bottom: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-        }
-        .title {
-          position: absolute;
-          text-align: left;
-          display: none;
-          width: 100%;
-          bottom: 0;
-          right: 0;
-          padding: 1rem;
-          font-weight: bold;
-          background: transparent;
-          transition: all 0.5s ease;
         }
       }
     }

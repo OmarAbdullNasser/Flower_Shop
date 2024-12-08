@@ -48,7 +48,7 @@ const fetchHomeData = async (lang) => {
     const respons = await HomeResponse.json();
     EventsData.value = respons.data;
 
-    console.log(EventsData.value);
+
 
     const {
       description,
@@ -83,7 +83,7 @@ watchEffect(async () => {
 });
 onMounted(async () => {
   await fetchHomeData(route.params.lang);
-  console.log(Meta.value);
+
   if (Meta.value) {
     // Use vue-meta to dynamically set meta tags based on the fetched metaData
 

@@ -310,7 +310,6 @@ const areFieldsValid = computed(() => {
 });
 
 const AlertValue = (errortype = null) => {
-  console.log(errortype);
   if (errortype && areFieldsValid) {
     emit("validation-result", areFieldsValid.value);
   } else if (errortype) {
@@ -377,7 +376,7 @@ const validateSenderPhone = () => {
 };
 const validateFloor = () => {
   const phoneLength = formFields.value.Floor.length;
-  console.log(phoneLength);
+
   if (phoneLength >= 1) {
     Flooer_flag.value = null; // Hide span
   } else {
@@ -400,7 +399,7 @@ watch(
   },
   { deep: true }
 );
-watchEffect(() => console.log(senderObj.value));
+
 onMounted(() => {
   emit("valid", areFieldsValid.value);
   syncFormWithVuex();

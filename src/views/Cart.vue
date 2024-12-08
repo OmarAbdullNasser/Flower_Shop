@@ -257,7 +257,6 @@ const updateItemQuantity = async (id, q) => {
 
     // Parse the JSON response
     const UpdateResponse = await response.json();
-    console.log(UpdateResponse.data);
     TM.value = UpdateResponse.data.total;
     quantity.value = UpdateResponse.data.quantity;
     const Prodect = Prodects.value.filter((item) => item.id == id);

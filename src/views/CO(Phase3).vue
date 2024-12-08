@@ -234,12 +234,11 @@ const SendOrder = async (obj) => {
       },
       body: formData, // Use FormData instead of JSON
     });
-    console.log(response);
+
     // Parse the JSON response
     const OrderResponse = await response.json();
     // Prodects.value = Prodects.value.filter((item) => item.id !== id);
-    console.log(OrderResponse);
-    console.log(OrderResponse);
+
     if (!response.ok) {
       throw new Error(
         OrderResponse.message || "Failed to update product in cart"
@@ -259,7 +258,7 @@ const SendOrder = async (obj) => {
   } catch (error) {
     Swal.close();
     Swal.fire("Error", error.message, "error");
-    console.error("Error make order from cart:", error);
+
     // Handle error appropriately (e.g., show notification)
   }
 };

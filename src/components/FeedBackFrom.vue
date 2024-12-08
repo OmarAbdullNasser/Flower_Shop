@@ -71,19 +71,7 @@
 </template>
 
 <script setup>
-// import { ref } from "vue";
-// const rating = ref(0);
-// const HoverIndex = ref(-1);
-// const SetRate = (index) => {
-//   rating.value = index;
-//   console.log(index);
-// };
-// const handleMouseEnter = (index) => {
-//   HoverIndex.value = index;
-// };
-// const handleMouseLeave = () => {
-//   HoverIndex.value = -1;
-// };
+
 
 import { ref, computed, onMounted, inject } from "vue";
 import { Modal } from "bootstrap";
@@ -100,7 +88,7 @@ const props = defineProps({
 });
 import Swal from "sweetalert2";
 const { order_id, product } = props.items;
-console.log(product, "products");
+
 
 // Update rating for a specific item on click
 const setRating = (itemId, rating) => {
@@ -129,7 +117,7 @@ const SendFeedback = async () => {
     }),
   });
   const respons = await FeddbackResponse.json();
-  console.log(respons);
+ 
   if (!respons.success) {
     throw new Error(
       FeddbackResponse.message || "Failed to update product in cart"

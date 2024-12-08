@@ -49,16 +49,7 @@ const SetPaymentMethod = () => {
   store.commit("SET_PAYMENT", "Shiptosome");
 };
 const senderObj = computed(() => store.getters.senderObj);
-// watch(
-//   () => Know.value,
-//   (newValue) => {
-//     store.commit("SET_SENDER", { know_receipent_address: newValue });
-//     console.log("changed", newValue);
-//   }
-// );
-// watchEffect(() => {
-//   store.commit("SET_SENDER", { know_receipent_address: Know.value });
-// });
+
 
 onMounted(() => {
   SetPaymentMethod();

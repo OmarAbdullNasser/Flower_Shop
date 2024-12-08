@@ -126,7 +126,7 @@ const fetchData = async () => {
     const respons = await PaymentRespons.json();
     Methods.value = respons.data;
     loading.value = false;
-    console.log(Methods.value);
+
     if (
       senderObj.value.ship_to_me == 1 &&
       senderObj.value.payment_method_id == 0
@@ -140,10 +140,7 @@ const fetchData = async () => {
     } else {
       FindMethod(3, false, 2);
     }
-    // if (!respons.success) {
-    //   console.log("fail");
-    // } else {
-    // }
+    
   } catch (e) {
     console.log(e);
   }
