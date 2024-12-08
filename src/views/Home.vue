@@ -82,7 +82,7 @@ const fetchHomeData = async (lang) => {
     PortfolioData.value = portfolio;
     ArticaleData.value = makers;
     metaData.value = meta;
-    console.log(contact_us);
+
     Rating();
     const ReviewResponse = await fetch(`${url}/reviews/list`, {
       method: "GET",
@@ -123,7 +123,7 @@ onMounted(async () => {
     // Use vue-meta to dynamically set meta tags based on the fetched metaData
 
     useHead({
-      title: metaData.title,
+      title: `${metaData.value.title || "Dalia ElHaggar"} `,
       meta: [
         {
           name: "description",

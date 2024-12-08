@@ -25,6 +25,7 @@ import Gallery from "@/components/Gallery.vue";
 import Hero from "@/components/Hero.vue";
 import { inject, ref, onMounted, watchEffect, provide } from "vue";
 import { useRoute } from "vue-router";
+import { useHead } from "@vueuse/head";
 
 name: "Landscape";
 const url = inject("url");
@@ -36,6 +37,7 @@ const bgUrl = ref("");
 const HeroText = ref("");
 const DescripationData = ref({});
 const ImgGallery = ref([]);
+const metaData = ref({});
 const fetchHomeData = async (lang) => {
   try {
     const HomeResponse = await fetch(`${url}/service/landscape`, {
@@ -47,7 +49,7 @@ const fetchHomeData = async (lang) => {
 
     const respons = await HomeResponse.json();
     LandscapeData.value = respons.data;
-   
+
     const { gallery, service } = LandscapeData.value;
     const {
       description,
@@ -62,6 +64,7 @@ const fetchHomeData = async (lang) => {
     HeroText.value = title;
     DescripationData.value = { middle_title, middle_content };
     ImgGallery.value = gallery;
+    metaData.value = meta;
   } catch (error) {
     console.error("Failed to fetch flowers:", error);
   }
@@ -80,6 +83,20 @@ watchEffect(async () => {
 });
 onMounted(async () => {
   await fetchHomeData(route.params.lang);
+  if (metaData.value) {
+    // Use vue-meta to dynamically set meta tags based on the fetched metaData
+
+    useHead({
+      title: `${metaData.value.meta_title || "Dalia ElHaggar"} `,
+      meta: [
+        {
+          name: "description",
+          content: `${metaData.value.meta_desc}`,
+        },
+        { name: "keywords", content: `${metaData.value.meta_key}` },
+      ],
+    });
+  }
 });
 </script>
 

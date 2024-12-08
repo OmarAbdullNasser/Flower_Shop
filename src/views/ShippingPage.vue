@@ -65,7 +65,7 @@ const progressWidth = ref(0); // Variable to store the dynamic width of the prog
 
 const url = inject("url");
 
-const getStatus = async (id) => {
+const getStatus = async (lang, id) => {
   try {
     const StatusResponse = await fetch(
       `${url}/show-order-shipping-status/${id}	`,
@@ -73,7 +73,7 @@ const getStatus = async (id) => {
         method: "GET",
         headers: {
           Accept: "application/json",
-          "Accept-Language": `en`,
+          "Accept-Language": `${lang}`,
           "Content-Type": "application/json",
         },
       }
@@ -139,7 +139,7 @@ const ColorBar = () => {
   }
 };
 onMounted(() => {
-  getStatus(route.params.id);
+  getStatus(route.params.lang, route.params.id);
 });
 </script>
 

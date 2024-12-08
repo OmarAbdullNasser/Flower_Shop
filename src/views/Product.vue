@@ -48,7 +48,6 @@
               >
                 Buy Now
               </button>
-            
             </div>
 
             <div class="price-line1 d-flex">
@@ -88,7 +87,7 @@ import Feedback from "@/components/Feedback.vue";
 import { inject, onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-
+import { useHead } from "@vueuse/head";
 const url = inject("url");
 const route = useRoute();
 const store = useStore();
@@ -96,7 +95,7 @@ const SingleProduct = ref(null);
 const loading = ref(true);
 const quantity = ref(1);
 const slugparam = route.params.slug;
-
+const Datameta = ref({});
 const ProductData = ref({
   product_id: 0,
   product_name: "",
@@ -112,7 +111,9 @@ const getSingleProductByFliter = async (lang) => {
       },
     });
     const respons = await result.json();
+
     SingleProduct.value = respons.data;
+    Datameta.value = SingleProduct.value.meta;
 
     if (result) {
       loading.value = false;
@@ -123,7 +124,6 @@ const getSingleProductByFliter = async (lang) => {
     console.error("Error during search:", error);
   }
 };
-
 
 const addToCart2 = async (item) => {
   ProductData.value = {
@@ -162,6 +162,20 @@ watch(
 
 onMounted(() => {
   getSingleProductByFliter(route.params.lang);
+  if (Datameta.value) {
+    // Use vue-meta to dynamically set meta tags based on the fetched metaData
+
+    useHead({
+      title: `${Datameta.value.title || "Dalia ElHaggar"} `,
+      meta: [
+        {
+          name: "description",
+          content: `${Datameta.value.description}`,
+        },
+        { name: "keywords", content: `${Datameta.value.key}` },
+      ],
+    });
+  }
 });
 </script>
 

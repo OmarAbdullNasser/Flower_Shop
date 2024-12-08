@@ -180,13 +180,11 @@ export default createStore({
         query += query ? `&${pt}` : pt;
       }
 
-      
-
       if (query) {
         try {
           const FlowerResponse = await fetch(`${url}/products?${query}`);
           const respons = await FlowerResponse.json();
-        
+
           const { items, pagination } = respons.data;
 
           commit("SET_PRODUCTS", items);

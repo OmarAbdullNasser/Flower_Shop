@@ -46,9 +46,8 @@ const fetchHomeData = async (lang) => {
     });
 
     const respons = await HomeResponse.json();
+
     EventsData.value = respons.data;
-
-
 
     const {
       description,
@@ -88,7 +87,7 @@ onMounted(async () => {
     // Use vue-meta to dynamically set meta tags based on the fetched metaData
 
     useHead({
-      title: Meta.meta_title,
+      title: `${Meta.value.meta_title || "Dalia ElHaggar"}`,
       meta: [
         {
           name: "description",

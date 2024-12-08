@@ -141,8 +141,9 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { inject, ref, computed, watchEffect } from "vue";
 import { toast } from "vue3-toastify";
+import { useHead } from "@vueuse/head";
 const url = inject("url");
 
 const validateNumberInput = (e) => {
@@ -155,6 +156,9 @@ const formData = ref({
   phone: "",
   message: "",
 });
+const pageTitle = computed(() =>
+  route.params.lang === "en" ? "Contact Us" : "تواصل معنا"
+);
 const showSuccessPopup = ref(false);
 const submitForm = async () => {
   try {

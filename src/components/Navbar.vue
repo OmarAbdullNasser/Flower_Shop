@@ -138,6 +138,7 @@ const router = useRouter();
 const { locale } = useI18n();
 const Links = computed(() => store.getters.SiteLinks);
 const Logo = ref(null);
+const icon = ref(null);
 // Logo.value = Links.value[16].setting_value;
 // const Logo = ref("");
 // const getLogo = () => {
@@ -164,12 +165,22 @@ const fetchNavbarData = async (lang) => {
   await store.dispatch("fetchNavbarData", lang);
   // getLogo();
 };
-
+const setFavicon = (url) => {
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "icon";
+    document.head.appendChild(link);
+  }
+  link.href = url;
+};
 onMounted(() => {
   fetchNavbarData();
   watchEffect(() => {
-    if (Links.value && Links.value[16]) {
+    if (Links.value && Links.value[16] && Links.value[18]) {
+      icon.value = Links.value[18].setting_value;
       Logo.value = Links.value[16].setting_value;
+      setFavicon(icon.value);
     }
   });
 });

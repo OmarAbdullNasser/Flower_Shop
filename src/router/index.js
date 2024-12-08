@@ -55,8 +55,6 @@ const routes = [
     // component: Chechout,
 
     component: () => import("@/views/CO(Phase3).vue"),
-
- 
   },
   {
     path: "/:lang(en|ar)/pages/:Pagename",
