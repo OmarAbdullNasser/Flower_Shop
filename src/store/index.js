@@ -3,7 +3,7 @@ import Cart from "./Cart";
 import VuexPersist from "vuex-persist";
 
 // const url = inject("url");
-const url = "https://flowerest.e1s.me/api";
+const url = "http://dashboard.daliaelhaggar.com/api";
 
 const vuexLocalStorage = new VuexPersist({
   key: "Cart", // Name of the key in storage

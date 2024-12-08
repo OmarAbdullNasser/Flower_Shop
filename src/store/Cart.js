@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 
 import { toast } from "vue3-toastify";
 
-const url = "https://flowerest.e1s.me/api";
+const url = "http://dashboard.daliaelhaggar.com/api";
 const Cart = {
   namespaced: true,
   state: () => ({ cart: [], cart_cookie: null, OrederId: null }),
