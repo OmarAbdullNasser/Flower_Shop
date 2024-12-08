@@ -23,7 +23,7 @@
                   >
                     <img
                       :src="item.image"
-                      class="img-fluid rounded-start"
+                      class="img-fluid rounded-start ms-2"
                       alt="..."
                     />
                   </div>

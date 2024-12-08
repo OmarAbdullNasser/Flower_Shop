@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <div class="col-12 col-sm-6 col-lg-4 item features-image">
+        <!-- <div class="col-12 col-sm-6 col-lg-4 item features-image">
           <div class="item-wrapper">
             <div class="item-img">
               <img src="../assets/b2.jpg" class="img-fluid" alt="" />
@@ -70,7 +70,7 @@
               <img src="../assets/b4.jpg" class="img-fluid" alt="" />
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
