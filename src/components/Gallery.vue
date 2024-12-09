@@ -8,11 +8,9 @@
           :key="img.id"
         >
           <div class="item-wrapper">
-            <a href="#">
               <div class="item-img">
-                <img :src="img.image" alt="" />
+                <img :src="img.image" alt="" class-="rounded" />
               </div>
-            </a>
           </div>
         </div>
       </div>
@@ -30,7 +28,7 @@ const Data = inject("GalleryData");
 .Gallery {
   padding-top: 5rem;
   padding-bottom: 5rem;
-  background-color: #1b745e;
+  background-color: #fff;
   .container-fluid {
     padding: 0 60px;
   }

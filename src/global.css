@@ -17,7 +17,9 @@ body {
   background-color: #fcf5fc;
   font-family: "Alexandria", sans-serif;
 }
-
+ul{
+  list-style: none;
+}
 .checkout .payment .Phone_Number input,
 .checkout .payment .Phone_Number textarea {
   border: 1px solid #e7d4e7;

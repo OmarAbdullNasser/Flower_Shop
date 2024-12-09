@@ -46,6 +46,7 @@ import Fliter from "@/components/Fliter.vue";
 import Pagination from "@/components/Pagination.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import { useStore } from "vuex";
+import { useHead } from "@vueuse/head";
 
 import { ref, onMounted, computed, watchEffect, onUpdated } from "vue";
 
@@ -82,6 +83,11 @@ watchEffect(() => {
 
 onMounted(async () => {
   store.dispatch("fetchProducts");
+
+  useHead({
+      title: 'Dalia ElHaggar | Shop',
+    });
+
 });
 </script>
 
