@@ -9,9 +9,7 @@
 
       <div v-else class="row">
         <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-          <VerticalSwiper
-            :initialImages="SingleProduct.gallery.gallery_images"
-          />
+          <VerticalSwiper :initialImages="Imgs" />
         </div>
 
         <div class="col-12 col-md-6">
@@ -24,11 +22,11 @@
             </p>
             <div class="price-line d-flex">
               <p class="desc2 display5" v-if="SingleProduct.price_after_sale">
-                <s>EGP {{ SingleProduct.price_after_sale }}</s>
+                <s>EGP {{ SingleProduct.price }}</s>
               </p>
               <p class="plus1 display5">
                 <strong>&nbsp;</strong>
-                $ {{ SingleProduct.price }}
+                EGP {{ SingleProduct.price_after_sale }}
               </p>
             </div>
             <p class="display4 text" v-html="SingleProduct.description"></p>
@@ -48,7 +46,7 @@
                 class="buy-btn btn display7 mx-3 mb-0"
                 @click="addToCart2(SingleProduct)"
               >
-                Buy Now
+                {{ $t("Buy") }}
               </button>
             </div>
 
@@ -85,7 +83,7 @@
 </template>
 
 <script setup>
-import { inject, onMounted, ref, watch, computed } from "vue";
+import { inject, onMounted, ref, watch, computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useHead } from "@vueuse/head";
@@ -98,7 +96,7 @@ const loading = ref(true);
 const quantity = ref(1);
 const slugparam = route.params.slug;
 const Datameta = ref({});
-
+const Imgs = ref([]);
 const ProductData = ref({
   product_id: 0,
   product_name: "",
@@ -116,6 +114,7 @@ const getSingleProductByFliter = async (lang) => {
     const respons = await result.json();
 
     SingleProduct.value = respons.data;
+    Imgs.value = SingleProduct.value.gallery?.gallery_images;
     Datameta.value = SingleProduct.value.meta;
 
     if (result) {
@@ -163,6 +162,7 @@ watch(
   { immediate: true } // Call the watcher immediately upon component mount
 );
 
+watchEffect(() => console.log(Imgs.value));
 onMounted(() => {
   getSingleProductByFliter(route.params.lang);
   if (Datameta.value) {
