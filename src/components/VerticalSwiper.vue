@@ -70,7 +70,7 @@ const onSwiper = (swiper) => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .slider {
   .swiper {
     position: relative;
