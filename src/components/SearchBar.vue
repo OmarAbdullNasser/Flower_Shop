@@ -16,7 +16,7 @@
       <div class="col-12 col-lg-6 col-md-6 order-1 order-md-2">
         <div class="FliterBar d-flex align-items-center">
           <label for="products-sort">
-            <span>Sort by:</span>
+            <span>{{ $t("Sort") }}</span>
           </label>
           <select
             name="sortby"
@@ -25,9 +25,9 @@
             @change="updateSort"
           >
             <!-- <option value="1">Recommended</option> -->
-            <option value="low_price">Price (Low to High)</option>
-            <option value="high_price">Price (High to Low)</option>
-            <option value="newest">Latest Arrival</option>
+            <option value="low_price">{{ $t("PriceLH") }}</option>
+            <option value="high_price">{{ $t("PriceHL") }}</option>
+            <option value="newest">{{ $t("New") }}</option>
           </select>
         </div>
       </div>

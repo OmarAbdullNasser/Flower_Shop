@@ -212,7 +212,7 @@ onMounted(() => {
     }
     .price-line {
       margin-bottom: 27px;
-      .desc2 {
+      .desc {
         color: #909190;
       }
       .plus1 {

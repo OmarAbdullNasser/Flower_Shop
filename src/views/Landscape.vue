@@ -10,8 +10,8 @@
       :pb="8"
       height="133px"
     >
-      <h1>
-        <strong>{{ HeroText }}</strong>
+      <h1 style="margin: 0 auto; font-size: 5rem; color: #fff">
+        {{ HeroText }}
       </h1>
     </Hero>
     <Description :bgcolor="'rgb(255, 255, 255)'" />
@@ -87,7 +87,9 @@ onMounted(async () => {
     // Use vue-meta to dynamically set meta tags based on the fetched metaData
 
     useHead({
-      title: 'Dalia ElHaggar |' + `${metaData.value.meta_title || "Dalia ElHaggar"} `,
+      title:
+        "Dalia ElHaggar |" +
+        `${metaData.value.meta_title || "Dalia ElHaggar"} `,
       meta: [
         {
           name: "description",

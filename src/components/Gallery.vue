@@ -8,9 +8,9 @@
           :key="img.id"
         >
           <div class="item-wrapper">
-              <div class="item-img">
-                <img :src="img.image" alt="" class-="rounded" />
-              </div>
+            <div class="item-img">
+              <img :src="img.image" alt="" class-="rounded" />
+            </div>
           </div>
         </div>
       </div>
@@ -36,15 +36,21 @@ const Data = inject("GalleryData");
   .item-wrapper {
     margin-bottom: 32px;
     overflow: hidden;
-    .item-img img {
-      height: 345px;
-      object-fit: cover;
-      margin-bottom: 15px;
-      transform: scale(1.06) translateX(0);
-      transition: all 0.3s ease-in-out;
-      width: 100%;
-      &:hover {
-        transform: scale(1.06) translateX(6px);
+    .item-img {
+      position: relative; /* Ensure proper layering */
+      overflow: hidden; /* Ensures border-radius works with scaling */
+      border-radius: 15px;
+      img {
+        height: 345px;
+        object-fit: cover;
+        margin-bottom: 15px;
+        transform: scale(1.06) translateX(0);
+        transition: all 0.3s ease-in-out;
+        width: 100%;
+
+        &:hover {
+          transform: scale(1.06) translateX(6px);
+        }
       }
     }
   }

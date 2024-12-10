@@ -41,6 +41,8 @@ const data = inject("DescripationData");
       font-family: "Quicksand", sans-serif;
       font-size: 2rem;
       line-height: 1.1;
+      text-align: center;
+      color: #431934;
     }
     p {
       font-family: "Crimson Text", serif;
@@ -51,6 +53,8 @@ const data = inject("DescripationData");
       word-break: break-word;
       word-wrap: break-word;
       font-weight: 400;
+      text-align: center;
+      color: #431934;
     }
   }
   .logo-wrapper {

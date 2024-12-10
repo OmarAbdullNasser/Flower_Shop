@@ -1,13 +1,6 @@
 <template>
   <div class="Fliter">
     <div class="container">
-      <div class="Text">
-        <h2 class="title display2 mb-2">
-          <strong>Gallery</strong>
-          <strong> With Tabs</strong>
-        </h2>
-      </div>
-
       <div class="Imgs">
         <div class="Img-wrapper">
           <!--Fliter-->
@@ -18,7 +11,7 @@
                 :class="{ active: selectedCategory === 'all' }"
                 @click="selectCategory('all')"
               >
-                <span href="#" class="Btn display7"> All </span>
+                <span href="#" class="Btn display7"> {{ $t("All") }} </span>
               </li>
 
               <li
@@ -106,9 +99,10 @@ const filteredImages = computed(() => {
       text-align: left;
       padding-right: 0;
       padding-left: 0;
+      text-align: center;
       .list {
         display: inline-block;
-        width: 100%;
+
         padding-left: 0;
         margin-bottom: 0;
         list-style: none;
@@ -158,6 +152,9 @@ const filteredImages = computed(() => {
 
       .item {
         position: relative;
+        img {
+          border-radius: 15px;
+        }
         &:hover {
           &::before {
             opacity: 0.4; // Change opacity on hover

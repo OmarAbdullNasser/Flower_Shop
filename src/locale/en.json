@@ -9,5 +9,21 @@
   "Email": "Email",
   "Soical_Media": "Soical Media",
   "SendEmail": "Send your messages",
-  "Send":"Send"
+  "Send": "Send",
+  "TitleShop": "The Best Gifts To Pair With Your Bouquet",
+  "pathHome": "Home",
+  "pathVesa": "vases",
+  "Categories": "Categories",
+  "Occasions": "Occasions",
+  "Price": "Price",
+  "Fliter": "Fliter",
+  "Sort": "Sort by :",
+  "PriceLH": "Price (Low to High)",
+  "PriceHL": "Price (High to Low)",
+  "New": "Latest Arrival",
+  "First": "First",
+  "Previous": "Previous",
+  "Next": "Next",
+  "Last": "Last",
+  "All": "All"
 }

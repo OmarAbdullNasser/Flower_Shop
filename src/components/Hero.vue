@@ -15,7 +15,7 @@
       <div class="row">
         <div class="col-12">
           <div class="title-wrapper display1 d-flex" :style="{ color: color }">
-            <slot></slot>
+            <slot ></slot>
           </div>
         </div>
       </div>
@@ -77,6 +77,15 @@ html {
   position: relative;
   .title-wrapper {
     margin-bottom: 660px;
+  }
+  .title-wrapper {
+    text-align: center;
+    font-size: 5rem;
+    ::v-deep(*) {
+      color: inherit; /* Default to inherit */
+      font-weight: bold;
+      text-transform: uppercase;
+    }
   }
 }
 @media screen and (max-width: 991px) {

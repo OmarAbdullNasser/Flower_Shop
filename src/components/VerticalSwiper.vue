@@ -1,5 +1,5 @@
 <template>
-  <div class="slider my-0">
+  <div class="VerticalSlider my-0">
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="d-flex">
@@ -70,8 +70,8 @@ const onSwiper = (swiper) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.slider {
+<style lang="scss">
+.VerticalSlider {
   .swiper {
     position: relative;
     width: 407px;
@@ -86,9 +86,10 @@ const onSwiper = (swiper) => {
       border: 2px solid transparent;
       cursor: pointer;
       transition: border 0.3s ease;
+      border-radius: 15px;
 
       &.active {
-        border: 2px solid black; /* Black border for the active image */
+        border: 2px solid #400a3f; /* Black border for the active image */
       }
 
       &:hover {
@@ -101,6 +102,7 @@ const onSwiper = (swiper) => {
     object-fit: cover;
     width: 100%;
     height: 100%;
+    border-radius: 15px;
   }
   .swiper-button-prev,
   .swiper-button-next {

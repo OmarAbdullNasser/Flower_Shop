@@ -2,7 +2,7 @@
   <div class="Fliter">
     <aside class="sidebar-wrarpper">
       <div class="sidebar-item">
-        <h3 class="sidebar-title">Categories</h3>
+        <h3 class="sidebar-title">{{ $t("Categories") }}</h3>
         <div class="sidebar-body">
           <ul>
             <li>
@@ -28,7 +28,7 @@
       </div>
 
       <div class="sidebar-item">
-        <h3 class="sidebar-title">Occasions</h3>
+        <h3 class="sidebar-title">{{ $t("Occasions") }}</h3>
         <div class="sidebar-body">
           <ul>
             <li>
@@ -56,8 +56,8 @@
         </div>
       </div>
 
+      <h3 class="sidebar-title ">{{ $t("Price") }}</h3>
       <div class="sidebar-item ltr">
-        <h3 class="sidebar-title">Price</h3>
         <div class="sidebar-body">
           <ul>
             <li>
@@ -89,7 +89,7 @@
                       value="7500"
                       @input="getRang"
                     />
-                    <button @click="PriceFliter">Fliter</button>
+                    <button @click="PriceFliter">{{ $t("Fliter") }}</button>
                   </div>
                 </div>
 
@@ -107,8 +107,6 @@
           </ul>
         </div>
       </div>
-
-      <p class="reset-price clear my-3" v-if="false">Reset</p>
     </aside>
   </div>
 </template>

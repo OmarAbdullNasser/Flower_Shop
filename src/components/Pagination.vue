@@ -2,12 +2,11 @@
   <nav aria-label="Page navigation">
     <ul class="pagination mb-0">
       <li
-
         class="page-item d-none d-lg-block"
         :class="{ disabled: props.meta.current_page === 1 }"
       >
         <button class="page-link" @click="goToPage(1)" aria-label="First">
-          First
+          {{ $t("First") }}
         </button>
       </li>
       <li
@@ -19,7 +18,7 @@
           @click="goToPage(props.meta.current_page - 1)"
           aria-label="Previous"
         >
-          Previous
+          {{ $t("Previous") }}
         </button>
       </li>
 
@@ -46,7 +45,7 @@
           @click="goToPage(props.meta.current_page + 1)"
           aria-label="Next"
         >
-          Next
+          {{ $t("Next") }}
         </button>
       </li>
       <li
@@ -60,7 +59,7 @@
           @click="goToPage(props.meta.total_pages)"
           aria-label="Last"
         >
-          Last
+          {{ $t("Last") }}
         </button>
       </li>
     </ul>
@@ -89,7 +88,6 @@ const goToPage = (page) => {
     emit("pageChanged", page);
   }
   currentPage.value = page;
-  
 };
 
 // Computed property to calculate pages to show

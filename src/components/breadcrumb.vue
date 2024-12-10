@@ -3,16 +3,18 @@
     <div class="container breadcrumb-wrap">
       <nav aria-label="breadcrumb">
         <h1 class="breadcrumb-title">
-          The Best Gifts To Pair With Your Bouquet
+          {{ $t("TitleShop") }}
         </h1>
         <ul class="breadcrumb mt-3">
           <li class="breadcrumb-item">
             <a href="#">
               <font-awesome-icon icon="fa-solid fa-house" />
-              Home</a
+              {{ $t("pathHome") }}</a
             >
           </li>
-          <li class="breadcrumb-item active" aria-current="page">vases</li>
+          <li class="breadcrumb-item active" aria-current="page">
+            {{ $t("pathVesa") }}
+          </li>
         </ul>
       </nav>
     </div>
