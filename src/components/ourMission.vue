@@ -37,6 +37,7 @@ const MissionData = inject("MissionData");
 <style lang="scss" scoped>
 .ourMission {
   .row {
+    border-radius: 15px;
     align-items: center;
     background: var(--main-color);
     padding: 0px;

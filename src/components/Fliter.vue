@@ -48,7 +48,7 @@
                   :for="`occasion_` + occasion.id"
                   class="custom-control-label"
                 >
-                  {{ occasion.title }}
+                  {{ occasion.title }} <span>(5)</span>
                 </label>
               </div>
             </li>
@@ -56,7 +56,7 @@
         </div>
       </div>
 
-      <h3 class="sidebar-title ">{{ $t("Price") }}</h3>
+      <h3 class="sidebar-title">{{ $t("Price") }}</h3>
       <div class="sidebar-item ltr">
         <div class="sidebar-body">
           <ul>

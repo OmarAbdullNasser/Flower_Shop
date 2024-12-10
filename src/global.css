@@ -17,7 +17,14 @@ body {
   background-color: #fcf5fc;
   font-family: "Alexandria", sans-serif;
 }
-ul{
+img {
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+ul {
   list-style: none;
 }
 .checkout .payment .Phone_Number input,

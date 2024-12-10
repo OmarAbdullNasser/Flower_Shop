@@ -65,13 +65,14 @@ const items = inject("CursolData");
 const modules = [Navigation, Pagination, A11y, Autoplay];
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .swiper-wrapper {
   margin-bottom: 3rem;
   height: auto;
 }
 .card {
   background: #fcf5fc;
+  border-radius: 15px;
 }
 .card-body {
   padding: 32px 35px 40px !important;

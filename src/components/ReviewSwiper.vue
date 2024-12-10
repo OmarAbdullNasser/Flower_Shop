@@ -2,8 +2,8 @@
   <div class="Review">
     <div class="container">
       <div class="HeaderText text-center">
-        <h4 class="my-4">Sample Reviews</h4>
-        <h2 class="my-4">More than 10,000 Happy Clients</h2>
+        <h4 class="my-4">{{ $t("ReviewTitle") }}</h4>
+        <h2 class="my-4">{{ $t("Reviewsubtitle") }}</h2>
       </div>
       <div class="row ReviewSwiper">
         <div class="col-12">
