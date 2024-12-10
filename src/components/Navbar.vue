@@ -91,7 +91,7 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <font-awesome-icon icon="fa-solid fa-globe" class="me-2" />
+              <font-awesome-icon icon="fa-solid fa-globe" class="mx-2" />
               <span v-if="route.params.lang === 'ar'">AR</span>
               <span v-else>EN</span>
             </a>

@@ -9,7 +9,10 @@
 
       <div v-else class="row">
         <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-          <img :src="SingleProduct.image" class="img-fluid" alt="" />
+          <!-- <img :src="SingleProduct.image" class="img-fluid" alt="" /> -->
+          <VerticalSwiper
+            :initialImages="SingleProduct.gallery.gallery_images"
+          />
         </div>
 
         <div class="col-12 col-md-6">
@@ -83,11 +86,11 @@
 </template>
 
 <script setup>
-import Feedback from "@/components/Feedback.vue";
 import { inject, onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useHead } from "@vueuse/head";
+import VerticalSwiper from "@/components/VerticalSwiper.vue";
 const url = inject("url");
 const route = useRoute();
 const store = useStore();
@@ -96,6 +99,7 @@ const loading = ref(true);
 const quantity = ref(1);
 const slugparam = route.params.slug;
 const Datameta = ref({});
+
 const ProductData = ref({
   product_id: 0,
   product_name: "",
@@ -166,7 +170,7 @@ onMounted(() => {
     // Use vue-meta to dynamically set meta tags based on the fetched metaData
 
     useHead({
-      title: 'Dalia ElHaggar |' + `${Datameta.value.title || "Product"} `,
+      title: "Dalia ElHaggar |" + `${Datameta.value.title || "Product"} `,
       meta: [
         {
           name: "description",
