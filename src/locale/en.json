@@ -12,7 +12,7 @@
   "Send": "Send",
   "TitleShop": "The Best Gifts To Pair With Your Bouquet",
   "pathHome": "Home",
-  "pathVesa": "vases",
+  "pathVesa": "Shop",
   "Categories": "Categories",
   "Occasions": "Occasions",
   "Price": "Price",
@@ -25,5 +25,10 @@
   "Previous": "Previous",
   "Next": "Next",
   "Last": "Last",
-  "All": "All"
+  "All": "All",
+  "Find": "Where to find",
+  "SALE": "SALE",
+  "Category": "Category:",
+  "occasions": "occasions:",
+  "ID": "Product ID:"
 }

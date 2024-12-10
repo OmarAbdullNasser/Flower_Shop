@@ -9,7 +9,6 @@
 
       <div v-else class="row">
         <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-          <!-- <img :src="SingleProduct.image" class="img-fluid" alt="" /> -->
           <VerticalSwiper
             :initialImages="SingleProduct.gallery.gallery_images"
           />
@@ -18,14 +17,14 @@
         <div class="col-12 col-md-6">
           <div class="right">
             <div class="Card" v-if="SingleProduct.price_after_sale">
-              <p class="desc1 display4">SALE</p>
+              <p class="desc1 display4">{{ $t("SALE") }}</p>
             </div>
             <p class="display2 name">
               <strong>{{ SingleProduct.title }}</strong>
             </p>
             <div class="price-line d-flex">
               <p class="desc2 display5" v-if="SingleProduct.price_after_sale">
-                <s>$ {{ SingleProduct.price_after_sale }}</s>
+                <s>EGP {{ SingleProduct.price_after_sale }}</s>
               </p>
               <p class="plus1 display5">
                 <strong>&nbsp;</strong>
@@ -55,14 +54,14 @@
 
             <div class="price-line1 d-flex">
               <p class="dec display7">
-                <strong> Category:</strong>
+                <strong> {{ $t("Category") }}</strong>
               </p>
               <p class="plus display4">&nbsp; {{ SingleProduct.category }}</p>
             </div>
 
             <div class="price-line1 d-flex">
               <p class="dec display7">
-                <strong> occasions:</strong>
+                <strong>{{ $t("occasions") }}</strong>
               </p>
               <span
                 class="plus display4"
@@ -74,7 +73,7 @@
 
             <div class="price-line1 d-flex">
               <p class="dec display7">
-                <strong>Product ID:</strong>
+                <strong>{{ $t("ID") }}</strong>
               </p>
               <p class="plus display4">&nbsp; {{ SingleProduct.slug }}</p>
             </div>

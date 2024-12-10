@@ -4,7 +4,7 @@
       <div class="row">
         <div class="title col-12 text-center my-5">
           <h3 class="mbr-section-subtitle">{{ $t("contact_us") }}</h3>
-          <h3 class="mbr-section-title">Where to find</h3>
+          <h3 class="mbr-section-title">{{ $t("Find") }}</h3>
         </div>
 
         <div class="col-12 col-lg-5">
