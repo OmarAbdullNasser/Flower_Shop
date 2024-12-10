@@ -32,7 +32,10 @@ const fetchContentData = async (lang) => {
 onMounted(async () => {
   await fetchContentData(route.params.lang);
   useHead({
-    title: route.params.lang === "en" ? "Contact Us" : "تواصل معنا",
+    title:
+      route.params.lang === "en"
+        ? "Dalia ElHaggar | Contact Us"
+        : "داليا الحجار | تواصل معنا",
   });
 });
 </script>

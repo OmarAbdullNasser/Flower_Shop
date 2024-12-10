@@ -125,10 +125,11 @@ import {
 } from "vue";
 import { useStore } from "vuex";
 import debounce from "lodash.debounce";
-debounce;
+import { useRoute } from "vue-router";
 const store = useStore();
 const emit = defineEmits(["value"]);
 const url = inject("url");
+const route = useRoute();
 //Fliter paramter
 const Categories = ref([]);
 const Occasions = ref([]);
@@ -191,22 +192,28 @@ const fetchFliterPrice = async (pf = 0, pt = 0) => {
   });
 };
 
-const getAllCategories = async () => {
-  const CategoriesResonse = await fetch(`${url}/categories`);
+const getAllCategories = async (lang) => {
+  const CategoriesResonse = await fetch(`${url}/categories`, {
+    headers: {
+      "Accept-Language": `${lang}`,
+    },
+  });
   const jsonResponse = await CategoriesResonse.json();
   Categories.value = jsonResponse.data;
 };
-const getAllOccasions = async () => {
-  const OccasionsResonse = await fetch(`${url}/occasions`);
+const getAllOccasions = async (lang) => {
+  const OccasionsResonse = await fetch(`${url}/occasions`, {
+    headers: {
+      "Accept-Language": `${lang}`,
+    },
+  });
   const jsonResponse = await OccasionsResonse.json();
   Occasions.value = jsonResponse.data;
 };
 onMounted(() => {
-  getAllCategories();
-  getAllOccasions();
+  getAllCategories(route.params.lang);
+  getAllOccasions(route.params.lang);
 });
-
-watchEffect(() => {});
 </script>
 
 <style lang="scss" scoped>

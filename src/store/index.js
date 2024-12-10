@@ -140,7 +140,8 @@ export default createStore({
     //Get  Category
     async fetchFliter(
       { commit },
-      { catid, occasionid, sort, priceFrom, pricertTo }
+      { catid, occasionid, sort, priceFrom, pricertTo },
+      lang = "en"
     ) {
       commit("SET_IDS", catid);
       commit("SET_OCCASIONS", occasionid);
