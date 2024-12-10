@@ -15,7 +15,9 @@
         <div class="col-12 col-md-6">
           <div class="right">
             <div class="Card" v-if="SingleProduct.price_after_sale">
-              <p class="desc1 display4">{{ $t("SALE") }}</p>
+              <p class="desc1 display4 p-2">
+                {{ $t("SALE") }} {{ SingleProduct.sale }}%
+              </p>
             </div>
             <p class="display2 name">
               <strong>{{ SingleProduct.title }}</strong>
@@ -116,7 +118,7 @@ const getSingleProductByFliter = async (lang) => {
     SingleProduct.value = respons.data;
     Imgs.value = SingleProduct.value.gallery?.gallery_images;
     Datameta.value = SingleProduct.value.meta;
-
+    console.log(SingleProduct.value);
     if (result) {
       loading.value = false;
     } else {

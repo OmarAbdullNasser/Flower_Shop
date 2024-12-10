@@ -19,7 +19,7 @@
                   @click="fetchFliter(cat.id, undefined)"
                 />
                 <label :for="`category_` + cat.id" class="custom-control-label">
-                  {{ cat.title }}
+                  {{ cat.title }}<span>({{ cat.count_of_products }})</span>
                 </label>
               </div>
             </li>
@@ -48,7 +48,8 @@
                   :for="`occasion_` + occasion.id"
                   class="custom-control-label"
                 >
-                  {{ occasion.title }} <span>(5)</span>
+                  {{ occasion.title }}
+                  <span>({{ occasion.count_of_products }})</span>
                 </label>
               </div>
             </li>
@@ -198,6 +199,7 @@ const getAllCategories = async (lang) => {
   });
   const jsonResponse = await CategoriesResonse.json();
   Categories.value = jsonResponse.data;
+  
 };
 const getAllOccasions = async (lang) => {
   const OccasionsResonse = await fetch(`${url}/occasions`, {
@@ -207,6 +209,7 @@ const getAllOccasions = async (lang) => {
   });
   const jsonResponse = await OccasionsResonse.json();
   Occasions.value = jsonResponse.data;
+ 
 };
 onMounted(() => {
   getAllCategories(route.params.lang);
