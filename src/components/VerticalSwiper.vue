@@ -9,7 +9,7 @@
               :key="index"
               :src="Img.image"
               alt=""
-              class="img-fluid p-3 my-3"
+              class="img-fluid p-2 my-1"
               :class="{ active: activeSlide === index }"
               @click="handleClick(index)"
             />
@@ -106,18 +106,18 @@ const onSlideChange = () => {
 
   .swiper-slide {
     overflow: hidden;
-    border-radius: 15px;
     img {
+      border-radius: 15px;
       object-fit: contain;
       width: 100%;
-      height: 100%;
+      height: fit-content;
     }
   }
   .swiper-button-prev,
   .swiper-button-next {
     position: absolute;
     margin: 0 1rem;
-    top: 50%;
+    top: 24%;
     width: 60px;
     height: 60px;
     background-color: #fff;

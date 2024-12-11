@@ -88,7 +88,7 @@ onMounted(async () => {
 
     useHead({
       title:
-        "Dalia ElHaggar |" +
+        "Dalia ElHaggar | " +
         `${metaData.value.meta_title || "Dalia ElHaggar"} `,
       meta: [
         {

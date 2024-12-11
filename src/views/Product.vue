@@ -47,8 +47,12 @@
               <button
                 class="buy-btn btn display7 mx-3 mb-0"
                 @click="addToCart2(SingleProduct)"
+                v-if="SingleProduct.in_stock == 1"
               >
                 {{ $t("Buy") }}
+              </button>
+              <button class="btn display7 mx-3 mb-0 outstock" disabled v-else>
+                {{ $t("outStok") }}
               </button>
             </div>
 
@@ -118,7 +122,7 @@ const getSingleProductByFliter = async (lang) => {
     SingleProduct.value = respons.data;
     Imgs.value = SingleProduct.value.gallery?.gallery_images;
     Datameta.value = SingleProduct.value.meta;
-    console.log(SingleProduct.value);
+
     if (result) {
       loading.value = false;
     } else {
@@ -164,7 +168,6 @@ watch(
   { immediate: true } // Call the watcher immediately upon component mount
 );
 
-watchEffect(() => console.log(Imgs.value));
 onMounted(() => {
   getSingleProductByFliter(route.params.lang);
   if (Datameta.value) {
@@ -234,6 +237,13 @@ onMounted(() => {
         border: 2px solid #400a3f;
         background-color: #fedadc;
         width: 107px;
+      }
+      .outstock {
+        width: 110px;
+        cursor: auto;
+        &:hover {
+          color: black;
+        }
       }
       a {
         padding: 0.5625rem 2.3125rem;

@@ -12,15 +12,17 @@
       <h5 class="card-title m-3 title">
         <a href="">{{ props.flower.title }}</a>
       </h5>
-      <p class="card-text mb-0  ">
-        <span class="mx-1" v-if="props.flower.price_after_sale">
+      <p class="card-text mb-1">
+        <span class="mx-1" v-if="props.flower.sale > 0">
           EGP {{ props.flower.price_after_sale }}
           <small>
             <span> {{ props.flower.price }}</span>
           </small>
         </span>
 
-        <span class="mx-1" v-else> EGP {{ props.flower.price }} </span>
+        <span class="mx-1" v-else>
+          EGP {{ props.flower.price_after_sale }}
+        </span>
       </p>
       <div class="rate my-1" v-if="props.flower.average_rate > 0">
         <font-awesome-icon
@@ -31,15 +33,22 @@
           icon="star"
         ></font-awesome-icon>
       </div>
-      <button class="btn w-100" @click="addToCart(props.flower)">
+      <button
+        class="btn w-100"
+        @click="addToCart(props.flower)"
+        v-if="props.flower.in_stock == 1"
+      >
         {{ $t("orderNow") }}
+      </button>
+      <button class="btn w-100 outstock" v-else>
+        {{ $t("outStok") }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onMounted } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -65,10 +74,15 @@ const addToCart = async (item) => {
   width: 18rem;
   cursor: pointer;
   height: fit-content;
+  border-radius: 15px;
 
   img {
     opacity: 85%;
     transition: all 0.2s ease-in-out;
+    height: 274px;
+    border-radius: 15px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     &:hover {
       opacity: 100%;
     }
@@ -105,6 +119,14 @@ const addToCart = async (item) => {
     outline: none;
     border-radius: 0;
     background: #ccaccc 0% 0% no-repeat padding-box;
+    border-radius: 15px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    &.outstock:hover {
+      background: #ccaccc 0% 0% no-repeat padding-box;
+      color: #784b77;
+      cursor: auto;
+    }
     &:hover {
       background-color: #784b77;
       color: #fcf5fc;
