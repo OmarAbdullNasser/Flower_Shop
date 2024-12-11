@@ -18,29 +18,29 @@ const routes = [
     component: () => import("@/views/Products.vue"),
   },
   {
-    path: "/:lang(en|ar)/Landscape",
+    path: "/:lang(en|ar)/landscape",
     name: "Landscape",
     component: () => import("@/views/Landscape.vue"),
   },
   {
-    path: "/:lang(en|ar)/Events",
+    path: "/:lang(en|ar)/events",
     name: "Events",
     component: () => import("@/views/Events.vue"),
   },
 
   {
-    path: "/:lang(en|ar)/Product/:slug",
+    path: "/:lang(en|ar)/product/:slug",
     name: "Product",
     component: () => import("@/views/Product.vue"),
   },
 
   {
-    path: "/:lang(en|ar)/Shipping",
+    path: "/:lang(en|ar)/shipping",
     name: "Shipping",
     component: () => import("@/views/ShippingPage.vue"),
   },
   {
-    path: "/:lang(en|ar)/Cart",
+    path: "/:lang(en|ar)/cart",
     name: "Cart",
     component: () => import("@/views/Cart.vue"),
   },
@@ -62,7 +62,7 @@ const routes = [
     component: () => import("@/views/SinglePage.vue"),
   },
   {
-    path: "/:lang(en|ar)/Shipping/:id",
+    path: "/:lang(en|ar)/shipping/:id",
     name: "Shipping",
     component: () => import("@/views/ShippingPage.vue"),
   },

@@ -30,8 +30,9 @@
   "SALE": "تخفيض ",
   "Category": "قسم:",
   "occasions": "مناسبات:",
-  "Buy":"اشتري الان ",
+  "Buy": "اشتري الان ",
   "ID": "كود:",
   "ReviewTitle": "اراء العملاء",
-  "Reviewsubtitle": "أكثر من 100عميل سعيد"
+  "Reviewsubtitle": "أكثر من 100عميل سعيد",
+  "orderNow": "اطلب الان "
 }

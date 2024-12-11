@@ -33,5 +33,16 @@
   "ID": "Product ID:",
   "Buy": "Buy Now",
   "ReviewTitle": "Sample Reviews",
-  "Reviewsubtitle": "More than 10,000 Happy Clients"
+  "Reviewsubtitle": "More than 10,000 Happy Clients",
+  "orderNow": "Order Now",
+  "Cart": "Your Cart",
+  "Edit": "Edit",
+  "Empty": "Empty",
+  "ConfirmDeletion": "Confirm Deletion",
+  "DeleteQ": "Are you sure you want to remove all products from the cart?",
+  "Cancel": "Cancel",
+  "Sure": "Sure",
+  "OrderNow": "Order Now",
+  "EmptyCard": "Your card is empty",
+  "Return":"Return to Home Page"
 }

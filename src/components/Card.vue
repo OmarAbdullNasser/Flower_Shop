@@ -12,7 +12,7 @@
       <h5 class="card-title m-3 title">
         <a href="">{{ props.flower.title }}</a>
       </h5>
-      <p class="card-text mb-0">
+      <p class="card-text mb-0  ">
         <span class="mx-1" v-if="props.flower.price_after_sale">
           EGP {{ props.flower.price_after_sale }}
           <small>
@@ -22,7 +22,7 @@
 
         <span class="mx-1" v-else> EGP {{ props.flower.price }} </span>
       </p>
-      <div class="rate my-1">
+      <div class="rate my-1" v-if="props.flower.average_rate > 0">
         <font-awesome-icon
           v-for="(star, index) in 5"
           :key="index"
@@ -32,7 +32,7 @@
         ></font-awesome-icon>
       </div>
       <button class="btn w-100" @click="addToCart(props.flower)">
-        Order Now
+        {{ $t("orderNow") }}
       </button>
     </div>
   </div>
@@ -54,7 +54,7 @@ const addToCart = async (item) => {
     product_id: item.id,
     product_name: item.title,
     quantity: 1, // Make sure quantity is a reactive property if needed
-    price: item.price,
+    price: item.price_after_sale,
   });
 };
 </script>

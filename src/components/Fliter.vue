@@ -2,32 +2,6 @@
   <div class="Fliter">
     <aside class="sidebar-wrarpper">
       <div class="sidebar-item">
-        <h3 class="sidebar-title">{{ $t("Categories") }}</h3>
-        <div class="sidebar-body">
-          <ul>
-            <li>
-              <div
-                class="custom-control custom-checkbox"
-                v-for="cat in Categories"
-                :key="cat.id"
-              >
-                <input
-                  type="checkbox"
-                  :id="`category_` + cat.id"
-                  class="custom-control-input checkmark ms-2"
-                  :value="cat.title"
-                  @click="fetchFliter(cat.id, undefined)"
-                />
-                <label :for="`category_` + cat.id" class="custom-control-label">
-                  {{ cat.title }}<span>({{ cat.count_of_products }})</span>
-                </label>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="sidebar-item">
         <h3 class="sidebar-title">{{ $t("Occasions") }}</h3>
         <div class="sidebar-body">
           <ul>
@@ -50,6 +24,32 @@
                 >
                   {{ occasion.title }}
                   <span>({{ occasion.count_of_products }})</span>
+                </label>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-item">
+        <h3 class="sidebar-title">{{ $t("Categories") }}</h3>
+        <div class="sidebar-body">
+          <ul>
+            <li>
+              <div
+                class="custom-control custom-checkbox"
+                v-for="cat in Categories"
+                :key="cat.id"
+              >
+                <input
+                  type="checkbox"
+                  :id="`category_` + cat.id"
+                  class="custom-control-input checkmark ms-2"
+                  :value="cat.title"
+                  @click="fetchFliter(cat.id, undefined)"
+                />
+                <label :for="`category_` + cat.id" class="custom-control-label">
+                  {{ cat.title }}<span>({{ cat.count_of_products }})</span>
                 </label>
               </div>
             </li>
@@ -199,7 +199,6 @@ const getAllCategories = async (lang) => {
   });
   const jsonResponse = await CategoriesResonse.json();
   Categories.value = jsonResponse.data;
-  
 };
 const getAllOccasions = async (lang) => {
   const OccasionsResonse = await fetch(`${url}/occasions`, {
@@ -209,7 +208,6 @@ const getAllOccasions = async (lang) => {
   });
   const jsonResponse = await OccasionsResonse.json();
   Occasions.value = jsonResponse.data;
- 
 };
 onMounted(() => {
   getAllCategories(route.params.lang);

@@ -1,7 +1,7 @@
 <template>
   <div class="cart">
     <div class="heaader p-3">
-      <h2 class="text-center">Your Cart</h2>
+      <h2 class="text-center">{{ $t("Cart") }}</h2>
     </div>
     <div class="container my-5" v-if="!isLoading">
       <div class="row" v-if="cartLength">
@@ -38,7 +38,7 @@
                   class="btn btn-secondary"
                   @click="updateItemQuantity(Prodect.id, quantity)"
                 >
-                  Edit
+                  {{ $t("Edit") }}
                 </button>
               </div>
 
@@ -59,7 +59,7 @@
               data-bs-toggle="modal"
               data-bs-target="#confirmDeleteModal"
             >
-              Empty
+              {{ $t("Empty") }}
             </button>
             <div
               class="modal fade"
@@ -73,7 +73,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="confirmDeleteModalLabel">
-                      Confirm Deletion
+                      {{ $t("ConfirmDeletion") }}
                     </h5>
                     <button
                       type="button"
@@ -83,7 +83,7 @@
                     ></button>
                   </div>
                   <div class="modal-body">
-                    Are you sure you want to remove all products from the cart?
+                    {{ $t("DeleteQ") }}
                   </div>
                   <div class="modal-footer">
                     <button
@@ -91,14 +91,14 @@
                       class="btn btn-secondary"
                       data-bs-dismiss="modal"
                     >
-                      Cancel
+                      {{ $t("Cancel") }}
                     </button>
                     <button
                       type="button"
                       class="btn btn-danger"
                       @click="removeAllProducts"
                     >
-                      Sure
+                      {{ $t("Sure") }}
                     </button>
                   </div>
                 </div>
@@ -116,7 +116,7 @@
             <hr />
             <button class="btn btn-checkout w-50 mx-auto mt-1">
               <router-link :to="{ path: `/${route.params.lang}/checkout` }">
-                Order Now
+                {{ $t("OrderNow") }}
               </router-link>
             </button>
           </div>
@@ -126,13 +126,13 @@
         class="d-flex flex-column justify-content-center align-items-center empty-card"
         v-else
       >
-        <h1 class="mb-4">Your card is empty</h1>
+        <h1 class="mb-4">{{ $t("EmptyCard") }}</h1>
         <router-link
           :to="{
             name: 'home',
           }"
           class="btn"
-          >Return to Home Page</router-link
+          >{{ $t("Return") }}</router-link
         >
       </div>
     </div>
@@ -199,7 +199,7 @@ const FetchDataCart = async () => {
     Prodects.value = data.cart;
     TM.value = data.total_sum;
     MoreItem.value = data.show_in_cart_products;
-    
+
     store.commit("Cart/SET_CART", Prodects.value);
   } catch (error) {
     // Handle and log any errors

@@ -14,7 +14,7 @@
 
         <div class="col-12 col-md-6">
           <div class="right">
-            <div class="Card" v-if="SingleProduct.price_after_sale">
+            <div class="Card" v-if="SingleProduct.sale > 0">
               <p class="desc1 display4 p-2">
                 {{ $t("SALE") }} {{ SingleProduct.sale }}%
               </p>
@@ -23,7 +23,7 @@
               <strong>{{ SingleProduct.title }}</strong>
             </p>
             <div class="price-line d-flex">
-              <p class="desc2 display5" v-if="SingleProduct.price_after_sale">
+              <p class="desc2 display5" v-if="SingleProduct.sale > 0">
                 <s>EGP {{ SingleProduct.price }}</s>
               </p>
               <p class="plus1 display5">
@@ -134,7 +134,7 @@ const addToCart2 = async (item) => {
     product_id: item.id,
     product_name: item.title,
     quantity: quantity.value, // Make sure quantity is a reactive property if needed
-    price: item.price,
+    price: item.price_after_sale,
   };
   await store.dispatch("Cart/addToCart", ProductData.value);
 

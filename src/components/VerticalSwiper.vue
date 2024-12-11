@@ -21,6 +21,7 @@
             :modules="modules"
             navigation
             @swiper="onSwiper"
+            @slideChange="onSlideChange"
           >
             <swiper-slide v-for="Img in props.initialImages" :key="Img.id">
               <img :src="Img.image" alt="" class="img-fluid" />
@@ -68,6 +69,11 @@ const slideTo = (index) => {
 const onSwiper = (swiper) => {
   swiperRef.value = swiper;
 };
+const onSlideChange = () => {
+  if (swiperRef.value) {
+    activeSlide.value = swiperRef.value.activeIndex; // Update activeSlide to current index
+  }
+};
 </script>
 
 <style lang="scss">
@@ -98,11 +104,14 @@ const onSwiper = (swiper) => {
     }
   }
 
-  .swiper-slide img {
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
+  .swiper-slide {
+    overflow: hidden;
     border-radius: 15px;
+    img {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+    }
   }
   .swiper-button-prev,
   .swiper-button-next {

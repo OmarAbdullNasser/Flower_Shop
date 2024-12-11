@@ -70,6 +70,9 @@ const modules = [Navigation, Pagination, A11y, Autoplay];
   margin-bottom: 3rem;
   height: auto;
 }
+.swiper-slide {
+  border-radius: 15px;
+}
 .card {
   background: #fcf5fc;
   border-radius: 15px;
