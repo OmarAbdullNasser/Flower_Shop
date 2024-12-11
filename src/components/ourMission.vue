@@ -47,6 +47,8 @@ const MissionData = inject("MissionData");
     padding: 0;
     img {
       width: 100%;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
   .left-side {

@@ -11,7 +11,7 @@
             @click="HasAdress"
             :checked="Know === 1"
           />
-          <label for="Know">I know the recipient address</label>
+          <label for="Know">{{ $t("know") }}</label>
         </p>
         <p class="mb-0 d-flex align-items-center">
           <input
@@ -21,10 +21,7 @@
             @click="NoAdress"
             :checked="Know === 0"
           />
-          <label for="NotKnow"
-            >I don't know the recipient address(Shipping fees will be
-            applied)</label
-          >
+          <label for="NotKnow">{{ $t("NotKnow") }}</label>
         </p>
       </div>
     </div>
@@ -49,7 +46,6 @@ const SetPaymentMethod = () => {
   store.commit("SET_PAYMENT", "Shiptosome");
 };
 const senderObj = computed(() => store.getters.senderObj);
-
 
 onMounted(() => {
   SetPaymentMethod();

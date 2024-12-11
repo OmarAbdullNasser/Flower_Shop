@@ -95,6 +95,7 @@ const route = useRoute();
   align-items: center;
   justify-content: center;
   text-align: center;
+  border-radius: 15px;
 }
 .Portfolio {
   padding-top: 3rem;

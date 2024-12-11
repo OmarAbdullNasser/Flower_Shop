@@ -77,7 +77,7 @@ const props = defineProps({
     required: true,
   },
 });
-
+const PgNum = computed(() => store.getters.PgNum);
 // Emit event for page change
 const emit = defineEmits(["pageChanged"]);
 const currentPage = ref(0);
@@ -88,6 +88,8 @@ const goToPage = (page) => {
     emit("pageChanged", page);
   }
   currentPage.value = page;
+  store.commit("SET_PAGE", page);
+  
 };
 
 // Computed property to calculate pages to show

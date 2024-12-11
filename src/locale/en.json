@@ -45,5 +45,14 @@
   "OrderNow": "Order Now",
   "EmptyCard": "Your card is empty",
   "Return": "Return to Home Page",
-  "outStok": "out of Stok"
+  "outStok": "out of Stok",
+  "Total": "Total",
+  "Shiptosomeone": "Ship to someone",
+  "Shiptome": "Ship to me",
+  "ExtraNotes": "Any Extra Notes",
+  "know": "I know the recipient address",
+  "NotKnow": "I don't know the recipient address (Shipping fees will be applied)",
+  "Free": "Free",
+  "SameDay":"Same day delivery ( Last order at 6 PM)",
+  "Date":"Choose specific date"
 }

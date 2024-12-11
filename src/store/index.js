@@ -28,6 +28,7 @@ export default createStore({
     PaymentMethod: "CashHome",
     SenderObj: {},
     Links: [],
+    PageNum: 0,
   },
 
   mutations: {
@@ -119,6 +120,9 @@ export default createStore({
     updateSenderObj(state, { key: newValue }) {
       state.SenderObj[key] = newValue;
     },
+    SET_PAGE(state, data) {
+      state.PageNum = data;
+    },
   },
 
   actions: {
@@ -140,7 +144,7 @@ export default createStore({
     //Get  Category
     async fetchFliter(
       { commit },
-      { catid, occasionid, sort, priceFrom, pricertTo },
+      { catid, occasionid, sort, priceFrom, pricertTo, page },
       lang = "en"
     ) {
       commit("SET_IDS", catid);
@@ -180,16 +184,23 @@ export default createStore({
       if (pt) {
         query += query ? `&${pt}` : pt;
       }
-
       if (query) {
         try {
-          const FlowerResponse = await fetch(`${url}/products?${query}`);
+          const FlowerResponse = await fetch(
+            `${url}/products?${query}&page=${page}`
+          );
           const respons = await FlowerResponse.json();
 
           const { items, pagination } = respons.data;
 
           commit("SET_PRODUCTS", items);
           commit("SET_META", pagination);
+          console.log(
+            "this came from fliterd prodcd ",
+            query,
+            "with page number ",
+            page
+          );
         } catch (error) {
           console.error("Failed to fetch flowers:", error);
         }
@@ -299,6 +310,9 @@ export default createStore({
     },
     SiteLinks: (state) => {
       return state.Links;
+    },
+    PgNum: (state) => {
+      return state.PageNum;
     },
   },
 

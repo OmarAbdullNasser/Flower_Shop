@@ -2,7 +2,7 @@
   <div class="cursol my-5">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-12">
+        <div class="col-12 px-0">
           <swiper
             :modules="modules"
             :slides-per-view="3"
@@ -17,7 +17,7 @@
                 slidesPerView: 3,
               },
             }"
-            :space-between="20"
+            :space-between="10"
             :pagination="{ clickable: true }"
             :loop="true"
             class="row"
@@ -65,33 +65,45 @@ const items = inject("CursolData");
 const modules = [Navigation, Pagination, A11y, Autoplay];
 </script>
 
-<style lang="scss" scoped>
-.swiper-wrapper {
-  margin-bottom: 3rem;
-  height: auto;
-}
-.swiper-slide {
-  border-radius: 15px;
-}
-.card {
-  background: #fcf5fc;
-  border-radius: 15px;
-}
-.card-body {
-  padding: 32px 35px 40px !important;
-  border-radius: 0;
-  background-color: #ffffff;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  display: flex;
-}
-.card-body h5 {
-  padding-bottom: 10px;
-  width: 100%;
-  text-align: left;
-  color: #0c5b47;
+<style lang="scss">
+.cursol {
+  .swiper {
+    .swiper-wrapper {
+      height: auto;
+      margin-bottom: 3rem;
+      padding: 0 !important;
+    }
+  }
+  // .swiper-slide {
+  //   border-radius: 15px;
+  // }
+  .card {
+    background: #fcf5fc;
+    border-radius: 15px;
+    overflow: hidden;
+    img {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+  .card-body {
+    padding: 32px 35px 40px !important;
+    border-radius: 0;
+    background-color: #ffffff;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    display: flex;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  .card-body h5 {
+    padding-bottom: 10px;
+    width: 100%;
+    text-align: left;
+    color: #0c5b47;
+  }
 }
 
 @media screen and (max-width: 767px) {

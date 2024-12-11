@@ -57,19 +57,19 @@ const flowers = computed(() => store.getters.allProducts);
 const meta = computed(() => store.getters.Meta);
 const sortOption = ref("low_price");
 const loading = ref(true);
-
+const PgNum = computed(() => store.getters.PgNum);
 // Computed property for items displayed on the current page
 const checkLoader = () => {
   if (flowers.value.length > 0) {
     loading.value = false;
-
   }
 };
 
 // Handle page change
 const handlePageChange = async (page) => {
   meta.value.current_page = page;
-  await store.dispatch("fetchProducts", meta.value.current_page);
+  // await store.dispatch("fetchProducts", meta.value.current_page);
+  await store.dispatch("fetchFliter", { page });
 };
 
 // Handle the sort change event emitted from FilterBar
@@ -85,9 +85,8 @@ onMounted(async () => {
   store.dispatch("fetchProducts");
 
   useHead({
-      title: 'Dalia ElHaggar | Shop',
-    });
-
+    title: "Dalia ElHaggar | Shop",
+  });
 });
 </script>
 

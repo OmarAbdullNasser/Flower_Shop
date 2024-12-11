@@ -110,7 +110,7 @@
         <div class="total_price col-12 col-lg-4">
           <div class="total d-flex flex-column p-5">
             <div class="total_product d-flex justify-content-between">
-              <h4>Total</h4>
+              <h4>{{ $t("Total") }}</h4>
               <h4>{{ TM }} L.E</h4>
             </div>
             <hr />

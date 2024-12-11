@@ -11,7 +11,7 @@
           v-if="SenderBox === 'ToSomeOne'"
         />
         <font-awesome-icon :icon="['far', 'circle']" v-else class="my-3" />
-        <p class="mb-0">Ship to someone</p>
+        <p class="mb-0">{{ $t("Shiptosomeone") }}</p>
       </button>
 
       <button class="btn BtnMe" @click="ToggleSender('ToMe')">
@@ -21,7 +21,7 @@
           v-if="SenderBox === 'ToMe'"
         />
         <font-awesome-icon :icon="['far', 'circle']" v-else class="my-3" />
-        <p class="mb-0">Ship to me</p>
+        <p class="mb-0">{{ $t("ShiptomeShiptome") }}</p>
       </button>
     </div>
     <div class="SenderArea">
@@ -29,7 +29,7 @@
       <ShipToMe v-else />
     </div>
     <div class="NextStage my-3 d-flex flex-column">
-      <span class="my-3">Any Extra Notes </span>
+      <span class="my-3">{{ $t("ExtraNotes") }} </span>
       <textarea
         name=""
         id=""
@@ -71,7 +71,6 @@ watch(
   () => notes.value,
   (newValue) => {
     store.commit("SET_SENDER", { extra_instructions: newValue });
-
   }
 );
 function syncFormWithVuex() {

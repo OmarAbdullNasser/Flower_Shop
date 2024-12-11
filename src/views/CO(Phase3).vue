@@ -23,22 +23,6 @@
         <div class="stage thrid" :class="{ active: phase === 3 }">3</div>
       </div>
       <div class="row">
-        <!-- <div class="col-12- col-lg-9 SendrInfo">
-          <FristStage v-if="phase === 1" />
-          <SecandStage v-else-if="phase === 2" @vaild="test" />
-          <ThirdStage v-else-if="phase === 3" />
-          <button
-            class="btn"
-            @click="SetPhase"
-            v-if="phase < 3"
-            :disabled="isButtonDisabled"
-          >
-            <span>Next</span>
-          </button>
-          <button class="btn" @click="SendOrder(senderObj)" v-else>
-            <span>Send</span>
-          </button>
-        </div> -->
         <div class="col-12 col-lg-9 SendrInfo">
           <!-- Dynamic Component -->
           <component
@@ -291,6 +275,7 @@ onMounted(() => FetchDataCart());
       padding: 7px 15px 10px 15px;
       line-height: initial;
       cursor: pointer;
+
       &.active {
         background-color: #28a52c;
       }
@@ -298,7 +283,7 @@ onMounted(() => FetchDataCart());
         content: "";
         position: absolute;
         top: 18px;
-        left: 42px;
+        inset-inline-start: 42px;
         width: 23px;
         height: 2px;
         background-color: #927091;

@@ -174,7 +174,7 @@ onMounted(() => {
     // Use vue-meta to dynamically set meta tags based on the fetched metaData
 
     useHead({
-      title: "Dalia ElHaggar |" + `${Datameta.value.title || "Product"} `,
+      title: "Dalia ElHaggar | " + `${Datameta.value.title || "Product"} `,
       meta: [
         {
           name: "description",

@@ -1,7 +1,10 @@
 <template>
   <div class="ShipToSomeOne">
     <div class="container">
-      <label>Choose delivery date <span class="freelogo">Free</span></label>
+      <label
+        >Choose delivery date
+        <span class="freelogo">{{ $t("Free") }}</span></label
+      >
       <div class="opations">
         <p class="mb-0 d-flex align-items-center">
           <input
@@ -11,7 +14,7 @@
             checked
             @click="SetTime(1, false)"
           />
-          <label for="SameDay">Same day delivery ( Last order at 6 PM)</label>
+          <label for="SameDay">{{ $t("SameDay") }}</label>
         </p>
         <p class="mb-0">
           <input
@@ -20,7 +23,7 @@
             id="specificDate"
             @click="SetTime(0, true)"
           />
-          <label for="specificDate">Choose specific date</label>
+          <label for="specificDate">{{ $t("Date") }}</label>
         </p>
         <div class="date mb-3" ref="date" v-if="isDateVisible">
           <input
@@ -107,7 +110,6 @@ onMounted(() => {
   store.commit("SET_SENDER", { payment_method_id: 0 });
   store.commit("SET_SENDER", { payment_method_id: 0 });
 });
-
 </script>
 
 <style lang="scss" scoped>
