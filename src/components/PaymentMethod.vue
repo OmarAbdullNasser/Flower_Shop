@@ -2,11 +2,11 @@
   <div class="PayMethod">
     <div class="container">
       <div class="UserName text-center" v-if="Props.Data.id == 2">
-        <label for="UserName">UserName </label>
+        <label for="UserName">{{ $t("ThridName") }} </label>
         <p id="UserName" class="my-3">{{ Props.Data.other_info.user_name }}</p>
       </div>
       <div class="PhoneNumber text-center">
-        <label for="PhoneNumber">PhoneNumber </label>
+        <label for="PhoneNumber">{{ $t("ThridPhone") }} </label>
         <p id="PhoneNumber" class="my-3">{{ Props.Data.other_info.number }}</p>
       </div>
       <div class="QR">
@@ -17,7 +17,7 @@
           @submit.prevent="emitImage"
           class="d-flex flex-column justify-content-center"
         >
-          <label for="img">Upload Transiation Img</label>
+          <label for="img">{{ $t("ThridIMG") }}</label>
           <input
             type="file"
             class="mx-auto my-3"
@@ -25,7 +25,7 @@
             accept="image/*"
           />
           <button class="w-50 mx-auto" type="submit" :disabled="!btn">
-            Upload
+            {{ $t("Thridupload") }}
           </button>
         </form>
         <div

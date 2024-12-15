@@ -4,7 +4,9 @@
       <div class="InfoAddress text-center text-lg-start">
         <label> Recipient Details</label>
         <div class="name d-flex flex-column">
-          <label for="Name">Name <span class="star">*</span></label>
+          <label for="Name"
+            >{{ $t("FormName") }} <span class="star">*</span></label
+          >
           <input
             type="text"
             name="Name"
@@ -15,7 +17,9 @@
         </div>
 
         <div class="Mobile d-flex flex-column">
-          <label for="Mobile">Mobile <span class="star">*</span></label>
+          <label for="Mobile"
+            >{{ $t("FormMobile") }} <span class="star">*</span></label
+          >
           <input
             type="tel"
             name="Mobile"
@@ -27,14 +31,14 @@
             minlength="11"
             maxlength="13"
           />
-          <span class="mt-2" v-if="flag" :class="{ red: flag == 'Phone' }"
-            >the Phoe must be 11 nummber to 13 number</span
-          >
+          <span class="mt-2" v-if="flag" :class="{ red: flag == 'Phone' }">{{
+            $t("FormMobileValidation")
+          }}</span>
         </div>
 
         <div class="Deliver" v-if="addresState == 'HasAdress'">
           <label for="Deliver" class="d-block"
-            >Deliver To <span class="star">*</span></label
+            >{{ $t("FormDeliver") }} <span class="star">*</span></label
           >
 
           <div
@@ -49,7 +53,7 @@
                 id="Office"
                 v-model="formFields.Deliver"
               />
-              <span>Office</span>
+              <span>{{ $t("FormOffice") }}</span>
             </label>
             <div class="Home d-flex align-content-center ms-2">
               <label class="Home d-flex align-content-center">
@@ -61,7 +65,7 @@
                   id="Home"
                   v-model="formFields.Deliver"
                 />
-                <span>Home</span>
+                <span>{{ $t("FormHome") }}</span>
               </label>
             </div>
           </div>
@@ -70,8 +74,8 @@
         <div class="Area" v-if="addresState == 'HasAdress'">
           <label for="Area">Area <span class="star">*</span></label>
           <select name="Area" v-model="formFields.Area" id="">
-            <option value="Cairo">Cairo</option>
-            <option value="Giza">Giza</option>
+            <option value="Cairo">{{ $t("FormCity1") }}</option>
+            <option value="Giza">{{ $t("FormCity2") }}</option>
           </select>
         </div>
 
@@ -80,7 +84,9 @@
           v-if="addresState == 'HasAdress'"
         >
           <div class="SName d-flex flex-column">
-            <label for="SName">Street Name <span class="star">*</span></label>
+            <label for="SName"
+              >{{ $t("FormStreet") }} <span class="star">*</span></label
+            >
             <input
               type="text"
               name="SName"
@@ -88,12 +94,12 @@
               v-model="formFields.SName"
               required
             />
-            <span>Preferably in Arabic if possible for more accuracy </span>
+            <span>{{ $t("FormStreetValiadition") }} </span>
           </div>
 
           <div class="Apartment d-flex flex-column">
             <label for="Apartment"
-              >Apartment No. <span class="star">*</span></label
+              >{{ $t("FormApartment") }} <span class="star">*</span></label
             >
             <input
               type="text"
@@ -104,7 +110,9 @@
           </div>
 
           <div class="Floor d-flex flex-column">
-            <label for="Floor ">Floor <span class="star">*</span></label>
+            <label for="Floor "
+              >{{ $t("FormFloor") }} <span class="star">*</span></label
+            >
             <input
               type="text"
               name="Floor"
@@ -114,7 +122,7 @@
               required
             />
             <span class="mt-2 red small" v-if="Flooer_flag"
-              >at lest one number
+              >{{ $t("FormFloorVailadtion") }}
             </span>
           </div>
         </div>
@@ -123,33 +131,24 @@
           class="NoAddreess d-flex flex-column my-3"
           v-if="addresState == 'NoAddress'"
         >
-          <span>Attention: This is only available in Cairo and Giza. </span>
+          <span>{{ $t("FormNotKnow") }} </span>
           <div class="satges">
             <div class="StageOne">
               <span class="number me-2">1</span>
-              <span
-                >Upon checkout, we will send an SMS to your recipient to collect
-                their address and preferred delivery date.</span
-              >
+              <span>{{ $t("StageOne") }}</span>
             </div>
             <div class="StageTwo my-3">
               <span class="number me-2">2</span>
-              <span
-                >Your recipient must accept the gift delivery before we prepare
-                your bouquet.</span
-              >
+              <span>{{ $t("StageTwo") }}.</span>
             </div>
             <div class="StageThree">
               <span class="number me-2">3</span>
-              <span
-                >You will get notified once we deliver your gift to your
-                recipient.</span
-              >
+              <span>{{ $t("StageThree") }}</span>
             </div>
           </div>
         </div>
         <div class="Greeting d-flex flex-column mt-3">
-          <label for="Greeting">Greeting Card Message </label>
+          <label for="Greeting">{{ $t("Greeting") }} </label>
           <textarea
             name="Greeting "
             id=""
@@ -165,7 +164,9 @@
 
         <div class="FullName d-flex flex-wrap">
           <div class="FristName d-flex flex-column">
-            <label for="FName">First Name <span class="star">*</span></label>
+            <label for="FName"
+              >{{ $t("FirstName") }} <span class="star">*</span></label
+            >
             <input
               type="text"
               name="FName"
@@ -176,7 +177,9 @@
           </div>
 
           <div class="LastName d-flex flex-column">
-            <label for="LName "> Last Name <span class="star">*</span></label>
+            <label for="LName ">
+              {{ $t("LastName") }}<span class="star">*</span></label
+            >
             <input
               type="text"
               name="LName"
@@ -188,7 +191,9 @@
         </div>
 
         <div class="PhoneNmber d-flex flex-column">
-          <label for="phone"> Phone <span class="star">*</span></label>
+          <label for="phone">
+            {{ $t("PhoneSender") }} <span class="star">*</span></label
+          >
           <input
             type="tel"
             name="phone"
@@ -207,12 +212,14 @@
               red: Sender_flag == 'SenderPhone',
               small: Sender_flag == 'SenderPhone',
             }"
-            >the Phoe must be 11 nummber to 13 number</span
+            >{{ $t("PhoneSenderVailation") }}</span
           >
         </div>
 
         <div class="Email d-flex flex-column">
-          <label for="email"> Email <span class="star">*</span></label>
+          <label for="email">
+            {{ $t("EmailSender") }} <span class="star">*</span></label
+          >
           <input
             type="email"
             name="email"
@@ -238,7 +245,7 @@
               v-model="formFields.SenderNameState"
               checked
             />
-            <label for="ShowName">Show my name on delivery</label>
+            <label for="ShowName">{{ $t("ShowName") }} </label>
           </p>
           <p class="mb-0">
             <input
@@ -248,7 +255,7 @@
               value="1"
               v-model="formFields.SenderNameState"
             />
-            <label for="HideName">Hide my name on delivery</label>
+            <label for="HideName">{{ $t("HidenName") }}</label>
           </p>
         </div>
       </div>

@@ -2,8 +2,8 @@
   <div class="checkpout2">
     <div class="container">
       <div class="title text-center">
-        <h1>Choose Delivery Service</h1>
-        <p>We deliver same day or on the date you choose</p>
+        <h1>{{$t("CO3title")}}</h1>
+        <p>{{ $t("CO3subtitle") }}</p>
       </div>
       <div class="stages d-flex justify-content-between text-center">
         <div
@@ -38,7 +38,7 @@
             v-if="phase < 3"
             :disabled="isButtonDisabled"
           >
-            <span>Next</span>
+            <span>{{ $t("Nextbtn") }}</span>
           </button>
           <button
             class="btn"
@@ -62,7 +62,8 @@
                 <span>{{ item.total }} EGP</span>
               </li>
               <li class="d-flex justify-content-between my-3">
-                <span>Shipping Fees</span> <span>Free shipping</span>
+                <span>{{ $t("Shipping") }}</span>
+                <span>{{ $t("Freeshipping") }}</span>
               </li>
             </ul>
           </div>
@@ -82,7 +83,7 @@
           </div>
           <hr />
           <div class="TotalMoney d-flex justify-content-between">
-            <h5>Grand Total</h5>
+            <h5>{{ $t("GrandTotal") }}</h5>
             <h5>{{ TM }} EGP</h5>
           </div>
         </div>

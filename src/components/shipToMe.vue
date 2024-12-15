@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <label for="">Payment Method </label>
+      <label for="">{{ $t("PaymentMethod") }} </label>
       <div class="paymentMethods">
         <p class="mb-0" @click="SetPaymentMethod('Instapay', 0)">
           <input
@@ -44,7 +44,7 @@
             :checked="paymentMethod == 0"
             id="Instapay"
           />
-          <label for="Instapay">Instapay</label>
+          <label for="Instapay">{{ $t("Instapay") }}</label>
         </p>
 
         <p class="mb-0" @click="SetPaymentMethod('CashHome', 1)">
@@ -54,7 +54,7 @@
             id="CashHome"
             :checked="paymentMethod == 1"
           />
-          <label for="CashHome">Cash Collect From Home</label>
+          <label for="CashHome">{{ $t("Cash") }}</label>
         </p>
 
         <p class="mb-0" @click="SetPaymentMethod('vodafoneCash', 2)">
@@ -64,7 +64,7 @@
             id="vodafoneCash"
             :checked="paymentMethod == 2"
           />
-          <label for="vodafoneCash">vodafoneCash</label>
+          <label for="vodafoneCash">{{ $t("vodafoneCash") }}</label>
         </p>
       </div>
     </div>
