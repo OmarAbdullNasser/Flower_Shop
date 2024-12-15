@@ -89,14 +89,13 @@ const goToPage = (page) => {
   }
   currentPage.value = page;
   store.commit("SET_PAGE", page);
-  
 };
 
 // Computed property to calculate pages to show
 const pagesToShow = computed(() => {
   const range = [];
-  const start = Math.max(1, props.meta.current_page - 2);
-  const end = Math.min(props.meta.total_pages, props.meta.current_page + 2);
+  const start = Math.max(1, PgNum.value - 2);
+  const end = Math.min(props.meta.total_pages, PgNum.value + 2);
 
   for (let i = start; i <= end; i++) {
     range.push(i);

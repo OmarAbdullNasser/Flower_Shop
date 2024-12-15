@@ -184,6 +184,7 @@ export default createStore({
       if (pt) {
         query += query ? `&${pt}` : pt;
       }
+
       if (query) {
         try {
           const FlowerResponse = await fetch(
@@ -195,18 +196,12 @@ export default createStore({
 
           commit("SET_PRODUCTS", items);
           commit("SET_META", pagination);
-          console.log(
-            "this came from fliterd prodcd ",
-            query,
-            "with page number ",
-            page
-          );
         } catch (error) {
           console.error("Failed to fetch flowers:", error);
         }
       } else {
         try {
-          const FlowerResponse = await fetch(`${url}/products`);
+          const FlowerResponse = await fetch(`${url}/products?page=${page}`);
           const respons = await FlowerResponse.json();
 
           const { items, pagination } = respons.data;

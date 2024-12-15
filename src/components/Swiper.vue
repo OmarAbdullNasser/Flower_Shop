@@ -46,7 +46,6 @@ const props = defineProps({
 
 const modules = [Navigation, Pagination, A11y, Autoplay];
 
-onMounted(() => {});
 </script>
 
 <style lang="scss">

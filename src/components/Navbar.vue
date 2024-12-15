@@ -175,7 +175,7 @@ const setFavicon = (url) => {
   link.href = url;
 };
 onMounted(() => {
-  fetchNavbarData();
+  fetchNavbarData(route.params.lang);
   watchEffect(() => {
     if (Links.value && Links.value[16] && Links.value[18]) {
       icon.value = Links.value[18].setting_value;

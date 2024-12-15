@@ -142,7 +142,7 @@ const fetchData = async () => {
     }
     
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 const FindMethod = (id, UserName, methodCode) => {

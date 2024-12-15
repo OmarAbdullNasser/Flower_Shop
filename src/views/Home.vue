@@ -32,6 +32,7 @@ const url = inject("url");
 
 const store = useStore();
 const route = useRoute();
+
 const loading = ref(true);
 const SwiperImg = ref([]);
 const ServiceData = ref({});
@@ -124,7 +125,8 @@ onMounted(async () => {
     // Use vue-meta to dynamically set meta tags based on the fetched metaData
 
     useHead({
-      title: 'Dalia ElHaggar |' + `${metaData.value.title || "Dalia ElHaggar"} `,
+      title:
+        "Dalia ElHaggar |" + `${metaData.value.title || "Dalia ElHaggar"} `,
       meta: [
         {
           name: "description",

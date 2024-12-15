@@ -84,6 +84,11 @@
           </div>
         </div>
       </div>
+      <hr />
+      <div class="Maylike row" v-if="SingleProduct">
+        <h1 class="text-center">You May Like</h1>
+        <Card class="px-0" :flower="SingleProduct" />
+      </div>
     </div>
   </div>
 </template>
@@ -94,6 +99,8 @@ import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useHead } from "@vueuse/head";
 import VerticalSwiper from "@/components/VerticalSwiper.vue";
+import Card from "@/components/Card.vue";
+
 const url = inject("url");
 const route = useRoute();
 const store = useStore();
@@ -126,7 +133,7 @@ const getSingleProductByFliter = async (lang) => {
     if (result) {
       loading.value = false;
     } else {
-      console.log("Product not found");
+      console.error("Product not found");
     }
   } catch (error) {
     console.error("Error during search:", error);
@@ -169,7 +176,6 @@ watch(
 );
 
 onMounted(() => {
-  getSingleProductByFliter(route.params.lang);
   if (Datameta.value) {
     // Use vue-meta to dynamically set meta tags based on the fetched metaData
 
@@ -190,7 +196,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .product {
   padding-top: 75px;
-  padding-bottom: 75px;
+
   background-color: #ffffff;
 
   .img-fluid {

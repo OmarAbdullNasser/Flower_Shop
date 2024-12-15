@@ -81,7 +81,6 @@ const onSlideChange = () => {
   .swiper {
     position: relative;
     width: 407px;
-    height: 705px;
   }
 
   .paginationImg {

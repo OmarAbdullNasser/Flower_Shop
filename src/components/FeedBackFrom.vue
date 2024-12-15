@@ -59,7 +59,11 @@
                 Close
               </button>
 
-              <button type="button" class="btn btn-send" @click="SendFeedback">
+              <button
+                type="button"
+                class="btn btn-send"
+                @click="SendFeedback(route.params.lang)"
+              >
                 Send Feedback
               </button>
             </div>
@@ -71,11 +75,11 @@
 </template>
 
 <script setup>
-
-
 import { ref, computed, onMounted, inject } from "vue";
 import { Modal } from "bootstrap";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+const route = useRoute();
 let bootstrapModal = null;
 const store = useStore();
 const modal = ref(null);
@@ -88,7 +92,6 @@ const props = defineProps({
 });
 import Swal from "sweetalert2";
 const { order_id, product } = props.items;
-
 
 // Update rating for a specific item on click
 const setRating = (itemId, rating) => {
@@ -103,12 +106,12 @@ const setRating = (itemId, rating) => {
     Rates.push({ id: itemId, rate: item.rating });
   }
 };
-const SendFeedback = async () => {
+const SendFeedback = async (lang) => {
   const FeddbackResponse = await fetch(`${url}/rating/add`, {
     method: "POST", // Specify the method if needed
     headers: {
       Accept: "application/json",
-      "Accept-Language": `ar`,
+      "Accept-Language": `${lang}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -117,7 +120,7 @@ const SendFeedback = async () => {
     }),
   });
   const respons = await FeddbackResponse.json();
- 
+
   if (!respons.success) {
     throw new Error(
       FeddbackResponse.message || "Failed to update product in cart"

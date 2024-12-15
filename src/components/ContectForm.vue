@@ -150,7 +150,7 @@ import { toast } from "vue3-toastify";
 import { useHead } from "@vueuse/head";
 const url = inject("url");
 const props = defineProps(["initialData", "Data"]);
-console.log(props.initialData);
+
 const validateNumberInput = (e) => {
   e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Replace any non-digit character with an empty string
 };
@@ -193,7 +193,7 @@ const submitForm = async () => {
     console.error("Error:", error);
   }
 };
-watchEffect(() => console.log(props.Data));
+
 </script>
 
 <style lang="scss" scoped>
