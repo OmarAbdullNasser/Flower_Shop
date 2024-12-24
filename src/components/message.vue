@@ -5,26 +5,23 @@
         <div class="right-side col-12 col-lg-6 text-center">
           <div class="card-wrapper">
             <div class="card-box text-center">
-              <h5 class="art">Local Florist Just For You</h5>
+              <h5 class="art">{{ props.initialData.section.title }}</h5>
               <p class="display4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo
-                vel pariatur dolorem inventore. Officia temporibus magni modi
-                sit atque et, dicta ex maiores ab mollitia dolore debitis eius
-                necessitatibus possimus!
+                {{ props.initialData.section.description }}
               </p>
               <p class="display7">
-                <em>Mary Byrd, owner</em>
+                <em> {{ props.initialData.section.sub_title }}</em>
               </p>
               <div class="si">
-                <img src="../assets/signature.png" alt="" />
+                <img :src="initialData.section.image" alt="" />
               </div>
             </div>
           </div>
         </div>
         <div class="left-side col-12 col-lg text-center mt-3">
-          <img src="../assets/fl2.jpg" alt="" class="img-fluid first" />
+          <img :src="initialData.left_image" alt="" class="img-fluid first" />
           <img
-            src="../assets/fl1.jpg"
+            :src="initialData.right_image"
             alt=""
             class="img-fluid secand d-none d-lg-block"
           />
@@ -35,8 +32,10 @@
 </template>
 
 <script setup>
+import { watchEffect } from "vue";
 
-
+const props = defineProps(["initialData"]);
+watchEffect(() => console.log(props.initialData));
 </script>
 
 <style lang="scss" scoped>

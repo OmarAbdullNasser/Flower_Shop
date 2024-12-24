@@ -9,7 +9,7 @@
       :op="0.5"
       :pt="8"
       :pb="8"
-      height="133px"
+     
     >
       <h1 style="margin: 0 auto; font-size: 5rem;">{{ HeroText }}</h1>
     </Hero>

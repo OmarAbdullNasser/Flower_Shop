@@ -6,7 +6,7 @@
           <Swiper
             :slides-per-view="1"
             :space-between="50"
-            navigation
+            
             :modules="modules"
           >
             <swiper-slide v-for="Img in initialImages" :key="Img.id">
@@ -43,9 +43,7 @@ const props = defineProps({
   },
 });
 
-
 const modules = [Navigation, Pagination, A11y, Autoplay];
-
 </script>
 
 <style lang="scss">

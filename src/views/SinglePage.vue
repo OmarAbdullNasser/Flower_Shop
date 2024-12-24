@@ -47,6 +47,7 @@ const fetchHomeData = async (lang, pagename) => {
     const Data = PageRespons.data;
 
     const { title, description, image, meta } = Data;
+
     DataPage.value.title = title;
     DataPage.value.description = description;
     DataPage.value.image = image;
@@ -61,7 +62,7 @@ onMounted(async () => {
     // Use vue-meta to dynamically set meta tags based on the fetched metaData
 
     useHead({
-      title: 'Dalia ElHaggar | ' + `${Meta.value.title || "Dalia ElHaggar"}`,
+      title: "Dalia ElHaggar | " + `${Meta.value.title || "Dalia ElHaggar"}`,
       meta: [
         {
           name: "description",

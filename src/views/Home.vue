@@ -3,7 +3,7 @@
   <div class="home" v-else>
     <FeedBackFrom v-if="isVisable" :items="ItemsRating" />
     <Swiper :initialImages="SwiperImg" />
-    <Message />
+    <Message :initialData="MessageData" />
     <Services :initialData="ServiceData" />
     <ReviewSwiper :initialData="Review" />
     <Portfolio :initialData="PortfolioData" />
@@ -44,6 +44,7 @@ const ItemsRating = ref([]);
 const Review = ref([]);
 const isVisable = ref(false);
 const ContectData = ref({});
+const MessageData = ref({});
 const Rating = () => {
   if (
     Array.isArray(ItemsRating.value?.product) &&
@@ -76,6 +77,7 @@ const fetchHomeData = async (lang) => {
       portfolio,
       tabs,
       service,
+      local_florist_just_for_you: message,
     } = respons.data;
 
     ItemsRating.value = order_to_rate;
@@ -85,6 +87,7 @@ const fetchHomeData = async (lang) => {
     ArticaleData.value = makers;
     metaData.value = meta;
     ContectData.value = contact_info;
+    MessageData.value = message;
     Rating();
     const ReviewResponse = await fetch(`${url}/reviews/list`, {
       method: "GET",

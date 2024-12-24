@@ -3,8 +3,6 @@
     class="section Hero"
     :style="{
       ...backgroundImgStyle,
-      '--custom-height': height,
-      '--normal-height': N_height,
     }"
   >
     <div
@@ -15,7 +13,7 @@
       <div class="row">
         <div class="col-12">
           <div class="title-wrapper display1 d-flex" :style="{ color: color }">
-            <slot ></slot>
+            <slot></slot>
           </div>
         </div>
       </div>
@@ -50,14 +48,6 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  height: {
-    type: String,
-    default: "auto",
-  },
-  N_height: {
-    type: String,
-    default: "auto",
-  },
 });
 
 const backgroundImgStyle = computed(() => ({
@@ -72,7 +62,7 @@ html {
   scroll-behavior: smooth;
 }
 .Hero {
-  height: var(--normal-height);
+  height: 300px;
   z-index: 0;
   position: relative;
   .title-wrapper {

@@ -8,7 +8,7 @@
       color="#000"
       :pt="5"
       :pb="8"
-      height="133px"
+    
     >
       <h1 style="margin: 0 auto; font-size: 5rem; color: #fff">
         {{ HeroText }}
