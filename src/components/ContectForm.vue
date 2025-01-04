@@ -30,7 +30,7 @@
                   </h5>
                   <ul class="list mbr-fonts-style display-4">
                     <li class="item-wrap">
-                      {{ props.Data?.mobile || props.Data?.mobile }}
+                      {{ props.initialData?.mobile || props.Data?.mobile }}
                     </li>
                   </ul>
                 </div>
@@ -193,7 +193,6 @@ const submitForm = async () => {
     console.error("Error:", error);
   }
 };
-
 </script>
 
 <style lang="scss" scoped>

@@ -116,7 +116,7 @@ const onSlideChange = () => {
   .swiper-button-next {
     position: absolute;
     margin: 0 1rem;
-    top: 24%;
+    top: 55%;
     width: 60px;
     height: 60px;
     background-color: #fff;

@@ -22,7 +22,7 @@
             :loop="true"
             class="row"
           >
-            <swiper-slide v-for="img in items" :key="img.id">
+            <swiper-slide v-for="img in ItemsWithImgs" :key="img.slug">
               <div class="card">
                 <router-link
                   :to="{
@@ -60,7 +60,46 @@ import { inject } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const items = inject("CursolData");
+const {
+  items,
+  events_image: events,
+  landscape_image: landscape,
+  shop_image: shop,
+} = inject("CursolData");
+
+// items.push({ image: events_image });
+// items[0].image = shop_image;
+// items[1].image = landscape_image;
+// items[2].image = events_image;
+// const ItemsWithImgs = items.map((item) => {
+//   if (item && item.slug) {
+//     if (item.slug === "events") {
+//       item.image = events;
+//     }
+//     if (item.slug === "landscape") {
+//       item.image = landscape;
+//     }
+//     if (item.slug === "shop") {
+//       item.image = shop;
+//     }
+//   }
+// });
+const ItemsWithImgs = items.map((item) => {
+  if (!item || !item.slug) {
+    return item; // If item is undefined or doesn't have slug, return it as-is
+  }
+  return {
+    ...item,
+    image:
+      item.slug === "events"
+        ? events
+        : item.slug === "landscape"
+        ? landscape
+        : item.slug === "shop"
+        ? shop
+        : item.image, // Keep the existing image if slug doesn't match
+  };
+});
 
 const modules = [Navigation, Pagination, A11y, Autoplay];
 </script>

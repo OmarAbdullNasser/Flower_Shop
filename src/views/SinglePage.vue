@@ -9,10 +9,7 @@
           <div class="Right col-12 col-lg-6 text-center">
             <img :src="DataPage.image" class="img-fluid rounded" alt="" />
           </div>
-          <div
-            class="Left col-12 col-lg-6 d-flex align-items-center text-center"
-            v-html="DataPage.description"
-          ></div>
+          <div class="Left col-12 col-lg-6" v-html="DataPage.description"></div>
         </div>
       </div>
     </div>
@@ -82,6 +79,9 @@ onMounted(async () => {
   }
   P {
     line-height: 3;
+  }
+  .Left {
+    padding-top: 8rem;
   }
 }
 </style>

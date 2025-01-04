@@ -12,9 +12,7 @@
             <swiper-slide v-for="Img in initialImages" :key="Img.id">
               <img :src="Img.image" alt="" class="img-fluid" />
 
-              <div class="carousel-caption">
-                <p>Lorem ipsum dolor sit amet</p>
-              </div>
+             
             </swiper-slide>
           </Swiper>
         </div>

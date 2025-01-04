@@ -16,17 +16,19 @@
         </div>
         <div class="card-body">
           <ul class="p-0">
+            <li class="text-center" @click="goToUrl(whatsapp.number)">
+              <a target="_blank" rel="noopener noreferrer">
+                <h5 class="card-title">{{ whatsapp.title }}</h5>
+              </a>
+            </li>
             <li
               class="text-center"
-              v-for="name in people"
-              :key="name.id"
-              @click="goToUrl(name.number)"
+              v-for="(link, index) in social_links"
+              :key="link"
             >
-              <a target="_blank" rel="noopener noreferrer">
-                <h5 class="card-title">{{ name.title }}</h5>
-                <small>Aavaiable</small>
+              <a :href="link" target="_blank">
+                <h5 class="card-title">{{ index }}</h5>
               </a>
-              <hr class="m-0" />
             </li>
           </ul>
         </div>
@@ -43,7 +45,8 @@ name: "WhatsAppIcon";
 const isDivVisible = ref(false);
 const route = useRoute();
 const url = inject("url");
-const people = ref([]);
+const whatsapp = ref({});
+const social_links = ref({});
 const toggleDiv = () => {
   isDivVisible.value = !isDivVisible.value;
 };
@@ -56,9 +59,11 @@ const FetchData = async (lang) => {
     },
   });
   const respons = await IconResponse.json();
-  const Content = respons.data;
-  people.value = Content;
+  const { whats_app_contact: Content, social_links: links } = respons.data;
+  whatsapp.value = Content;
+  social_links.value = links;
 };
+
 onMounted(async () => {
   await FetchData(route.params.lang);
 });

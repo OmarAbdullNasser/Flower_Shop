@@ -26,9 +26,15 @@ const props = defineProps({
 });
 const { service, mission, tabs } = props.initialData;
 
-const { info, items } = service;
+const {
+  info,
+  items,
+  services_events_image: events_image,
+  services_landscape_image: landscape_image,
+  services_shop_image: shop_image,
+} = service;
 
-provide("CursolData", items);
+provide("CursolData", { items, events_image, landscape_image, shop_image });
 provide("MissionData", mission);
 provide("FeatureData", tabs);
 </script>

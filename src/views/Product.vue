@@ -85,9 +85,14 @@
         </div>
       </div>
       <hr />
-      <div class="Maylike row" v-if="SingleProduct">
-        <h1 class="text-center">You May Like</h1>
-        <Card class="px-0" :flower="SingleProduct" />
+      <div class="Maylike row" v-if="RelatedProducts">
+        <h1 class="text-center mb-3">You May Like</h1>
+        <Card
+          class="px-0 mx-2"
+          v-for="item in RelatedProducts"
+          :key="item.id"
+          :flower="item"
+        />
       </div>
     </div>
   </div>
@@ -105,6 +110,7 @@ const url = inject("url");
 const route = useRoute();
 const store = useStore();
 const SingleProduct = ref(null);
+const RelatedProducts = ref([]);
 const loading = ref(true);
 const quantity = ref(1);
 const slugparam = route.params.slug;
@@ -125,8 +131,9 @@ const getSingleProductByFliter = async (lang) => {
       },
     });
     const respons = await result.json();
-
-    SingleProduct.value = respons.data;
+    console.log(respons);
+    SingleProduct.value = respons.data.product;
+    RelatedProducts.value = respons.data.related_products;
     Imgs.value = SingleProduct.value.gallery?.gallery_images;
     Datameta.value = SingleProduct.value.meta;
 

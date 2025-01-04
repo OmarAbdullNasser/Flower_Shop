@@ -79,7 +79,7 @@ const fetchHomeData = async (lang) => {
       service,
       local_florist_just_for_you: message,
     } = respons.data;
-
+  
     ItemsRating.value = order_to_rate;
     SwiperImg.value = sliders;
     ServiceData.value = { service, mission, tabs };
@@ -88,6 +88,7 @@ const fetchHomeData = async (lang) => {
     metaData.value = meta;
     ContectData.value = contact_info;
     MessageData.value = message;
+
     Rating();
     const ReviewResponse = await fetch(`${url}/reviews/list`, {
       method: "GET",

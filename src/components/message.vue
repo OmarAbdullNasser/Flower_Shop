@@ -35,7 +35,6 @@
 import { watchEffect } from "vue";
 
 const props = defineProps(["initialData"]);
-watchEffect(() => console.log(props.initialData));
 </script>
 
 <style lang="scss" scoped>
