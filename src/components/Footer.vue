@@ -82,7 +82,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, watchEffect, ref } from "vue";
+import { computed, onMounted, watchEffect, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 const store = useStore();
@@ -91,13 +91,16 @@ const DatatFooter = computed(() => store.getters.footer);
 
 const soicallink = ref([]);
 const Links = computed(() => store.getters.SiteLinks);
-
 const SocialLinks = () => {
+  // Filter the links based on the key
   const link = Links.value.filter((item) =>
-    ["instagram", "facebook", "tiktok"].includes(item.key)
+    ["instagram", "facebook", "tiktok"].includes(item.setting_key)
   );
-  soicallink.value = link;
+
+  // Debugging logs
+  soicallink.value.push(...link);
 };
+
 function goToUrl(url) {
   // Ensure soicallink has valid data before proceeding
   if (!soicallink.value || soicallink.value.length === 0) {
@@ -105,13 +108,14 @@ function goToUrl(url) {
     return;
   }
 
-  const mapping = soicallink.value.find((item) => item.key === url);
-  if (mapping && mapping.value) {
-    window.location.href = mapping.value; // Navigate to the specified URL
+  const mapping = soicallink.value.find((item) => item.setting_key === url);
+  if (mapping && mapping.setting_value) {
+    window.location.href = mapping.setting_value; // Navigate to the specified URL
   } else {
     console.error("Invalid URL or mapping not found.");
   }
 }
+
 onMounted(() => {
   if (Links.value && Links.value.length > 0) {
     SocialLinks();

@@ -238,6 +238,7 @@ export default createStore({
         commit("SET_FOOTER", footer);
         commit("SET_CART", cart_num);
         commit("SET_LINKS", site_setting);
+        console.log(site_setting)
       } catch (error) {
         console.error("Failed to fetch flowers:", error);
       }

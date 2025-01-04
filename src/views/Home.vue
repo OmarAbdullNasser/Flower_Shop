@@ -79,7 +79,7 @@ const fetchHomeData = async (lang) => {
       service,
       local_florist_just_for_you: message,
     } = respons.data;
-  
+   
     ItemsRating.value = order_to_rate;
     SwiperImg.value = sliders;
     ServiceData.value = { service, mission, tabs };
